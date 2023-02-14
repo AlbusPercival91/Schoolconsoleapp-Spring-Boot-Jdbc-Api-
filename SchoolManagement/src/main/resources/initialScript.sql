@@ -1,0 +1,22 @@
+DROP DATABASE IF EXISTS amigoscode;
+DROP ROLE IF EXISTS amigoscode;
+
+CREATE ROLE amigoscode 
+LOGIN
+PASSWORD 'password';
+
+
+CREATE DATABASE amigoscode
+    WITH
+    OWNER = amigoscode
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'en_US.UTF-8'
+    LC_CTYPE = 'en_US.UTF-8'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+    
+GRANT ALL PRIVILEGES ON DATABASE amigoscode TO amigoscode;
+
+
+    
