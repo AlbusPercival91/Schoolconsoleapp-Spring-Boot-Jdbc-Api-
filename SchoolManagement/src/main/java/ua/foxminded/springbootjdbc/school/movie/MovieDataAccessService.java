@@ -28,12 +28,12 @@ public class MovieDataAccessService implements MovieDao {
     @Override
     public int insertMovie(Movie movie) {
         var sql = """
-                INSERT INTO movie(name, release_date)
-                VALUES (?, ?);
+                INSERT INTO movie(name)
+                VALUES (?);
                  """;
         return jdbcTemplate.update(
                 sql,
-                movie.name(), movie.releaseDate()
+                movie.name()
         );
     }
 

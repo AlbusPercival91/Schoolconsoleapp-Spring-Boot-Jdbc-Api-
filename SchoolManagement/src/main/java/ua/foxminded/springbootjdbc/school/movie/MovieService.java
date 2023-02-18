@@ -39,6 +39,6 @@ public class MovieService {
   }
 
   public Movie getMovie(int id) {
-    return movieDao.selectMovieById(id).orElseThrow(() -> new IllegalArgumentException());
+    return movieDao.selectMovieById(id).orElseThrow(IllegalArgumentException::new);
   }
 }
