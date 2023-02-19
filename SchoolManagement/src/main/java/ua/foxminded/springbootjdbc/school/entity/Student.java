@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.movie;
+package ua.foxminded.springbootjdbc.school.entity;
 
 public class Student {
     private Integer groupId;
