@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import ua.foxminded.springbootjdbc.school.dao.SchoolDataService;
+import ua.foxminded.springbootjdbc.school.dao.JdbcSchoolRepository;
+
 @SpringBootApplication
 public class SchoolManagementApplication {
 

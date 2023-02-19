@@ -5,7 +5,7 @@ import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 
-public interface DummyDataDao {
+public interface SchoolRepository {
 
   int createStudent(Student student);
 

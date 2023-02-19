@@ -1,20 +1,21 @@
 package ua.foxminded.springbootjdbc.school.dao;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
-import ua.foxminded.springbootjdbc.school.interfaces.DummyDataDao;
+import ua.foxminded.springbootjdbc.school.interfaces.SchoolRepository;
 
 @Repository
-public class DummyDataDAO implements DummyDataDao {
+public class JdbcSchoolRepository implements SchoolRepository {
   
-  @Autowired
-  private JdbcTemplate jdbcTemplate;
+  private final JdbcTemplate jdbcTemplate;
 
+  public JdbcSchoolRepository(JdbcTemplate jdbcTemplate) {
+    this.jdbcTemplate = jdbcTemplate;
+  }
 
   @Override
   public int createStudent(Student student) {
