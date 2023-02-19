@@ -1,5 +1,6 @@
 package ua.foxminded.springbootjdbc.school.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ua.foxminded.springbootjdbc.school.entity.Course;
@@ -10,11 +11,10 @@ import ua.foxminded.springbootjdbc.school.interfaces.DummyDataDao;
 
 @Repository
 public class DummyDataDAO implements DummyDataDao {
-  private final JdbcTemplate jdbcTemplate;
+  
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
-  public DummyDataDAO(JdbcTemplate jdbcTemplate) {
-    this.jdbcTemplate = jdbcTemplate;
-  }
 
   @Override
   public int createStudent(Student student) {
