@@ -14,31 +14,31 @@ public class MovieService {
     this.movieDao = movieDao;
   }
 
-  public List<Movie> getMovies() {
-    return movieDao.selectMovies();
-  }
-
-  public void addNewMovie(Movie movie) {
-    // TODO: check if movie exists
-    int result = movieDao.insertMovie(movie);
-    if (result != 1) {
-      throw new IllegalStateException("oops something went wrong");
-    }
-  }
-
-  public void deleteMovie(Integer id) {
-    Optional<Movie> movies = movieDao.selectMovieById(id);
-    movies.ifPresentOrElse(movie -> {
-      int result = movieDao.deleteMovie(id);
-      if (result != 1) {
-        throw new IllegalStateException("oops could not delete movie");
-      }
-    }, () -> {
-      throw new IllegalArgumentException();
-    });
-  }
-
-  public Movie getMovie(int id) {
-    return movieDao.selectMovieById(id).orElseThrow(IllegalArgumentException::new);
-  }
+//  public List<Movie> getMovies() {
+//    return movieDao.selectMovies();
+//  }
+//
+//  public void addNewMovie(Movie movie) {
+//    // TODO: check if movie exists
+//    int result = movieDao.insertMovie(movie);
+//    if (result != 1) {
+//      throw new IllegalStateException("oops something went wrong");
+//    }
+//  }
+//
+//  public void deleteMovie(Integer id) {
+//    Optional<Movie> movies = movieDao.selectMovieById(id);
+//    movies.ifPresentOrElse(movie -> {
+//      int result = movieDao.deleteMovie(id);
+//      if (result != 1) {
+//        throw new IllegalStateException("oops could not delete movie");
+//      }
+//    }, () -> {
+//      throw new IllegalArgumentException();
+//    });
+//  }
+//
+//  public Movie getMovie(int id) {
+//    return movieDao.selectMovieById(id).orElseThrow(IllegalArgumentException::new);
+//  }
 }

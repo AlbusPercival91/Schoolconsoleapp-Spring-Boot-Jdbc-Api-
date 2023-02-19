@@ -4,27 +4,28 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
-import ua.foxminded.springbootjdbc.school.movie.Movie;
 import ua.foxminded.springbootjdbc.school.movie.MovieDataAccessService;
+import ua.foxminded.springbootjdbc.school.movie.SchoolDummyDataService;
 
-@Component
+//@Component
 public class ConsoleMenu {
+  SchoolDummyDataService dummyData = new SchoolDummyDataService();
 
-  @Autowired
-  public void addMovie(JdbcTemplate jdbcTemplate) {
-    Scanner scan = new Scanner(System.in);
-    System.out.println(ConsoleMenuConstants.STUDENT_LAST_NAME);
-    String name = scan.nextLine();
-
-    if (!name.isEmpty()) {    
-        Movie movie = new Movie(null, name, null, null);
-        MovieDataAccessService mds = new MovieDataAccessService(jdbcTemplate);
-        mds.insertMovie(movie);
-      } else {
-        System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
-      }
-    scan.close();
-  }
+//  @Autowired
+//  public void addMovie(JdbcTemplate jdbcTemplate) {
+//    Scanner scan = new Scanner(System.in);
+//    System.out.println(ConsoleMenuConstants.STUDENT_LAST_NAME);
+//    String name = scan.nextLine();
+//
+//    if (!name.isEmpty()) {    
+//        Movie movie = new Movie(null, name, null, null);
+//        MovieDataAccessService mds = new MovieDataAccessService(jdbcTemplate);
+//        mds.insertMovie(movie);
+//      } else {
+//        System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
+//      }
+//    scan.close();
+//  }
 
 //  CourseMaker course = new CourseMaker();
 //
