@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CourseMaker {
   StudentMaker student = new StudentMaker();
 
