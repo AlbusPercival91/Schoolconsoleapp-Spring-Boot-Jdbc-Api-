@@ -1,28 +1,28 @@
-package ua.foxminded.springbootjdbc.school.dao;
+package ua.foxminded.springbootjdbc.school.testdatadao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SchoolController {
+public class TestDataController {
     
     @Autowired
-    public void createGroup(SchoolDataService dataService) {
+    public void createGroup(TestDataService dataService) {
         dataService.createGroup();
     }
 
     @Autowired
-    public void createStudent(SchoolDataService dataService) {
+    public void createStudent(TestDataService dataService) {
         dataService.createStudent();
     }
        
     @Autowired
-    public void createCourse(SchoolDataService dataService) {
+    public void createCourse(TestDataService dataService) {
         dataService.createCourse();
     }
     
     @Autowired
-    public void createCourseStudentRelation(SchoolDataService dataService) {
+    public void createCourseStudentRelation(TestDataService dataService) {
         dataService.createCourseStudentRelation();
     }
 }

@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.dao;
+package ua.foxminded.springbootjdbc.school.testdatadao;
 
 import java.util.Map;
 import java.util.Set;
@@ -14,17 +14,17 @@ import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
 import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @Service
-public class SchoolDataService {
+public class TestDataService {
 
   @Autowired
-  private final JdbcSchoolRepository schoolRepository;
+  private final TestDataRepository dataRepository;
 
   StudentMaker studentMaker = new StudentMaker();
   CourseMaker courseMaker = new CourseMaker();
   GroupMaker groupMaker = new GroupMaker();
 
-  public SchoolDataService(JdbcSchoolRepository schoolRepository) {
-    this.schoolRepository = schoolRepository;
+  public TestDataService(TestDataRepository dataRepository) {
+    this.dataRepository = dataRepository;
   }
 
   public void createStudent() {
@@ -33,21 +33,21 @@ public class SchoolDataService {
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
       Student student = new Student(groupMaker.assignGroupId().get(i++), s.substring(0, s.indexOf(" ")),
           s.substring(s.indexOf(" ")));
-      schoolRepository.createStudent(student);
+      dataRepository.createStudent(student);
     }
   }
 
   public void createGroup() {
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
-      schoolRepository.createGroup(group);
+      dataRepository.createGroup(group);
     }
   }
 
   public void createCourse() {
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
-      schoolRepository.createCourse(course);
+      dataRepository.createCourse(course);
     }
   }
 
@@ -58,7 +58,7 @@ public class SchoolDataService {
 
       for (Integer i : value) {
         StudentCourseRelation scRelation = new StudentCourseRelation(key, i);
-        schoolRepository.createCourseStudentRelation(scRelation);
+        dataRepository.createCourseStudentRelation(scRelation);
       }
     }
   }
