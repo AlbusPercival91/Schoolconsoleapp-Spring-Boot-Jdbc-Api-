@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school;
+package ua.foxminded.springbootjdbc.school.console;
 
 public final class ConsoleMenuConstants {
     static final String DIGITS_REQUIRED = "Digits required!";
