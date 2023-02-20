@@ -5,30 +5,24 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SchoolController {
-
-    private final SchoolDataService dataService;
-
-    public SchoolController(SchoolDataService dataService) {
-        this.dataService = dataService;
-    }
     
     @Autowired
-    public void createGroup() {
+    public void createGroup(SchoolDataService dataService) {
         dataService.createGroup();
     }
 
     @Autowired
-    public void createStudent() {
+    public void createStudent(SchoolDataService dataService) {
         dataService.createStudent();
     }
        
     @Autowired
-    public void createCourse() {
+    public void createCourse(SchoolDataService dataService) {
         dataService.createCourse();
     }
     
     @Autowired
-    public void createCourseStudentRelation() {
+    public void createCourseStudentRelation(SchoolDataService dataService) {
         dataService.createCourseStudentRelation();
     }
 }
