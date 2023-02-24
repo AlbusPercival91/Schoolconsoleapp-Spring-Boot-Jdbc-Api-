@@ -3,6 +3,7 @@ package ua.foxminded.springbootjdbc.school.dao;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
@@ -13,13 +14,14 @@ import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
 import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @Service
-public class DataService {
+public class TestDataService {
   StudentMaker studentMaker = new StudentMaker();
   CourseMaker courseMaker = new CourseMaker();
   GroupMaker groupMaker = new GroupMaker();
 
+  @Order(1)
   @Autowired
-  public void createStudent(DataRepository dataRepository) {
+  public void createStudent(TestDataRepository dataRepository) {
     int i = 0;
 
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
@@ -30,7 +32,7 @@ public class DataService {
   }
 
   @Autowired
-  public void createGroup(DataRepository dataRepository) {
+  public void createGroup(TestDataRepository dataRepository) {
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
       dataRepository.createGroup(group);
@@ -38,7 +40,7 @@ public class DataService {
   }
 
   @Autowired
-  public void createCourse(DataRepository dataRepository) {
+  public void createCourse(TestDataRepository dataRepository) {
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
       dataRepository.createCourse(course);
@@ -46,7 +48,7 @@ public class DataService {
   }
 
   @Autowired
-  public void createCourseStudentRelation(DataRepository dataRepository) {
+  public void createCourseStudentRelation(TestDataRepository dataRepository) {
     for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
       Integer key = entry.getKey();
       Set<Integer> value = entry.getValue();
