@@ -2,3 +2,11 @@ select * from school.students;
 select * from school.course;
 select * from school.groups;
 select * from school.students_courses_checkouts;
+
+SELECT groups.group_id, groups.group_name, COUNT(students.student_id) AS number_of_students
+            FROM school.groups LEFT JOIN school.students ON groups.group_id = students.group_id
+            GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <= 15;
+            
+SELECT groups.group_name, COUNT(students.student_id) AS number_of_students
+            FROM school.groups LEFT JOIN school.students ON groups.group_id = students.group_id
+            GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <= 15;

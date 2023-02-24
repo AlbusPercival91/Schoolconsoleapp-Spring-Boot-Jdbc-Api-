@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.testdatadao;
+package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,13 +13,13 @@ import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
 import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @Service
-public class TestDataService {
+public class DataService {
   StudentMaker studentMaker = new StudentMaker();
   CourseMaker courseMaker = new CourseMaker();
   GroupMaker groupMaker = new GroupMaker();
 
   @Autowired
-  public void createStudent(TestDataRepository dataRepository) {
+  public void createStudent(DataRepository dataRepository) {
     int i = 0;
 
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
@@ -30,7 +30,7 @@ public class TestDataService {
   }
 
   @Autowired
-  public void createGroup(TestDataRepository dataRepository) {
+  public void createGroup(DataRepository dataRepository) {
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
       dataRepository.createGroup(group);
@@ -38,7 +38,7 @@ public class TestDataService {
   }
 
   @Autowired
-  public void createCourse(TestDataRepository dataRepository) {
+  public void createCourse(DataRepository dataRepository) {
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
       dataRepository.createCourse(course);
@@ -46,7 +46,7 @@ public class TestDataService {
   }
 
   @Autowired
-  public void createCourseStudentRelation(TestDataRepository dataRepository) {
+  public void createCourseStudentRelation(DataRepository dataRepository) {
     for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
       Integer key = entry.getKey();
       Set<Integer> value = entry.getValue();

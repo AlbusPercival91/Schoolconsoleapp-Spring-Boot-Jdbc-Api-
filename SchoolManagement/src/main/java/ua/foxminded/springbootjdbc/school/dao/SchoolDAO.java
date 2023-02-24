@@ -15,13 +15,12 @@ public class SchoolDAO {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public List<String> findGroupIDWithLessOrEqualsStudents(int number) {
-    String sql = "SELECT group_id, COUNT (*) FROM school.students GROUP BY group_id HAVING COUNT(*)<=" + number + ";";
-    return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getString("group_id"));
-  }
-
-  public List<Group> findGroupsWithLessOrEqualsStudents(String s) {
-    String sql = "SELECT * FROM school.groups WHERE group_id = " + s + ";";
+  public List<Group> findGroupsWithLessOrEqualsStudents(int students) {
+    String sql = """
+        SELECT groups.group_id, groups.group_name, COUNT(students.student_id) AS number_of_students
+            FROM school.groups LEFT JOIN school.students ON groups.group_id = students.group_id
+            GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <=
+        """ + students + ";";
     return jdbcTemplate.query(sql, new GroupRowMapper());
   }
 

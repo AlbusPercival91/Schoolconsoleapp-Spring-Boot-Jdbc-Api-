@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.testdatadao;
+package ua.foxminded.springbootjdbc.school.dao;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -8,11 +8,11 @@ import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 
 @Repository
-public class TestDataRepository {
+public class DataRepository {
 
   private final JdbcTemplate jdbcTemplate;
 
-  public TestDataRepository(JdbcTemplate jdbcTemplate) {
+  public DataRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 
