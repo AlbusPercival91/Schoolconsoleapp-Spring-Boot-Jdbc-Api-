@@ -3,7 +3,6 @@ package ua.foxminded.springbootjdbc.school.dao;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Service;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
@@ -19,7 +18,6 @@ public class TestDataService {
   CourseMaker courseMaker = new CourseMaker();
   GroupMaker groupMaker = new GroupMaker();
 
-  @Order(1)
   @Autowired
   public void createStudent(TestDataRepository dataRepository) {
     int i = 0;
