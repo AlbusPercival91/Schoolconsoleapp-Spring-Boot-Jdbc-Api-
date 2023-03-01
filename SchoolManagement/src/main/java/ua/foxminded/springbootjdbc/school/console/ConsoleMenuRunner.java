@@ -6,19 +6,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import ua.foxminded.springbootjdbc.school.dao.SchoolService;
+import ua.foxminded.springbootjdbc.school.dao.TestDataService;
 
 @Component
 public class ConsoleMenuRunner {
 
-//  @Autowired
-//  private final SchoolService schoolService;
-//
-//  public ConsoleMenuRunner(SchoolService schoolService) {
-//    this.schoolService = schoolService;
-//  }
+  private final SchoolService schoolService;
+
+  public ConsoleMenuRunner(SchoolService schoolService) {
+    this.schoolService = schoolService;
+  }
 
   @Autowired
-  public void runner(SchoolService schoolService) {
+  public void runner(TestDataService testData) {
+    testData.createGroup();
+    testData.createStudent();
+    testData.createCourse();
+    testData.createCourseStudentRelation();
+
     Scanner scan = new Scanner(System.in);
 
     String command = "";

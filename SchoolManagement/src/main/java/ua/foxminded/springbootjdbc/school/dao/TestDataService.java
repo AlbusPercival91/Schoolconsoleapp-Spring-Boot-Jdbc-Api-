@@ -2,7 +2,6 @@ package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.Map;
 import java.util.Set;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
@@ -18,8 +17,13 @@ public class TestDataService {
   CourseMaker courseMaker = new CourseMaker();
   GroupMaker groupMaker = new GroupMaker();
 
-  @Autowired
-  public void createStudent(TestDataRepository dataRepository) {
+  private final TestDataRepository dataRepository;
+
+  public TestDataService(TestDataRepository dataRepository) {
+    this.dataRepository = dataRepository;
+  }
+
+  public void createStudent() {
     int i = 0;
 
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
@@ -29,24 +33,21 @@ public class TestDataService {
     }
   }
 
-  @Autowired
-  public void createGroup(TestDataRepository dataRepository) {
+  public void createGroup() {
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
       dataRepository.createGroup(group);
     }
   }
 
-  @Autowired
-  public void createCourse(TestDataRepository dataRepository) {
+  public void createCourse() {
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
       dataRepository.createCourse(course);
     }
   }
 
-  @Autowired
-  public void createCourseStudentRelation(TestDataRepository dataRepository) {
+  public void createCourseStudentRelation() {
     for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
       Integer key = entry.getKey();
       Set<Integer> value = entry.getValue();
