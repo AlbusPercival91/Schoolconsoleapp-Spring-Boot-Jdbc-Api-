@@ -1,12 +1,11 @@
 package ua.foxminded.springbootjdbc.school.console;
 
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import ua.foxminded.springbootjdbc.school.dao.SchoolService;
 import ua.foxminded.springbootjdbc.school.dao.TestDataService;
+import ua.foxminded.springbootjdbc.school.entity.Group;
 
 @Component
 public class ConsoleMenuRunner {
@@ -41,7 +40,8 @@ public class ConsoleMenuRunner {
 
         if (scan.hasNextInt()) {
           int quant = scan.nextInt();
-          schoolService.findGroupsWithLessOrEqualsStudents(quant).forEach(System.out::println);
+          schoolService.findGroupsWithLessOrEqualsStudents(quant).stream().map(Group::toString)
+              .forEach(System.out::println);
         } else {
           System.out.println(ConsoleMenuConstants.DIGITS_REQUIRED);
         }

@@ -2,7 +2,7 @@ package ua.foxminded.springbootjdbc.school.entity;
 
 public class Group {
   private String groupName;
-  
+
   public Group(String groupName) {
     super();
     this.groupName = groupName;
@@ -12,4 +12,8 @@ public class Group {
     return groupName;
   }
 
+  @Override
+  public String toString() {
+    return groupName;
+  }
 }
