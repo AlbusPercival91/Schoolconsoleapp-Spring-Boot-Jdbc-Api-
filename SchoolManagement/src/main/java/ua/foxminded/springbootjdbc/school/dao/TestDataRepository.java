@@ -17,7 +17,7 @@ public class TestDataRepository {
   }
 
   public int createStudent(Student student) {
-    String sql = "INSERT INTO school.students(group_id, first_name, last_name) " + "VALUES(?,?,?)";
+    String sql = "INSERT INTO school.students(group_id, first_name, last_name) VALUES(?,?,?);";
     return jdbcTemplate.update(sql, student.getGroupId(), student.getFirstName(), student.getLastName());
   }
 
@@ -27,12 +27,12 @@ public class TestDataRepository {
   }
 
   public int createCourse(Course course) {
-    String sql = "INSERT INTO school.course(course_name, course_description) " + "VALUES(?,?)";
+    String sql = "INSERT INTO school.course(course_name, course_description) VALUES(?,?);";
     return jdbcTemplate.update(sql, course.getCourseName(), course.getCourseDescription());
   }
 
   public int createCourseStudentRelation(StudentCourseRelation scRelation) {
-    String sql = "INSERT INTO school.students_courses_checkouts(student_id,course_id) " + "VALUES(?,?)";
+    String sql = "INSERT INTO school.students_courses_checkouts(student_id,course_id) VALUES(?,?);";
     return jdbcTemplate.update(sql, scRelation.getStudentId(), scRelation.getCourseId());
   }
 

@@ -26,10 +26,15 @@ public class ConsoleMenuRunner {
     Scanner scan = new Scanner(System.in);
 
     String command = "";
-    String menu = "a. Find all groups with less or equal students’ number\n"
-        + "b. Find all students related to the course with the given name\n" + "c. Add a new student\n"
-        + "d. Delete a student by the STUDENT_ID\n" + "e. Add a student to the course (from a list)\n"
-        + "f. Remove the student from one of their courses\n" + "q. Quit\n";
+    String menu = """
+        a. Find all groups with less or equal students’ number
+        b. Find all students related to the course with the given name
+        c. Add a new student
+        d. Delete a student by the STUDENT_ID
+        e. Add a student to the course (from a list)
+        f. Remove the student from one of their courses
+        q. Quit
+            """;
     System.out.println("Welcome to School console application. Please choose options below:\n\n" + menu);
 
     while (!command.equalsIgnoreCase("q")) {
