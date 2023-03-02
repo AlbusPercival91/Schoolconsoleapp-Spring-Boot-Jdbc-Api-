@@ -34,7 +34,7 @@ public class SchoolDAO {
         JOIN school.course ON school.students_courses_checkouts.course_id = school.course.course_id
         WHERE school.course.course_name = ?
               """;
-    return jdbcTemplate.query(sql, new Object[] { courseName }, new StudentRowMapper());
+    return jdbcTemplate.query(sql, new StudentRowMapper(), courseName);
   }
 
 }
