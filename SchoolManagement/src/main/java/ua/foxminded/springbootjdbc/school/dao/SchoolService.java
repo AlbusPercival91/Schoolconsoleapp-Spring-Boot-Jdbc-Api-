@@ -32,7 +32,12 @@ public class SchoolService {
   }
 
   public int deleteStudentByID(int id) {
-    return schoolDao.deleteStudentByID(id);
+    int result = schoolDao.deleteStudentByID(id);
+
+    if (result != 1) {
+      throw new IllegalStateException("oops something went wrong");
+    }
+    return result;
   }
 
 }

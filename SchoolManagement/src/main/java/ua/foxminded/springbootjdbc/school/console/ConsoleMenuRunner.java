@@ -89,7 +89,7 @@ public class ConsoleMenuRunner {
       } else if (command.equalsIgnoreCase("d")) {
         System.out.println(ConsoleMenuConstants.STUDENT_ID);
         int studentId = scan.nextInt();
-        System.out.println(schoolService.deleteStudentByID(studentId) + " student(s) deleted from data base");
+        System.out.println(schoolService.deleteStudentByID(studentId) + " student(s) deleted");
       }
 //      else if (command.equalsIgnoreCase("e")) {
 //            cmf.addStudentToTheCourseFacade(scan);
