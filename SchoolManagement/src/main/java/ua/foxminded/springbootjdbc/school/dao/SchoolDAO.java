@@ -42,4 +42,9 @@ public class SchoolDAO {
     return jdbcTemplate.update(sql, student.getGroupId(), student.getFirstName(), student.getLastName());
   }
 
+  public int deleteStudentByID(int id) {
+    String sql = "delete from school.students where student_id = ?";
+    return jdbcTemplate.update(sql, id);
+  }
+
 }

@@ -74,8 +74,8 @@ public class ConsoleMenuRunner {
                 groupId = null;
               }
               Student student = new Student(groupId, firstName, lastName);
-              schoolService.addNewStudent(student);
-              System.out.println("\n" + ConsoleMenuConstants.MENU);
+              System.out.println(
+                  "Added " + schoolService.addNewStudent(student) + " student" + "\n" + ConsoleMenuConstants.MENU);
             } else {
               System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
             }
@@ -86,11 +86,12 @@ public class ConsoleMenuRunner {
           System.out.println(ConsoleMenuConstants.EMPTY_NOTE);
         }
 
+      } else if (command.equalsIgnoreCase("d")) {
+        System.out.println(ConsoleMenuConstants.STUDENT_ID);
+        int studentId = scan.nextInt();
+        System.out.println(schoolService.deleteStudentByID(studentId) + " student(s) deleted from data base");
       }
-
-//else if (command.equalsIgnoreCase("d")) {
-//            cmf.deleteStudentByIdFacade(scan);
-//        } else if (command.equalsIgnoreCase("e")) {
+//      else if (command.equalsIgnoreCase("e")) {
 //            cmf.addStudentToTheCourseFacade(scan);
 //        } else if (command.equalsIgnoreCase("f")) {
 //            cmf.removeStudentFromCourseFacade(scan);
