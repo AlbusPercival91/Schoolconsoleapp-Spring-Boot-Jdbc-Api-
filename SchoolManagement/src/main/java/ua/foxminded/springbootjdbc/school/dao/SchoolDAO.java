@@ -21,9 +21,9 @@ public class SchoolDAO {
     String sql = """
         SELECT groups.group_id, groups.group_name, COUNT(students.student_id) AS number_of_students
         FROM school.groups LEFT JOIN school.students ON groups.group_id = students.group_id
-        GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <=
-        """ + students + ";";
-    return jdbcTemplate.query(sql, new GroupRowMapper());
+        GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <= ?
+        """;
+    return jdbcTemplate.query(sql, new GroupRowMapper(), students);
   }
 
   public List<Student> findStudentsRelatedToCourse(String courseName) {
