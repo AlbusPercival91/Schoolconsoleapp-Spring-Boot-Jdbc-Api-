@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.dao.SchoolService;
 import ua.foxminded.springbootjdbc.school.dao.TestDataService;
 import ua.foxminded.springbootjdbc.school.entity.Group;
+import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Component
@@ -53,15 +54,41 @@ public class ConsoleMenuRunner {
           schoolService.findStudentsRelatedToCourse(courseName).forEach(System.out::println);
           System.out.println("\n" + ConsoleMenuConstants.MENU);
         } else {
-          System.out.println(ConsoleMenuConstants.WRONG_COURSE);
-          System.out.println("\n" + ConsoleMenuConstants.MENU);
+          System.out.println(ConsoleMenuConstants.WRONG_COURSE + "\n" + ConsoleMenuConstants.MENU);
+        }
+      } else if (command.equalsIgnoreCase("c")) {
+        System.out.println(ConsoleMenuConstants.STUDENT_NAME);
+        String firstName = scan.nextLine();
+        System.out.println(ConsoleMenuConstants.STUDENT_LAST_NAME);
+        String lastName = scan.nextLine();
+
+        if (!firstName.isEmpty() || !lastName.isEmpty()) {
+          System.out.println(ConsoleMenuConstants.GROUP_ID);
+
+          if (scan.hasNextInt()) {
+            Integer groupId = scan.nextInt();
+
+            if (groupId >= 0 && groupId <= 10) {
+
+              if (groupId == 0) {
+                groupId = null;
+              }
+              Student student = new Student(groupId, firstName, lastName);
+              schoolService.addNewStudent(student);
+              System.out.println("\n" + ConsoleMenuConstants.MENU);
+            } else {
+              System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
+            }
+          } else {
+            System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE2);
+          }
+        } else {
+          System.out.println(ConsoleMenuConstants.EMPTY_NOTE);
         }
 
       }
 
-//        else if (command.equalsIgnoreCase("c")) {
-//            cmf.addNewStudentFacade(scan);
-//        } else if (command.equalsIgnoreCase("d")) {
+//else if (command.equalsIgnoreCase("d")) {
 //            cmf.deleteStudentByIdFacade(scan);
 //        } else if (command.equalsIgnoreCase("e")) {
 //            cmf.addStudentToTheCourseFacade(scan);

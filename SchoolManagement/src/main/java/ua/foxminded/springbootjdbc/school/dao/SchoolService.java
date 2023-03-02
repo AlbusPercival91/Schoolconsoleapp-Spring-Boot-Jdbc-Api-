@@ -22,4 +22,13 @@ public class SchoolService {
     return schoolDao.findStudentsRelatedToCourse(courseName);
   }
 
+  public void addNewStudent(Student student) {
+    int result = schoolDao.addNewStudent(student);
+    if (result != 1) {
+      throw new IllegalStateException("oops something went wrong");
+    } else {
+      
+    }
+  }
+
 }

@@ -37,4 +37,9 @@ public class SchoolDAO {
     return jdbcTemplate.query(sql, new StudentRowMapper(), courseName);
   }
 
+  public int addNewStudent(Student student) {
+    String sql = "insert into school.students(group_id, first_name, last_name) values(?,?,?)";
+    return jdbcTemplate.update(sql, student.getGroupId(), student.getFirstName(), student.getLastName());
+  }
+
 }
