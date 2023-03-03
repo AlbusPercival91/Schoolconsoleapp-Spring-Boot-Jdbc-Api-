@@ -26,9 +26,7 @@ public class ConsoleMenuRunner {
     testData.createCourseStudentRelation();
 
     Scanner scan = new Scanner(System.in);
-
     String command = "";
-
     System.out
         .println("Welcome to School console application. Please choose options below:\n\n" + ConsoleMenuConstants.MENU);
 
