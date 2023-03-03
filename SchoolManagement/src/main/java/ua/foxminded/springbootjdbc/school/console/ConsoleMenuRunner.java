@@ -84,7 +84,6 @@ public class ConsoleMenuRunner {
         } else {
           System.out.println(ConsoleMenuConstants.EMPTY_NOTE);
         }
-
       } else if (command.equalsIgnoreCase("d")) {
         System.out.println(ConsoleMenuConstants.STUDENT_ID);
         int studentId = scan.nextInt();
