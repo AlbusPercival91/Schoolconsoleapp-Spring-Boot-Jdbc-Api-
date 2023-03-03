@@ -11,7 +11,6 @@ import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Component
 public class ConsoleMenuRunner {
-
   private final SchoolService schoolService;
   CourseMaker course = new CourseMaker();
 
@@ -136,13 +135,7 @@ public class ConsoleMenuRunner {
         } else {
           System.out.println(ConsoleMenuConstants.DIGITS_REQUIRED);
         }
-      } 
-      
-//      else if (command.equalsIgnoreCase("q")) {
-//        System.out.println("exit - OK!");
-//      } else {
-//        System.out.println("\n" + ConsoleMenuConstants.MENU);
-//      }
+      }
     }
     scan.close();
   }

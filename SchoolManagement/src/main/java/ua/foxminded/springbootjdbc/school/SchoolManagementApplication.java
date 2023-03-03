@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Paths;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 public class SchoolManagementApplication {
@@ -36,7 +37,9 @@ public class SchoolManagementApplication {
       throw new IllegalArgumentException("File not found");
     }
 
-    SpringApplication.run(SchoolManagementApplication.class, args);
+    ConfigurableApplicationContext context = SpringApplication.run(SchoolManagementApplication.class, args);
+    context.close();
+
   }
 
 }

@@ -7,11 +7,9 @@ import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import org.springframework.stereotype.Component;
 import com.github.javafaker.service.FakeValuesService;
 import com.github.javafaker.service.RandomService;
 
-@Component
 public class GroupMaker {
     StudentMaker student = new StudentMaker();
 
