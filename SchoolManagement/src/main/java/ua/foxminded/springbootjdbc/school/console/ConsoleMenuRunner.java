@@ -74,8 +74,8 @@ public class ConsoleMenuRunner {
                 groupId = null;
               }
               Student student = new Student(groupId, firstName, lastName);
-              System.out.println(
-                  "Added " + schoolService.addNewStudent(student) + " student" + "\n" + ConsoleMenuConstants.MENU);
+              System.out
+                  .println(schoolService.addNewStudent(student) + " student added" + "\n" + ConsoleMenuConstants.MENU);
             } else {
               System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
             }
@@ -90,16 +90,59 @@ public class ConsoleMenuRunner {
         System.out.println(ConsoleMenuConstants.STUDENT_ID);
         int studentId = scan.nextInt();
         System.out.println(schoolService.deleteStudentByID(studentId) + " student(s) deleted");
-      }
-//      else if (command.equalsIgnoreCase("e")) {
-//            cmf.addStudentToTheCourseFacade(scan);
-//        } else if (command.equalsIgnoreCase("f")) {
-//            cmf.removeStudentFromCourseFacade(scan);
-//        } else if (command.equalsIgnoreCase("q")) {
-//            System.out.println("exit - OK!");
-//        } else {
-//            System.out.println("\n" + menu);
-//        }
+      } else if (command.equalsIgnoreCase("e")) {
+        System.out.println(ConsoleMenuConstants.STUDENT_ID);
+
+        if (scan.hasNextInt()) {
+          Integer studentId = scan.nextInt();
+
+          if (schoolService.getStudentID().contains(studentId)) {
+            System.out.println(ConsoleMenuConstants.COURSE_LIST);
+            course.generateCourses().forEach(System.out::println);
+            String courseName = scan.next();
+
+            if (course.generateCourses().contains(courseName)) {
+              schoolService.addStudentToTheCourse(studentId, courseName);
+              System.out.println("Student with ID: " + studentId + " assigned to the course: " + courseName);
+            } else {
+              System.out.println(ConsoleMenuConstants.WRONG_COURSE);
+            }
+          } else {
+            System.out.println(ConsoleMenuConstants.STUDENT_ID_NOT_EXIST);
+          }
+        } else {
+          System.out.println(ConsoleMenuConstants.DIGITS_REQUIRED);
+        }
+      } else if (command.equalsIgnoreCase("f")) {
+        System.out.println(ConsoleMenuConstants.STUDENT_ID);
+
+        if (scan.hasNextInt()) {
+          Integer studentId = scan.nextInt();
+
+          if (schoolService.getStudentID().contains(studentId)) {
+            System.out.println(ConsoleMenuConstants.COURSE_LIST);
+            course.generateCourses().forEach(System.out::println);
+            String courseName = scan.next();
+
+            if (course.generateCourses().contains(courseName)) {
+              System.out.println(schoolService.removeStudentFromCourse(studentId, courseName) + " student(s) with ID "
+                  + studentId + " deleted from course " + courseName);
+            } else {
+              System.out.println(ConsoleMenuConstants.WRONG_COURSE);
+            }
+          } else {
+            System.out.println(ConsoleMenuConstants.STUDENT_ID_NOT_EXIST);
+          }
+        } else {
+          System.out.println(ConsoleMenuConstants.DIGITS_REQUIRED);
+        }
+      } 
+      
+//      else if (command.equalsIgnoreCase("q")) {
+//        System.out.println("exit - OK!");
+//      } else {
+//        System.out.println("\n" + ConsoleMenuConstants.MENU);
+//      }
     }
     scan.close();
   }

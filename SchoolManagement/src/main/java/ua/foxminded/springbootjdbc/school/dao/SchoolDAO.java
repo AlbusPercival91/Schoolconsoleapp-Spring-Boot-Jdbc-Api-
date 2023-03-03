@@ -47,4 +47,31 @@ public class SchoolDAO {
     return jdbcTemplate.update(sql, id);
   }
 
+  public List<Integer> getStudentID() {
+    String sql = "select student_id from school.students;";
+    return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getInt("student_id"));
+  }
+
+  public int addStudentToTheCourse(Integer studentId, String courseName) {
+    String sql = """
+              INSERT INTO school.students_courses_checkouts(student_id, course_id)
+              SELECT
+              (SELECT student_id FROM school.students WHERE student_id= ?),
+              (SELECT course_id FROM school.course WHERE course_name = ?);
+        """;
+    return jdbcTemplate.update(sql, studentId, courseName);
+  }
+
+  public int removeStudentFromCourse(Integer studentId, String courseName) {
+    String sql = """
+        DELETE
+        FROM school.students_courses_checkouts
+        WHERE student_id= ?
+        AND
+        course_id IN (SELECT course_id
+        FROM school.course
+        WHERE course_name = ?);
+        """;
+    return jdbcTemplate.update(sql, studentId, courseName);
+  }
 }

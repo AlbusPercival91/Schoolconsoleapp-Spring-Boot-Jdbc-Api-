@@ -22,3 +22,13 @@ SELECT group_id, first_name, last_name FROM school.students
         ON school.students_courses_checkouts.student_id = school.students.student_id
         JOIN school.course ON school.students_courses_checkouts.course_id = school.course.course_id
         WHERE school.course.course_name = 'Art';
+        
+ INSERT INTO school.students_courses_checkouts(student_id, course_id)
+           SELECT
+           (SELECT student_id FROM school.students WHERE student_id= 12),
+           (SELECT course_id FROM school.course WHERE course_name = 'Art');
+
+
+
+
+

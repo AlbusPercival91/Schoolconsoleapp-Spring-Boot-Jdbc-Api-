@@ -32,12 +32,19 @@ public class SchoolService {
   }
 
   public int deleteStudentByID(int id) {
-    int result = schoolDao.deleteStudentByID(id);
+    return schoolDao.deleteStudentByID(id);
+  }
 
-    if (result != 1) {
-      throw new IllegalStateException("oops something went wrong");
-    }
-    return result;
+  public List<Integer> getStudentID() {
+    return schoolDao.getStudentID();
+  }
+
+  public int addStudentToTheCourse(Integer studentId, String courseName) {
+    return schoolDao.addStudentToTheCourse(studentId, courseName);
+  }
+
+  public int removeStudentFromCourse(Integer studentId, String courseName) {
+    return schoolDao.removeStudentFromCourse(studentId, courseName);
   }
 
 }

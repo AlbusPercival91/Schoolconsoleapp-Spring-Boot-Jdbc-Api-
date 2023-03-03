@@ -18,7 +18,7 @@ public final class ConsoleMenuConstants {
       a. Find all groups with less or equal students’ number
       b. Find all students related to the course with the given name
       c. Add a new student
-      d. Delete a student by the STUDENT_ID
+      d. Delete a student by the ID
       e. Add a student to the course (from a list)
       f. Remove the student from one of their courses
       q. Quit
