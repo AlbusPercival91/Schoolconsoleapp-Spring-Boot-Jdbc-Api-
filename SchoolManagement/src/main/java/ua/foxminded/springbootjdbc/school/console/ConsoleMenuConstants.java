@@ -15,6 +15,7 @@ public final class ConsoleMenuConstants {
   static final String GROUP_ID_NOTE2 = "Wrong id format, digits required!";
   static final String EMPTY_NOTE = "Empty entrance!";
   static final String MENU = """
+
       a. Find all groups with less or equal students’ number
       b. Find all students related to the course with the given name
       c. Add a new student

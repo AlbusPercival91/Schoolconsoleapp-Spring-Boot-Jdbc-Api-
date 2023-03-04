@@ -23,7 +23,7 @@ public class ConsoleMenuRunner {
     Scanner scan = new Scanner(System.in);
     String command = "";
     System.out
-        .println("Welcome to School console application. Please choose options below:\n\n" + ConsoleMenuConstants.MENU);
+        .println("Welcome to School console application. Please choose options below:\n" + ConsoleMenuConstants.MENU);
 
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
@@ -40,6 +40,8 @@ public class ConsoleMenuRunner {
         facade.addStudentToTheCourse(scan);
       } else if (command.equalsIgnoreCase("f")) {
         facade.removeStudentFromCourse(scan);
+      } else {
+        System.out.println(ConsoleMenuConstants.MENU);
       }
     }
     scan.close();
