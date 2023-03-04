@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS school;
+DROP DATABASE IF EXISTS school(force);
 DROP ROLE IF EXISTS school_admin;
 
 CREATE ROLE school_admin 
