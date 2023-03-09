@@ -2,41 +2,75 @@ package ua.foxminded.springbootjdbc.school.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.flywaydb.core.Flyway;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-import ua.foxminded.springbootjdbc.school.config.DatasourceConfig;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 
-@SpringBootTest(classes = DatasourceConfig.class)
 @Testcontainers
-@ActiveProfiles("test")
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
+@AutoConfigureTestDatabase(replace = Replace.NONE)
 class SchoolDAOTest {
 
+  @Autowired
+  private TestDataService testData;
+
+  @Autowired
+  private SchoolService schoolService;
+
+  @Autowired
+  private Flyway flyway;
+
   @Container
-  private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13")
-      .withDatabaseName("school").withUsername("school_admin").withPassword("1234");
+  private static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:13").withDatabaseName("school")
+      .withUsername("school_admin").withPassword("1234");
 
-  @DynamicPropertySource
-  static void postgresProperties(DynamicPropertyRegistry registry) {
-    registry.add("spring.datasource.url", postgres::getJdbcDriverInstance);
-    registry.add("spring.datasource.username", postgres::getUsername);
-    registry.add("spring.datasource.password", postgres::getPassword);
+  @BeforeAll
+  static void startContainers() {
+    postgres.start();
   }
 
-  // Only example to check
+  @AfterAll
+  static void stopContainers() {
+    postgres.stop();
+  }
+
+  @BeforeEach
+  void setUp() {
+    flyway.migrate();
+  }
+
+  @AfterEach
+  @Sql({ "/drop_all_tables.sql" })
+  void tearDown() {
+
+  }
+
   @Test
-  void findGroupsWithLessOrEqualsStudents() {
-    List<Group> groups = new ArrayList<Group>();
-    Group group = new Group("123");
-    groups.add(group);
-    assertEquals(1, groups.size());
+  void findGroupsWithLessOrEqualsStudents_CheckAllValues_ShouldMatchPattern() {
+    testData.createGroup();
+    testData.createStudent();
+    Pattern pattern = Pattern.compile("[a-z]{2}-[0-9]{2}");
+    List<Group> actual = schoolService.findGroupsWithLessOrEqualsStudents(30);
+    int matchedPattern = (int) actual.stream().map(Group::toString).map(pattern::matcher).filter(Matcher::find).count();
+    assertEquals(10, matchedPattern);
   }
+
 }
