@@ -8,10 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.*;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
+import ua.foxminded.springbootjdbc.school.console.ConsoleFacade;
+import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 
 @Testcontainers
@@ -26,6 +29,12 @@ class SchoolDAOTest {
 
   @Autowired
   private SchoolService schoolService;
+
+  @MockBean
+  private ConsoleFacade consoleFacade;
+
+  @MockBean
+  private ConsoleMenuRunner consoleMenuRunner;
 
   @Container
   private static GenericContainer<?> container = new GenericContainer<>("openjdk:8-jdk-alpine").withExposedPorts(1521)
