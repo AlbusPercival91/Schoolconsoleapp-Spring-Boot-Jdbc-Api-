@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.*;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
@@ -16,6 +17,7 @@ import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.console.ConsoleFacade;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Group;
+import ua.foxminded.springbootjdbc.school.entity.Student;
 
 @Testcontainers
 @SpringBootTest
@@ -23,6 +25,9 @@ import ua.foxminded.springbootjdbc.school.entity.Group;
 class SchoolDAOTest {
 
   private static final int MAX_STUDENTS = 30;
+
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
   @Autowired
   private TestDataService testData;
@@ -83,4 +88,39 @@ class SchoolDAOTest {
     List<Group> actual = schoolService.findGroupsWithLessOrEqualsStudents(100);
     Assertions.assertEquals(10, actual.size());
   }
+
+  @Test
+  @DisplayName("Should return true when actual and inserted student are equals")
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void addNewStudent() {
+    testData.createGroup();
+    Student student = new Student(4, "Harry", "Potter");
+    schoolService.addNewStudent(student);
+    String sql = "SELECT * FROM school.students;";
+    String actual = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+      return rs.getInt("student_id") + " " + rs.getInt("group_id") + " " + rs.getString("first_name") + " "
+          + rs.getString("last_name");
+    });
+
+    String expected = 1 + " " + student.getGroupId() + " " + student.getFirstName() + " " + student.getLastName();
+    Assertions.assertEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Should return 1 if student deleted from DB")
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void deleteStudentByID() {
+    testData.createGroup();
+    String sql = "insert into school.students(group_id, first_name, last_name) values(9,'Albus','Dambldor');";
+    jdbcTemplate.update(sql);
+    int deleted = 0;
+
+    if (schoolService.getStudentID().contains(1)) {
+      deleted = schoolService.deleteStudentByID(1);
+    }
+    Assertions.assertEquals(1, deleted);
+  }
+  
+  
+  
 }
