@@ -3,6 +3,7 @@ package ua.foxminded.springbootjdbc.school.dao;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.*;
@@ -55,6 +56,85 @@ class SchoolDAOTest {
   @Sql(scripts = "/drop_all_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
   void tearDown() {
     container.stop();
+  }
+
+  @TestFactory
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  Stream<DynamicTest> findStudentsRelatedToCourse__ShouldBeMoreZero() {
+    testData.createGroup();
+    testData.createCourse();
+    testData.createStudent();
+    testData.createCourseStudentRelation();
+    return Stream.of(DynamicTest.dynamicTest("History course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("History").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Literature course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Literature").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Computer Science course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Computer Science").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Geography course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Geography").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Physical Science course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Physical Science").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Life Science course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Life Science").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("English course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("English").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Mathematics course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Mathematics").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Sports course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Sports").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }), DynamicTest.dynamicTest("Art course should have students", () -> {
+      long studentCount = schoolService.findStudentsRelatedToCourse("Art").stream()
+          .filter(s -> s.toString().trim().contains(" ")).count();
+      Assertions.assertTrue(studentCount > 0);
+    }));
+  }
+
+  @TestFactory
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  Stream<DynamicTest> addStudentToTheCourse_ShouldBeOne() {
+    testData.createGroup();
+    testData.createCourse();
+    testData.createStudent();
+    return Stream.of(
+        DynamicTest.dynamicTest("Add student with ID: 12 to course: Art",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(12, "Art"))),
+        DynamicTest.dynamicTest("Add student with ID: 190 to course: Literature",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(190, "Literature"))),
+        DynamicTest.dynamicTest("Add student with ID: 19 to course: Computer Science",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(19, "Computer Science"))),
+        DynamicTest.dynamicTest("Add student with ID: 21 to course: Geography",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(21, "Geography"))),
+        DynamicTest.dynamicTest("Add student with ID: 193 to course: Physical Science",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(193, "Physical Science"))),
+        DynamicTest.dynamicTest("Add student with ID: 1 to course: Life Science",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(1, "Life Science"))),
+        DynamicTest.dynamicTest("Add student with ID: 9 to course: English",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(9, "English"))),
+        DynamicTest.dynamicTest("Add student with ID: 2 to course: Mathematics",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(2, "Mathematics"))),
+        DynamicTest.dynamicTest("Add student with ID: 150 to course: Sports",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(150, "Sports"))),
+        DynamicTest.dynamicTest("Add student with ID: 7 to course: History",
+            () -> Assertions.assertEquals(1, schoolService.addStudentToTheCourse(7, "History"))));
   }
 
   @Test
@@ -120,7 +200,5 @@ class SchoolDAOTest {
     }
     Assertions.assertEquals(1, deleted);
   }
-  
-  
-  
+
 }
