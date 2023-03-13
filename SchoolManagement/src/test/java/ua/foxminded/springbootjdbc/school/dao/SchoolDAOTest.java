@@ -201,4 +201,22 @@ class SchoolDAOTest {
     Assertions.assertEquals(1, deleted);
   }
 
+  @Test
+  @DisplayName("Should return 1 if student deleted from course Table in DB")
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void removeStudentFromCourse() {
+    testData.createGroup();
+    testData.createCourse();
+    testData.createStudent();
+    String sql = """
+            INSERT INTO school.students_courses_checkouts(student_id, course_id)
+            SELECT
+        (SELECT student_id FROM school.students WHERE student_id=17),
+        (SELECT course_id FROM school.course WHERE course_name = 'Sports');
+            """;
+    jdbcTemplate.update(sql);
+    int deleted = schoolService.removeStudentFromCourse(17, "Sports");
+    Assertions.assertEquals(1, deleted);
+  }
+
 }
