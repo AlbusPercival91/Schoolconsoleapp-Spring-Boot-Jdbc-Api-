@@ -5,7 +5,6 @@ public class StudentCourseRelation {
   private int courseId;
 
   public StudentCourseRelation(int studentId, int courseId) {
-    super();
     this.studentId = studentId;
     this.courseId = courseId;
   }
