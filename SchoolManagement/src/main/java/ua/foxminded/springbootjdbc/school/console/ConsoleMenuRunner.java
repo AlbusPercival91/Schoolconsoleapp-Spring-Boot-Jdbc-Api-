@@ -3,7 +3,7 @@ package ua.foxminded.springbootjdbc.school.console;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.foxminded.springbootjdbc.school.dao.TestDataService;
+import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Component
 public class ConsoleMenuRunner {

@@ -19,6 +19,7 @@ import ua.foxminded.springbootjdbc.school.console.ConsoleFacade;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
+import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Testcontainers
 @SpringBootTest

@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.dao;
+package ua.foxminded.springbootjdbc.school.testdata.dao;
 
 import java.util.Map;
 import java.util.Set;
