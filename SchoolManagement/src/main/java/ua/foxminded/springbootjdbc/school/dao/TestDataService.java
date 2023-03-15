@@ -2,6 +2,8 @@ package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.Map;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
@@ -13,9 +15,15 @@ import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @Service
 public class TestDataService {
-  StudentMaker studentMaker = new StudentMaker();
-  CourseMaker courseMaker = new CourseMaker();
-  GroupMaker groupMaker = new GroupMaker();
+
+  @Autowired
+  private StudentMaker studentMaker;
+
+  @Autowired
+  private CourseMaker courseMaker;
+
+  @Autowired
+  private GroupMaker groupMaker;
 
   private final TestDataRepository dataRepository;
 

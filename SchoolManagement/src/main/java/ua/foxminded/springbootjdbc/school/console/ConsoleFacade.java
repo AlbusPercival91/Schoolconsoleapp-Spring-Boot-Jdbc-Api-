@@ -11,7 +11,9 @@ import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 @Component
 public class ConsoleFacade {
   private final SchoolService schoolService;
-  CourseMaker course = new CourseMaker();
+
+  @Autowired
+  private CourseMaker courseMaker;
 
   @Autowired
   public ConsoleFacade(SchoolService schoolService) {
@@ -34,7 +36,7 @@ public class ConsoleFacade {
     System.out.println(ConsoleMenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
-    if (course.generateCourses().contains(courseName)) {
+    if (courseMaker.generateCourses().contains(courseName)) {
       schoolService.findStudentsRelatedToCourse(courseName).forEach(System.out::println);
       System.out.println("\n" + ConsoleMenuConstants.MENU);
     } else {
@@ -87,10 +89,10 @@ public class ConsoleFacade {
 
       if (schoolService.getStudentID().contains(studentId)) {
         System.out.println(ConsoleMenuConstants.COURSE_LIST);
-        course.generateCourses().forEach(System.out::println);
+        courseMaker.generateCourses().forEach(System.out::println);
         String courseName = scan.next();
 
-        if (course.generateCourses().contains(courseName)) {
+        if (courseMaker.generateCourses().contains(courseName)) {
           schoolService.addStudentToTheCourse(studentId, courseName);
           System.out.println("Student with ID: " + studentId + " assigned to the course: " + courseName);
         } else {
@@ -112,10 +114,10 @@ public class ConsoleFacade {
 
       if (schoolService.getStudentID().contains(studentId)) {
         System.out.println(ConsoleMenuConstants.COURSE_LIST);
-        course.generateCourses().forEach(System.out::println);
+        courseMaker.generateCourses().forEach(System.out::println);
         String courseName = scan.next();
 
-        if (course.generateCourses().contains(courseName)) {
+        if (courseMaker.generateCourses().contains(courseName)) {
           System.out.println(schoolService.removeStudentFromCourse(studentId, courseName) + " student(s) with ID "
               + studentId + " deleted from course " + courseName);
         } else {
