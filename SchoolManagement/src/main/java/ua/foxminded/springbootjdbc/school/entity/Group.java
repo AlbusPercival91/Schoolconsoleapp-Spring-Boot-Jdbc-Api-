@@ -4,7 +4,6 @@ public class Group {
   private String groupName;
 
   public Group(String groupName) {
-    super();
     this.groupName = groupName;
   }
 

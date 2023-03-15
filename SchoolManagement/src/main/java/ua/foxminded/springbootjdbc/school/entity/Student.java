@@ -6,7 +6,6 @@ public class Student {
   private String lastName;
 
   public Student(Integer groupId, String firstName, String lastName) {
-    super();
     this.groupId = groupId;
     this.firstName = firstName;
     this.lastName = lastName;
