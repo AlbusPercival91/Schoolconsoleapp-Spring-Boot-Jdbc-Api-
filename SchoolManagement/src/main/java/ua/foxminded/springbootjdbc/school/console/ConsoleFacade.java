@@ -3,21 +3,27 @@ package ua.foxminded.springbootjdbc.school.console;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.foxminded.springbootjdbc.school.dao.SchoolService;
+
+import ua.foxminded.springbootjdbc.school.dao.GroupService;
+import ua.foxminded.springbootjdbc.school.dao.StudentService;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Component
 public class ConsoleFacade {
-  private final SchoolService schoolService;
+  @Autowired
+  private final StudentService studentService;
+
+  @Autowired
+  private final GroupService groupService;
 
   @Autowired
   private CourseMaker courseMaker;
 
-  @Autowired
-  public ConsoleFacade(SchoolService schoolService) {
-    this.schoolService = schoolService;
+  public ConsoleFacade(StudentService studentService, GroupService groupService) {
+    this.studentService = studentService;
+    this.groupService = groupService;
   }
 
   public void findGroupsWithLessOrEqualsStudents(Scanner scan) {
@@ -25,8 +31,7 @@ public class ConsoleFacade {
 
     if (scan.hasNextInt()) {
       int quant = scan.nextInt();
-      schoolService.findGroupsWithLessOrEqualsStudents(quant).stream().map(Group::toString)
-          .forEach(System.out::println);
+      groupService.findGroupsWithLessOrEqualsStudents(quant).stream().map(Group::toString).forEach(System.out::println);
     } else {
       System.out.println(ConsoleMenuConstants.DIGITS_REQUIRED);
     }
@@ -37,7 +42,7 @@ public class ConsoleFacade {
     String courseName = scan.nextLine();
 
     if (courseMaker.generateCourses().contains(courseName)) {
-      schoolService.findStudentsRelatedToCourse(courseName).forEach(System.out::println);
+      studentService.findStudentsRelatedToCourse(courseName).forEach(System.out::println);
       System.out.println("\n" + ConsoleMenuConstants.MENU);
     } else {
       System.out.println(ConsoleMenuConstants.WRONG_COURSE + "\n" + ConsoleMenuConstants.MENU);
@@ -63,7 +68,7 @@ public class ConsoleFacade {
           }
           Student student = new Student(groupId, firstName, lastName);
           System.out
-              .println(schoolService.addNewStudent(student) + " student added" + "\n" + ConsoleMenuConstants.MENU);
+              .println(studentService.addNewStudent(student) + " student added" + "\n" + ConsoleMenuConstants.MENU);
         } else {
           System.out.println(ConsoleMenuConstants.GROUP_ID_NOTE);
         }
@@ -78,7 +83,7 @@ public class ConsoleFacade {
   public void deleteStudentByID(Scanner scan) {
     System.out.println(ConsoleMenuConstants.STUDENT_ID);
     int studentId = scan.nextInt();
-    System.out.println(schoolService.deleteStudentByID(studentId) + " student(s) deleted");
+    System.out.println(studentService.deleteStudentByID(studentId) + " student(s) deleted");
   }
 
   public void addStudentToTheCourse(Scanner scan) {
@@ -87,13 +92,13 @@ public class ConsoleFacade {
     if (scan.hasNextInt()) {
       Integer studentId = scan.nextInt();
 
-      if (schoolService.getStudentID().contains(studentId)) {
+      if (studentService.getStudentID().contains(studentId)) {
         System.out.println(ConsoleMenuConstants.COURSE_LIST);
         courseMaker.generateCourses().forEach(System.out::println);
         String courseName = scan.next();
 
         if (courseMaker.generateCourses().contains(courseName)) {
-          schoolService.addStudentToTheCourse(studentId, courseName);
+          studentService.addStudentToTheCourse(studentId, courseName);
           System.out.println("Student with ID: " + studentId + " assigned to the course: " + courseName);
         } else {
           System.out.println(ConsoleMenuConstants.WRONG_COURSE);
@@ -112,13 +117,13 @@ public class ConsoleFacade {
     if (scan.hasNextInt()) {
       Integer studentId = scan.nextInt();
 
-      if (schoolService.getStudentID().contains(studentId)) {
+      if (studentService.getStudentID().contains(studentId)) {
         System.out.println(ConsoleMenuConstants.COURSE_LIST);
         courseMaker.generateCourses().forEach(System.out::println);
         String courseName = scan.next();
 
         if (courseMaker.generateCourses().contains(courseName)) {
-          System.out.println(schoolService.removeStudentFromCourse(studentId, courseName) + " student(s) with ID "
+          System.out.println(studentService.removeStudentFromCourse(studentId, courseName) + " student(s) with ID "
               + studentId + " deleted from course " + courseName);
         } else {
           System.out.println(ConsoleMenuConstants.WRONG_COURSE);
