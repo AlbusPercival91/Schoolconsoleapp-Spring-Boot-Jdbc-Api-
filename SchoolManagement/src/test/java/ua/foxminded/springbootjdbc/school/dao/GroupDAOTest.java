@@ -13,7 +13,7 @@ import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
-import ua.foxminded.springbootjdbc.school.console.ConsoleFacade;
+import ua.foxminded.springbootjdbc.school.console.MenuFacade;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
@@ -32,7 +32,7 @@ class GroupDAOTest {
   private GroupService groupService;
 
   @MockBean
-  private ConsoleFacade consoleFacade;
+  private MenuFacade consoleFacade;
 
   @MockBean
   private ConsoleMenuRunner consoleMenuRunner;

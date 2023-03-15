@@ -1,6 +1,6 @@
 package ua.foxminded.springbootjdbc.school.console;
 
-public final class ConsoleMenuConstants {
+public final class MenuConstants {
   static final String DIGITS_REQUIRED = "Digits required!";
   static final String STUDENT_ID = "Enter Student's ID: ";
   static final String WRONG_COURSE = "Wrong course name!";
@@ -14,18 +14,29 @@ public final class ConsoleMenuConstants {
   static final String GROUP_ID_NOTE = "Group ID should be from 0 to 10.";
   static final String GROUP_ID_NOTE2 = "Wrong id format, digits required!";
   static final String EMPTY_NOTE = "Empty entrance!";
-  static final String MENU = """
+  static final String MAIN_MENU = """
+
+      1. STUDENTS SERVICE
+      2. GROUP SERVICE
+      3. COURSE SERVICE
+      q. QUIT
+          """;
+  static final String STUDENT_MENU = """
+
+      a. Find all students related to the course with the given name
+      b. Add a new student
+      c. Delete a student by the ID
+      d. Add a student to the course (from a list)
+      e. Remove the student from one of their courses
+      m. To Main Menu
+          """;
+  static final String GROUP_MENU = """
 
       a. Find all groups with less or equal students’ number
-      b. Find all students related to the course with the given name
-      c. Add a new student
-      d. Delete a student by the ID
-      e. Add a student to the course (from a list)
-      f. Remove the student from one of their courses
-      q. Quit
+      m. To Main Menu
           """;
 
-  private ConsoleMenuConstants() {
+  private MenuConstants() {
 
   }
 
