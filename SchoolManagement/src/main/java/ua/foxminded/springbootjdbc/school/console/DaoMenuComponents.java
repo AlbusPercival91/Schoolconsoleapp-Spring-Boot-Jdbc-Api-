@@ -11,7 +11,7 @@ import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Component
-public class MenuFacade {
+public class DaoMenuComponents {
  
   @Autowired
   private final StudentService studentService;
@@ -22,7 +22,7 @@ public class MenuFacade {
   @Autowired
   private CourseMaker courseMaker;
 
-  public MenuFacade(StudentService studentService, GroupService groupService) {
+  public DaoMenuComponents(StudentService studentService, GroupService groupService) {
     this.studentService = studentService;
     this.groupService = groupService;
   }

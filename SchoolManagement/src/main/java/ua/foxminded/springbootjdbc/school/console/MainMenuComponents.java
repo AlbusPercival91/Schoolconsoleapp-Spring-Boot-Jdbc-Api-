@@ -5,12 +5,12 @@ import java.util.Scanner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class MenuComponents {
+public class MainMenuComponents {
 
-  private MenuFacade facade;
+  private DaoMenuComponents daoMenu;
 
-  public MenuComponents(MenuFacade facade) {
-    this.facade = facade;
+  public MainMenuComponents(DaoMenuComponents facade) {
+    this.daoMenu = facade;
   }
 
   public String studentMenu(Scanner scan) {
@@ -20,15 +20,15 @@ public class MenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        facade.findStudentsRelatedToCourse(scan);
+        daoMenu.findStudentsRelatedToCourse(scan);
       } else if (command.equalsIgnoreCase("b")) {
-        facade.addNewStudent(scan);
+        daoMenu.addNewStudent(scan);
       } else if (command.equalsIgnoreCase("c")) {
-        facade.deleteStudentByID(scan);
+        daoMenu.deleteStudentByID(scan);
       } else if (command.equalsIgnoreCase("d")) {
-        facade.addStudentToTheCourse(scan);
+        daoMenu.addStudentToTheCourse(scan);
       } else if (command.equalsIgnoreCase("e")) {
-        facade.removeStudentFromCourse(scan);
+        daoMenu.removeStudentFromCourse(scan);
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
@@ -44,11 +44,27 @@ public class MenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        facade.findGroupsWithLessOrEqualsStudents(scan);
+        daoMenu.findGroupsWithLessOrEqualsStudents(scan);
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
         System.out.println(MenuConstants.GROUP_MENU);
+      }
+    }
+    return command;
+  }
+
+  public String courseMenu(Scanner scan) {
+    String command = "";
+    System.out.println(MenuConstants.COURSE_MENU);
+    while (!command.equals("m")) {
+      command = scan.nextLine();
+      if (command.equalsIgnoreCase("a")) {
+        System.out.println("You write " + command + ", will be available soon! =)");
+      } else if (command.equalsIgnoreCase("m")) {
+        System.out.println(MenuConstants.MAIN_MENU);
+      } else {
+        System.out.println(MenuConstants.COURSE_MENU);
       }
     }
     return command;

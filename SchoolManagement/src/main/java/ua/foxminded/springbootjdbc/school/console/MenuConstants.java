@@ -28,11 +28,25 @@ public final class MenuConstants {
       c. Delete a student by the ID
       d. Add a student to the course (from a list)
       e. Remove the student from one of their courses
+      f. Update student by ID
       m. To Main Menu
           """;
   static final String GROUP_MENU = """
 
       a. Find all groups with less or equal students’ number
+      b. Create a new group
+      c. Edit group name
+      d. Delete group by name
+      e. Show all groups
+      m. To Main Menu
+          """;
+  static final String COURSE_MENU = """
+
+      a. Find all courses with less or equal students’ number
+      b. Create a new course
+      c. Edit course name and description
+      d. Delete course by name
+      e. Show all courses
       m. To Main Menu
           """;
 

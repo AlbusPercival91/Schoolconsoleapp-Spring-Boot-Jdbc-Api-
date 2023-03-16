@@ -9,9 +9,9 @@ import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 public class ConsoleMenuRunner {
 
   @Autowired
-  private MenuComponents menu;
+  private MainMenuComponents menu;
 
-  public ConsoleMenuRunner(MenuComponents menu) {
+  public ConsoleMenuRunner(MainMenuComponents menu) {
     this.menu = menu;
   }
 
@@ -24,8 +24,8 @@ public class ConsoleMenuRunner {
 
     Scanner scan = new Scanner(System.in);
     String command = "";
-    System.out.println(
-        "Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
+    System.out
+        .println("Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
 
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
@@ -35,7 +35,7 @@ public class ConsoleMenuRunner {
       } else if (command.equals("2")) {
         command = menu.groupMenu(scan);
       } else if (command.equals("3")) {
-
+        command = menu.courseMenu(scan);
       }
     }
     scan.close();
