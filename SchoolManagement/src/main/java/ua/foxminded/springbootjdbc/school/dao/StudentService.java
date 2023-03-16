@@ -44,4 +44,8 @@ public class StudentService {
     return studentDao.removeStudentFromCourse(studentId, courseName);
   }
 
+  public List<Object> showAllStudents() {
+    return studentDao.showAllStudents();
+  }
+
 }

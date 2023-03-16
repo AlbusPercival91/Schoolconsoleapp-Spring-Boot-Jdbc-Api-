@@ -42,7 +42,7 @@ public class MainMenuComponents {
       } else if (command.equalsIgnoreCase("f")) {
         studentMenu.updateStudentById(scan);
       } else if (command.equalsIgnoreCase("g")) {
-        studentMenu.showAllStudents(scan);
+        studentMenu.showAllStudents();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {

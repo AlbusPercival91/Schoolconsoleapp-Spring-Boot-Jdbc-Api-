@@ -123,8 +123,8 @@ public class StudentMenuComponents {
 
   }
 
-  public void showAllStudents(Scanner scan) {
-
+  public void showAllStudents() {
+    studentService.showAllStudents().forEach(System.out::println);
   }
 
 }
