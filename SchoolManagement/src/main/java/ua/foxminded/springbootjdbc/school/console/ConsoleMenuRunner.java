@@ -9,10 +9,10 @@ import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 public class ConsoleMenuRunner {
 
   @Autowired
-  private MainMenuComponents menu;
+  private MainMenuComponents mainMenu;
 
-  public ConsoleMenuRunner(MainMenuComponents menu) {
-    this.menu = menu;
+  public ConsoleMenuRunner(MainMenuComponents mainMenu) {
+    this.mainMenu = mainMenu;
   }
 
   @Autowired
@@ -30,12 +30,12 @@ public class ConsoleMenuRunner {
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
 
-      if (command.equals("1")) {
-        command = menu.studentMenu(scan);
-      } else if (command.equals("2")) {
-        command = menu.groupMenu(scan);
-      } else if (command.equals("3")) {
-        command = menu.courseMenu(scan);
+      if (command.equalsIgnoreCase("a")) {
+        command = mainMenu.studentMenu(scan);
+      } else if (command.equalsIgnoreCase("b")) {
+        command = mainMenu.groupMenu(scan);
+      } else if (command.equalsIgnoreCase("c")) {
+        command = mainMenu.courseMenu(scan);
       }
     }
     scan.close();

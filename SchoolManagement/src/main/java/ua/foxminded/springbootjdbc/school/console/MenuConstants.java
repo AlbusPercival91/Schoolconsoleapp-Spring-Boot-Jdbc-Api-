@@ -16,9 +16,9 @@ public final class MenuConstants {
   static final String EMPTY_NOTE = "Empty entrance!";
   static final String MAIN_MENU = """
 
-      1. STUDENTS SERVICE
-      2. GROUP SERVICE
-      3. COURSE SERVICE
+      a. STUDENTS SERVICE
+      b. GROUP SERVICE
+      c. COURSE SERVICE
       q. QUIT
           """;
   static final String STUDENT_MENU = """
