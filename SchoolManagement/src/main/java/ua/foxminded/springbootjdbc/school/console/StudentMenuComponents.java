@@ -140,8 +140,8 @@ public class StudentMenuComponents {
             if (newGroupId == 0) {
               newGroupId = null;
             }
-//            Student student = new Student(newGroupId, newFirstName, newLastName);
-            System.out.println(studentService.updateStudentById(newGroupId, newFirstName, newLastName, studentId)
+            Student updatedStudent = new Student(newGroupId, newFirstName, newLastName);
+            System.out.println(studentService.updateStudentById(studentId, updatedStudent)
                 + " student updated" + "\n" + MenuConstants.STUDENT_MENU);
           } else {
             System.out.println(MenuConstants.GROUP_ID_NOTE);

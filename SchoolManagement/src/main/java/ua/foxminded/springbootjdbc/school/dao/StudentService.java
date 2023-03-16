@@ -44,8 +44,8 @@ public class StudentService {
     return studentDao.removeStudentFromCourse(studentId, courseName);
   }
 
-  public int updateStudentById(Integer newGroupId, String newFirstName, String newLastName, Integer studentId) {
-    int result = studentDao.updateStudentById(studentId, newGroupId, newFirstName, newLastName);
+  public int updateStudentById(Integer studentId, Student student) {
+    int result = studentDao.updateStudentById(studentId, student);
 
     if (result != 1) {
       throw new IllegalStateException("oops something went wrong");

@@ -66,7 +66,7 @@ public class StudentDAO {
     return jdbcTemplate.update(sql, studentId, courseName);
   }
 
-  public int updateStudentById(Integer studentId, Integer newGroupId, String newFirstName, String newLastName) {
+  public int updateStudentById(Integer studentId, Student student) {
     String sql = """
         UPDATE school.students SET
         group_id = ?,
@@ -74,7 +74,7 @@ public class StudentDAO {
         last_name = ?
         WHERE student_id = ?;
                 """;
-    return jdbcTemplate.update(sql, newGroupId, newFirstName, newLastName, studentId);
+    return jdbcTemplate.update(sql, student.getGroupId(), student.getFirstName(), student.getLastName(), studentId);
   }
 
   public List<Object> showAllStudents() {
