@@ -3,39 +3,21 @@ package ua.foxminded.springbootjdbc.school.console;
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import ua.foxminded.springbootjdbc.school.dao.GroupService;
 import ua.foxminded.springbootjdbc.school.dao.StudentService;
-import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Component
-public class DaoMenuComponents {
- 
+public class StudentMenuComponents {
+
   @Autowired
   private final StudentService studentService;
 
   @Autowired
-  private final GroupService groupService;
-
-  @Autowired
   private CourseMaker courseMaker;
 
-  public DaoMenuComponents(StudentService studentService, GroupService groupService) {
+  public StudentMenuComponents(StudentService studentService) {
     this.studentService = studentService;
-    this.groupService = groupService;
-  }
-
-  public void findGroupsWithLessOrEqualsStudents(Scanner scan) {
-    System.out.println(MenuConstants.NUMBER_OF_STUDENTS);
-
-    if (scan.hasNextInt()) {
-      int quant = scan.nextInt();
-      groupService.findGroupsWithLessOrEqualsStudents(quant).stream().map(Group::toString).forEach(System.out::println);
-    } else {
-      System.out.println(MenuConstants.DIGITS_REQUIRED);
-    }
   }
 
   public void findStudentsRelatedToCourse(Scanner scan) {
@@ -135,6 +117,14 @@ public class DaoMenuComponents {
     } else {
       System.out.println(MenuConstants.DIGITS_REQUIRED);
     }
+  }
+
+  public void updateStudentById(Scanner scan) {
+
+  }
+
+  public void showAllStudents(Scanner scan) {
+
   }
 
 }

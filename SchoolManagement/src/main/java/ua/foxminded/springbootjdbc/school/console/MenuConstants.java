@@ -29,6 +29,7 @@ public final class MenuConstants {
       d. Add a student to the course (from a list)
       e. Remove the student from one of their courses
       f. Update student by ID
+      g. Show all students
       m. To Main Menu
           """;
   static final String GROUP_MENU = """

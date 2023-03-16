@@ -12,7 +12,7 @@ import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
-import ua.foxminded.springbootjdbc.school.console.DaoMenuComponents;
+import ua.foxminded.springbootjdbc.school.console.StudentMenuComponents;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
@@ -32,7 +32,7 @@ class StudentDAOTest {
   private StudentService studentService;
 
   @MockBean
-  private DaoMenuComponents consoleFacade;
+  private StudentMenuComponents consoleFacade;
 
   @MockBean
   private ConsoleMenuRunner consoleMenuRunner;

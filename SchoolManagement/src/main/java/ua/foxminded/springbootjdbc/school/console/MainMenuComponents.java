@@ -1,16 +1,26 @@
 package ua.foxminded.springbootjdbc.school.console;
 
 import java.util.Scanner;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MainMenuComponents {
 
-  private DaoMenuComponents daoMenu;
+  @Autowired
+  private StudentMenuComponents studentMenu;
 
-  public MainMenuComponents(DaoMenuComponents facade) {
-    this.daoMenu = facade;
+  @Autowired
+  private GroupMenuComponents groupMenu;
+
+  @Autowired
+  private CourseMenuComponents courseMenu;
+
+  public MainMenuComponents(StudentMenuComponents studentMenu, GroupMenuComponents groupMenu,
+      CourseMenuComponents courseMenu) {
+    this.studentMenu = studentMenu;
+    this.groupMenu = groupMenu;
+    this.courseMenu = courseMenu;
   }
 
   public String studentMenu(Scanner scan) {
@@ -20,15 +30,19 @@ public class MainMenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        daoMenu.findStudentsRelatedToCourse(scan);
+        studentMenu.findStudentsRelatedToCourse(scan);
       } else if (command.equalsIgnoreCase("b")) {
-        daoMenu.addNewStudent(scan);
+        studentMenu.addNewStudent(scan);
       } else if (command.equalsIgnoreCase("c")) {
-        daoMenu.deleteStudentByID(scan);
+        studentMenu.deleteStudentByID(scan);
       } else if (command.equalsIgnoreCase("d")) {
-        daoMenu.addStudentToTheCourse(scan);
+        studentMenu.addStudentToTheCourse(scan);
       } else if (command.equalsIgnoreCase("e")) {
-        daoMenu.removeStudentFromCourse(scan);
+        studentMenu.removeStudentFromCourse(scan);
+      } else if (command.equalsIgnoreCase("f")) {
+        studentMenu.updateStudentById(scan);
+      } else if (command.equalsIgnoreCase("g")) {
+        studentMenu.showAllStudents(scan);
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
@@ -44,7 +58,7 @@ public class MainMenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        daoMenu.findGroupsWithLessOrEqualsStudents(scan);
+        groupMenu.findGroupsWithLessOrEqualsStudents(scan);
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
