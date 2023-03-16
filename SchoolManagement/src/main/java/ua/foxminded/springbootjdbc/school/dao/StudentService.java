@@ -44,6 +44,15 @@ public class StudentService {
     return studentDao.removeStudentFromCourse(studentId, courseName);
   }
 
+  public int updateStudentById(Integer newGroupId, String newFirstName, String newLastName, Integer studentId) {
+    int result = studentDao.updateStudentById(studentId, newGroupId, newFirstName, newLastName);
+
+    if (result != 1) {
+      throw new IllegalStateException("oops something went wrong");
+    }
+    return result;
+  }
+
   public List<Object> showAllStudents() {
     return studentDao.showAllStudents();
   }

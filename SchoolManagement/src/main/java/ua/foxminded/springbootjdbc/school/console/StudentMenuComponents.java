@@ -120,11 +120,46 @@ public class StudentMenuComponents {
   }
 
   public void updateStudentById(Scanner scan) {
+    System.out.println(MenuConstants.STUDENT_ID);
+    Integer studentId = scan.nextInt();
 
+    if (studentService.getStudentID().contains(studentId)) {
+      System.out.println(MenuConstants.STUDENT_NAME);
+      String newFirstName = scan.next();
+      System.out.println(MenuConstants.STUDENT_LAST_NAME);
+      String newLastName = scan.next();
+
+      if (!newFirstName.isEmpty() || !newLastName.isEmpty()) {
+        System.out.println(MenuConstants.GROUP_ID);
+
+        if (scan.hasNextInt()) {
+          Integer newGroupId = scan.nextInt();
+
+          if (newGroupId >= 0 && newGroupId <= 10) {
+
+            if (newGroupId == 0) {
+              newGroupId = null;
+            }
+//            Student student = new Student(newGroupId, newFirstName, newLastName);
+            System.out.println(studentService.updateStudentById(newGroupId, newFirstName, newLastName, studentId)
+                + " student updated" + "\n" + MenuConstants.STUDENT_MENU);
+          } else {
+            System.out.println(MenuConstants.GROUP_ID_NOTE);
+          }
+        } else {
+          System.out.println(MenuConstants.GROUP_ID_NOTE2);
+        }
+      } else {
+        System.out.println(MenuConstants.EMPTY_NOTE);
+      }
+    } else {
+      System.out.println(MenuConstants.STUDENT_ID_NOT_EXIST);
+    }
   }
 
   public void showAllStudents() {
     studentService.showAllStudents().forEach(System.out::println);
+    System.out.println(MenuConstants.STUDENT_MENU);
   }
 
 }

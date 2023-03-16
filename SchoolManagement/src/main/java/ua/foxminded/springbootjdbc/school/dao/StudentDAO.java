@@ -66,6 +66,17 @@ public class StudentDAO {
     return jdbcTemplate.update(sql, studentId, courseName);
   }
 
+  public int updateStudentById(Integer studentId, Integer newGroupId, String newFirstName, String newLastName) {
+    String sql = """
+        UPDATE school.students SET
+        group_id = ?,
+        first_name = ?,
+        last_name = ?
+        WHERE student_id = ?;
+                """;
+    return jdbcTemplate.update(sql, newGroupId, newFirstName, newLastName, studentId);
+  }
+
   public List<Object> showAllStudents() {
     String sql = "SELECT * FROM school.students;";
     return jdbcTemplate.query(sql,

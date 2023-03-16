@@ -27,7 +27,7 @@ public class MainMenuComponents {
     String command = "";
     System.out.println(MenuConstants.STUDENT_MENU);
 
-    while (!command.equals("m")) {
+    while (!command.equalsIgnoreCase("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
         studentMenu.findStudentsRelatedToCourse(scan);
