@@ -32,9 +32,6 @@ class GroupDAOTest {
   private GroupService groupService;
 
   @MockBean
-  private StudentMenuComponents consoleFacade;
-
-  @MockBean
   private ConsoleMenuRunner consoleMenuRunner;
 
   @Container

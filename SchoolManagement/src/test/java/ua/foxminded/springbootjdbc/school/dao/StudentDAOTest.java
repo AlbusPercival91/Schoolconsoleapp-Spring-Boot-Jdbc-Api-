@@ -32,9 +32,6 @@ class StudentDAOTest {
   private StudentService studentService;
 
   @MockBean
-  private StudentMenuComponents consoleFacade;
-
-  @MockBean
   private ConsoleMenuRunner consoleMenuRunner;
 
   @Container
