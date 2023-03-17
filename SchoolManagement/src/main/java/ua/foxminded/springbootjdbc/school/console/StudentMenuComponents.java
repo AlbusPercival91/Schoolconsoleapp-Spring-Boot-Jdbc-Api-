@@ -133,18 +133,7 @@ public class StudentMenuComponents {
 
         if (scan.hasNextInt()) {
           Integer newGroupId = scan.nextInt();
-
-          if (newGroupId >= 0 && newGroupId <= 10) {
-
-            if (newGroupId == 0) {
-              newGroupId = null;
-            }
-            Student updatedStudent = new Student(newGroupId, newFirstName, newLastName);
-            System.out.println(studentService.updateStudentById(studentId, updatedStudent) + " student updated" + "\n"
-                + MenuConstants.STUDENT_MENU);
-          } else {
-            System.out.println(MenuConstants.GROUP_ID_NOTE);
-          }
+          updateStudent(studentId, newFirstName, newLastName, newGroupId);
         } else {
           System.out.println(MenuConstants.GROUP_ID_NOTE2);
         }
@@ -153,6 +142,20 @@ public class StudentMenuComponents {
       }
     } else {
       System.out.println(MenuConstants.STUDENT_ID_NOT_EXIST);
+    }
+  }
+
+  private void updateStudent(Integer studentId, String newFirstName, String newLastName, Integer newGroupId) {
+    if (newGroupId >= 0 && newGroupId <= 10) {
+
+      if (newGroupId == 0) {
+        newGroupId = null;
+      }
+      Student updatedStudent = new Student(newGroupId, newFirstName, newLastName);
+      System.out.println(studentService.updateStudentById(studentId, updatedStudent) + " student updated" + "\n"
+          + MenuConstants.STUDENT_MENU);
+    } else {
+      System.out.println(MenuConstants.GROUP_ID_NOTE);
     }
   }
 
