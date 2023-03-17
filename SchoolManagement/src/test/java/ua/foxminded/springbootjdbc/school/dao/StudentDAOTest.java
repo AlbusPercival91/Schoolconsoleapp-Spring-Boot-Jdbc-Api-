@@ -1,5 +1,6 @@
 package ua.foxminded.springbootjdbc.school.dao;
 
+import java.util.List;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,6 +177,36 @@ class StudentDAOTest {
     jdbcTemplate.update(sql);
     int deleted = studentService.removeStudentFromCourse(17, "Sports");
     Assertions.assertEquals(1, deleted);
+  }
+
+  @Test
+  @DisplayName("Should return 1 if student updated")
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void updateStudentById() {
+    testData.createGroup();
+    Student student = new Student(4, "Harry", "Potter");
+    studentService.addNewStudent(student);
+    Student updatedStudent = new Student(4, "Ron", "Wesley");
+    studentService.updateStudentById(1, updatedStudent);
+    String sql = "SELECT * FROM school.students;";
+    String actual = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+      return rs.getInt("student_id") + " " + rs.getInt("group_id") + " " + rs.getString("first_name") + " "
+          + rs.getString("last_name");
+    });
+    String expected = 1 + " " + updatedStudent.getGroupId() + " " + updatedStudent.getFirstName() + " "
+        + updatedStudent.getLastName();
+    Assertions.assertEquals(expected, actual);
+  }
+
+  @Test
+  @DisplayName("Should return 200 when initiated test data")
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+  void showAllStudents() {
+    testData.createGroup();
+    testData.createStudent();
+    List<Object> actual = studentService.showAllStudents();
+    Assertions.assertEquals(200, actual.size());
+
   }
 
 }
