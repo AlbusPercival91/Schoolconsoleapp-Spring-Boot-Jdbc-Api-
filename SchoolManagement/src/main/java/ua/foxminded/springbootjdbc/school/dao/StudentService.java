@@ -8,6 +8,7 @@ import ua.foxminded.springbootjdbc.school.entity.Student;
 
 @Service
 public class StudentService {
+  private static final String WRONG = "oops something went wrong";
 
   private final StudentDAO studentDao;
 
@@ -23,13 +24,18 @@ public class StudentService {
     int result = studentDao.addNewStudent(student);
 
     if (result != 1) {
-      throw new IllegalStateException("oops something went wrong");
+      throw new IllegalStateException(WRONG);
     }
     return result;
   }
 
   public int deleteStudentByID(int id) {
-    return studentDao.deleteStudentByID(id);
+    int result = studentDao.deleteStudentByID(id);
+
+    if (result != 1) {
+      throw new IllegalStateException(WRONG);
+    }
+    return result;
   }
 
   public List<Integer> getStudentID() {
@@ -37,7 +43,12 @@ public class StudentService {
   }
 
   public int addStudentToTheCourse(Integer studentId, String courseName) {
-    return studentDao.addStudentToTheCourse(studentId, courseName);
+    int result = studentDao.addStudentToTheCourse(studentId, courseName);
+
+    if (result != 1) {
+      throw new IllegalStateException(WRONG);
+    }
+    return result;
   }
 
   public int removeStudentFromCourse(Integer studentId, String courseName) {
@@ -48,7 +59,7 @@ public class StudentService {
     int result = studentDao.updateStudentById(studentId, student);
 
     if (result != 1) {
-      throw new IllegalStateException("oops something went wrong");
+      throw new IllegalStateException(WRONG);
     }
     return result;
   }

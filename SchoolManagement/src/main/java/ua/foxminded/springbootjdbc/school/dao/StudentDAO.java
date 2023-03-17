@@ -83,5 +83,4 @@ public class StudentDAO {
         (rs, rowNum) -> "ID: " + rs.getInt("student_id") + " Group_ID: " + rs.getInt("group_id") + " First_Name: "
             + rs.getString("first_name") + " Last_Name: " + rs.getString("last_name"));
   }
-
 }

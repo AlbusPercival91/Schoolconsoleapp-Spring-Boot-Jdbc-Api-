@@ -59,6 +59,14 @@ public class MainMenuComponents {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
         groupMenu.findGroupsWithLessOrEqualsStudents(scan);
+      } else if (command.equalsIgnoreCase("b")) {
+        groupMenu.createGroup(scan);
+      } else if (command.equalsIgnoreCase("c")) {
+        groupMenu.editGroupName(scan);
+      } else if (command.equalsIgnoreCase("d")) {
+        groupMenu.deleteGroupByName(scan);
+      } else if (command.equalsIgnoreCase("e")) {
+        groupMenu.showAllGroups();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {

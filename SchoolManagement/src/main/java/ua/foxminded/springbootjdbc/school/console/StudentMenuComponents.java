@@ -50,8 +50,7 @@ public class StudentMenuComponents {
             groupId = null;
           }
           Student student = new Student(groupId, firstName, lastName);
-          System.out
-              .println(studentService.addNewStudent(student) + " student added" + "\n" + MenuConstants.STUDENT_MENU);
+          System.out.println(studentService.addNewStudent(student) + " student added");
         } else {
           System.out.println(MenuConstants.GROUP_ID_NOTE);
         }
@@ -141,8 +140,8 @@ public class StudentMenuComponents {
               newGroupId = null;
             }
             Student updatedStudent = new Student(newGroupId, newFirstName, newLastName);
-            System.out.println(studentService.updateStudentById(studentId, updatedStudent)
-                + " student updated" + "\n" + MenuConstants.STUDENT_MENU);
+            System.out.println(studentService.updateStudentById(studentId, updatedStudent) + " student updated" + "\n"
+                + MenuConstants.STUDENT_MENU);
           } else {
             System.out.println(MenuConstants.GROUP_ID_NOTE);
           }

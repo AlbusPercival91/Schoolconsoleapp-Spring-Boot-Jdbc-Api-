@@ -10,7 +10,7 @@ import ua.foxminded.springbootjdbc.school.mapper.GroupRowMapper;
 
 @Repository
 public class GroupDAO {
-  
+
   private final JdbcTemplate jdbcTemplate;
 
   public GroupDAO(JdbcTemplate jdbcTemplate) {
@@ -24,6 +24,30 @@ public class GroupDAO {
         GROUP BY groups.group_id, groups.group_name HAVING COUNT(students.student_id) <= ?
         """;
     return jdbcTemplate.query(sql, new GroupRowMapper(), students);
+  }
+
+  public int createGroup(Group group) {
+    String sql = "insert into school.groups(group_name) values(?)";
+    return jdbcTemplate.update(sql, group.getGroupName());
+  }
+
+  public int editGroupName(String groupName, String newGroupName) {
+    String sql = """
+        UPDATE school.groups SET
+        group_name = ?
+        WHERE group_name = ?
+                """;
+    return jdbcTemplate.update(sql, newGroupName, groupName);
+  }
+
+  public int deleteGroupByName(String groupName) {
+    String sql = "delete from school.groups where group_name = ?";
+    return jdbcTemplate.update(sql, groupName);
+  }
+
+  public List<Group> showAllGroups() {
+    String sql = "SELECT * FROM school.groups;";
+    return jdbcTemplate.query(sql, new GroupRowMapper());
   }
 
 }

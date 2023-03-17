@@ -14,6 +14,11 @@ public final class MenuConstants {
   static final String GROUP_ID_NOTE = "Group ID should be from 0 to 10.";
   static final String GROUP_ID_NOTE2 = "Wrong id format, digits required!";
   static final String EMPTY_NOTE = "Empty entrance!";
+  static final String GROUP_NAME = "Enter group name as in pattern: [a-z]{2}-[0-9]{2}";
+  static final String CHOOSE_GROUP_NAME = "Choose group name from List:";
+  static final String NEW_GROUP_NAME = "Enter new group name as in pattern: [a-z]{2}-[0-9]{2}";
+  static final String NO_SUCH_GROUP = "Group not exists, try again";
+
   static final String MAIN_MENU = """
 
       a. STUDENTS SERVICE
