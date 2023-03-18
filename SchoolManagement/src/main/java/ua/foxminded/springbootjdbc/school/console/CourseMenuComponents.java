@@ -27,6 +27,59 @@ public class CourseMenuComponents {
       System.out.println(MenuConstants.DIGITS_REQUIRED + "\n" + MenuConstants.COURSE_MENU);
     }
   }
-  
-  
+
+  public void createCourse(Scanner scan) {
+    System.out.println(MenuConstants.COURSE_NAME);
+    String courseName = scan.nextLine();
+
+    if (!courseName.isEmpty()) {
+      System.out.println(MenuConstants.COURSE_DESCRIPTION);
+      String courseDescription = scan.nextLine();
+      Course course = new Course(courseName, courseDescription);
+      System.out.println(courseService.createCourse(course) + " course added" + "\n" + MenuConstants.COURSE_MENU);
+    } else {
+      System.out.println(MenuConstants.EMPTY_NOTE + "\n" + MenuConstants.COURSE_MENU);
+    }
+  }
+
+  public void editCourseNameAndDescription(Scanner scan) {
+    System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
+    courseService.showAllCourses().forEach(System.out::println);
+    String courseName = scan.nextLine();
+
+    if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
+      System.out.println(MenuConstants.NEW_COURSE_NAME);
+      String newCourseName = scan.nextLine();
+
+      if (!newCourseName.isEmpty()) {
+        System.out.println(MenuConstants.COURSE_DESCRIPTION);
+        String newCourseDescription = scan.nextLine();
+        System.out.println(courseService.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription)
+            + " course name and description updated" + "\n" + MenuConstants.COURSE_MENU);
+      } else {
+        System.out.println(MenuConstants.EMPTY_NOTE + "\n" + MenuConstants.COURSE_MENU);
+      }
+    } else {
+      System.out.println(MenuConstants.NO_SUCH_COURSE + "\n" + MenuConstants.COURSE_MENU);
+    }
+  }
+
+  public void deleteCourseByName(Scanner scan) {
+    System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
+    courseService.showAllCourses().forEach(System.out::println);
+    String courseName = scan.nextLine();
+
+    if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
+      System.out
+          .println(courseService.deleteCourseByName(courseName) + " course deleted" + "\n" + MenuConstants.COURSE_MENU);
+    } else {
+      System.out.println(MenuConstants.NO_SUCH_COURSE + "\n" + MenuConstants.COURSE_MENU);
+    }
+  }
+
+  public void showAllCourses() {
+    courseService.showAllCourses().forEach(System.out::println);
+    System.out.println(MenuConstants.COURSE_MENU);
+  }
+
 }

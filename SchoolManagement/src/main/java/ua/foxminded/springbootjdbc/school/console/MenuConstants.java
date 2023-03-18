@@ -6,6 +6,7 @@ public final class MenuConstants {
   static final String WRONG_COURSE = "Wrong course name!";
   static final String NUMBER_OF_STUDENTS = "Enter number of students: ";
   static final String COURSE_NAME = "Enter course name: ";
+  static final String COURSE_DESCRIPTION = "Enter course description: ";
   static final String STUDENT_NAME = "Enter student name: ";
   static final String STUDENT_LAST_NAME = "Enter student last name: ";
   static final String GROUP_ID = "Enter group id (if student don't have group enter 0): ";
@@ -18,7 +19,9 @@ public final class MenuConstants {
   static final String CHOOSE_GROUP_NAME = "Choose group name from List:";
   static final String NEW_GROUP_NAME = "Enter new group name as in pattern: [a-z]{2}-[0-9]{2}";
   static final String NO_SUCH_GROUP = "Group not exists, try again";
-
+  static final String CHOOSE_COURSE_NAME = "Choose course name from List:";
+  static final String NEW_COURSE_NAME = "Enter new course name:";
+  static final String NO_SUCH_COURSE = "Course not exists, try again";
   static final String MAIN_MENU = """
 
       a. STUDENTS SERVICE

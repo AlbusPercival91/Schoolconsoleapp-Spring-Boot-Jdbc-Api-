@@ -46,7 +46,7 @@ public class CourseService {
     return result;
   }
 
-  public List<Course> showAllGroups() {
+  public List<Course> showAllCourses() {
     return courseDao.showAllCourses();
   }
 }

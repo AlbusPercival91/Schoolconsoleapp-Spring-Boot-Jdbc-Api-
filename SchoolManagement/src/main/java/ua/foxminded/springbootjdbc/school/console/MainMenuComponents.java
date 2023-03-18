@@ -84,13 +84,13 @@ public class MainMenuComponents {
       if (command.equalsIgnoreCase("a")) {
         courseMenu.findCoursesWithLessOrEqualsStudents(scan);
       } else if (command.equalsIgnoreCase("b")) {
-
+        courseMenu.createCourse(scan);
       } else if (command.equalsIgnoreCase("c")) {
-
+        courseMenu.editCourseNameAndDescription(scan);
       } else if (command.equalsIgnoreCase("d")) {
-
+        courseMenu.deleteCourseByName(scan);
       } else if (command.equalsIgnoreCase("e")) {
-
+        courseMenu.showAllCourses();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
