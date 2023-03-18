@@ -4,6 +4,7 @@ import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.dao.CourseService;
+import ua.foxminded.springbootjdbc.school.entity.Course;
 
 @Component
 public class CourseMenuComponents {
@@ -20,7 +21,8 @@ public class CourseMenuComponents {
 
     if (scan.hasNextInt()) {
       int quant = scan.nextInt();
-      courseService.findCoursesWithLessOrEqualsStudents(quant).forEach(System.out::println);
+      courseService.findCoursesWithLessOrEqualsStudents(quant).stream().map(Course::toString)
+          .forEach(System.out::println);
     } else {
       System.out.println(MenuConstants.DIGITS_REQUIRED + "\n" + MenuConstants.COURSE_MENU);
     }

@@ -21,4 +21,9 @@ public class Course {
     return courseDescription;
   }
 
+  @Override
+  public String toString() {
+    return courseName + ", course description: " + courseDescription;
+  }
+
 }

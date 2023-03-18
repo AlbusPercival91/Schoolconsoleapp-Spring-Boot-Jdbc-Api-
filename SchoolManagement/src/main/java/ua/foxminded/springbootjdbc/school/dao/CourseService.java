@@ -3,6 +3,8 @@ package ua.foxminded.springbootjdbc.school.dao;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+import ua.foxminded.springbootjdbc.school.entity.Course;
+
 @Service
 public class CourseService {
   private static final String WRONG = "oops something went wrong";
@@ -13,7 +15,7 @@ public class CourseService {
     this.courseDao = courseDao;
   }
 
-  public List<Object> findCoursesWithLessOrEqualsStudents(int students) {
+  public List<Course> findCoursesWithLessOrEqualsStudents(int students) {
     return courseDao.findCoursesWithLessOrEqualsStudents(students);
   }
 }
