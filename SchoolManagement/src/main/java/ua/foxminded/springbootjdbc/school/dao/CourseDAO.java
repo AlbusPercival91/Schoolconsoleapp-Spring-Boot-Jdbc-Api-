@@ -27,6 +27,29 @@ public class CourseDAO {
                                  """;
     return jdbcTemplate.query(sql, new CourseRowMapper(), students);
   }
-  
-  
+
+  public int createCourse(Course course) {
+    String sql = "insert into school.course(course_name, course_description) values(?,?)";
+    return jdbcTemplate.update(sql, course.getCourseName(), course.getCourseDescription());
+  }
+
+  public int editCourseNameAndDescription(String courseName, String newCourseName, String newDescription) {
+    String sql = """
+        UPDATE school.course SET
+        course_name = ?,
+        course_description = ?
+        WHERE course_name = ?
+                """;
+    return jdbcTemplate.update(sql, newCourseName, newDescription, courseName);
+  }
+
+  public int deleteCourseByName(String courseName) {
+    String sql = "delete from school.course where course_name = ?";
+    return jdbcTemplate.update(sql, courseName);
+  }
+
+  public List<Course> showAllCourses() {
+    String sql = "SELECT * FROM school.course;";
+    return jdbcTemplate.query(sql, new CourseRowMapper());
+  }
 }

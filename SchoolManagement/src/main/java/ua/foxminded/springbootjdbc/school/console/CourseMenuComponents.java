@@ -27,4 +27,6 @@ public class CourseMenuComponents {
       System.out.println(MenuConstants.DIGITS_REQUIRED + "\n" + MenuConstants.COURSE_MENU);
     }
   }
+  
+  
 }

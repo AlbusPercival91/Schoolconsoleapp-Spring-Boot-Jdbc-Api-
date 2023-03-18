@@ -18,4 +18,35 @@ public class CourseService {
   public List<Course> findCoursesWithLessOrEqualsStudents(int students) {
     return courseDao.findCoursesWithLessOrEqualsStudents(students);
   }
+
+  public int createCourse(Course course) {
+    int result = courseDao.createCourse(course);
+
+    if (result != 1) {
+      throw new IllegalStateException(WRONG);
+    }
+    return result;
+  }
+
+  public int editCourseNameAndDescription(String courseName, String newCourseName, String newDescription) {
+    int result = courseDao.editCourseNameAndDescription(courseName, newCourseName, newDescription);
+
+    if (result != 1) {
+      throw new IllegalStateException(WRONG);
+    }
+    return result;
+  }
+
+  public int deleteCourseByName(String courseName) {
+    int result = courseDao.deleteCourseByName(courseName);
+
+    if (result != 1) {
+      throw new IllegalStateException(WRONG);
+    }
+    return result;
+  }
+
+  public List<Course> showAllGroups() {
+    return courseDao.showAllCourses();
+  }
 }
