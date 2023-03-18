@@ -82,7 +82,15 @@ public class MainMenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        System.out.println("You write " + command + ", will be available soon! =)");
+        courseMenu.findCoursesWithLessOrEqualsStudents(scan);
+      } else if (command.equalsIgnoreCase("b")) {
+
+      } else if (command.equalsIgnoreCase("c")) {
+
+      } else if (command.equalsIgnoreCase("d")) {
+
+      } else if (command.equalsIgnoreCase("e")) {
+
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
