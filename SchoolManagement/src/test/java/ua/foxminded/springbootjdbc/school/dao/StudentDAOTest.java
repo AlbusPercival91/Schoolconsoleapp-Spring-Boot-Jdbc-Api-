@@ -80,7 +80,6 @@ class StudentDAOTest {
     testData.createGroup();
     testData.createCourse();
     testData.createStudent();
-
     Assertions.assertEquals(1, studentService.addStudentToTheCourse(studentId, course));
   }
 
@@ -96,7 +95,6 @@ class StudentDAOTest {
       return rs.getInt("student_id") + " " + rs.getInt("group_id") + " " + rs.getString("first_name") + " "
           + rs.getString("last_name");
     });
-
     String expected = 1 + " " + student.getGroupId() + " " + student.getFirstName() + " " + student.getLastName();
     Assertions.assertEquals(expected, actual);
   }
@@ -162,7 +160,6 @@ class StudentDAOTest {
     testData.createStudent();
     List<Object> actual = studentService.showAllStudents();
     Assertions.assertEquals(200, actual.size());
-
   }
 
 }
