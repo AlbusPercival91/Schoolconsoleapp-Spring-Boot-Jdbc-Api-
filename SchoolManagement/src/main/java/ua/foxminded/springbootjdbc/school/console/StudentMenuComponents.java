@@ -20,7 +20,7 @@ public class StudentMenuComponents {
     this.studentService = studentService;
   }
 
-  public void findStudentsRelatedToCourse(Scanner scan) {
+  public void findStudentsRelatedToCourseFacade(Scanner scan) {
     System.out.println(MenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
@@ -32,7 +32,7 @@ public class StudentMenuComponents {
     }
   }
 
-  public void addNewStudent(Scanner scan) {
+  public void addNewStudentFacade(Scanner scan) {
     System.out.println(MenuConstants.STUDENT_NAME);
     String firstName = scan.nextLine();
     System.out.println(MenuConstants.STUDENT_LAST_NAME);
@@ -62,13 +62,13 @@ public class StudentMenuComponents {
     }
   }
 
-  public void deleteStudentByID(Scanner scan) {
+  public void deleteStudentByIdFacade(Scanner scan) {
     System.out.println(MenuConstants.STUDENT_ID);
     int studentId = scan.nextInt();
     System.out.println(studentService.deleteStudentByID(studentId) + " student(s) deleted");
   }
 
-  public void addStudentToTheCourse(Scanner scan) {
+  public void addStudentToTheCourseFacade(Scanner scan) {
     System.out.println(MenuConstants.STUDENT_ID);
 
     if (scan.hasNextInt()) {
@@ -93,7 +93,7 @@ public class StudentMenuComponents {
     }
   }
 
-  public void removeStudentFromCourse(Scanner scan) {
+  public void removeStudentFromCourseFacade(Scanner scan) {
     System.out.println(MenuConstants.STUDENT_ID);
 
     if (scan.hasNextInt()) {
@@ -118,7 +118,7 @@ public class StudentMenuComponents {
     }
   }
 
-  public void updateStudentById(Scanner scan) {
+  public void updateStudentByIdFacade(Scanner scan) {
     System.out.println(MenuConstants.STUDENT_ID);
     Integer studentId = scan.nextInt();
 
@@ -159,7 +159,7 @@ public class StudentMenuComponents {
     }
   }
 
-  public void showAllStudents() {
+  public void showAllStudentsFacade() {
     studentService.showAllStudents().forEach(System.out::println);
     System.out.println(MenuConstants.STUDENT_MENU);
   }

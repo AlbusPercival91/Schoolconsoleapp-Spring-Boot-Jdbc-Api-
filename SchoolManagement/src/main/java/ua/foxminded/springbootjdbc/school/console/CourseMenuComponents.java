@@ -16,7 +16,7 @@ public class CourseMenuComponents {
     this.courseService = courseService;
   }
 
-  public void findCoursesWithLessOrEqualsStudents(Scanner scan) {
+  public void findCoursesWithLessOrEqualsStudentsFacade(Scanner scan) {
     System.out.println(MenuConstants.NUMBER_OF_STUDENTS);
 
     if (scan.hasNextInt()) {
@@ -28,7 +28,7 @@ public class CourseMenuComponents {
     }
   }
 
-  public void createCourse(Scanner scan) {
+  public void createCourseFacade(Scanner scan) {
     System.out.println(MenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
@@ -42,7 +42,7 @@ public class CourseMenuComponents {
     }
   }
 
-  public void editCourseNameAndDescription(Scanner scan) {
+  public void editCourseNameAndDescriptionFacade(Scanner scan) {
     System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
     courseService.showAllCourses().forEach(System.out::println);
     String courseName = scan.nextLine();
@@ -64,7 +64,7 @@ public class CourseMenuComponents {
     }
   }
 
-  public void deleteCourseByName(Scanner scan) {
+  public void deleteCourseByNameFacade(Scanner scan) {
     System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
     courseService.showAllCourses().forEach(System.out::println);
     String courseName = scan.nextLine();
@@ -77,7 +77,7 @@ public class CourseMenuComponents {
     }
   }
 
-  public void showAllCourses() {
+  public void showAllCoursesFacade() {
     courseService.showAllCourses().forEach(System.out::println);
     System.out.println(MenuConstants.COURSE_MENU);
   }

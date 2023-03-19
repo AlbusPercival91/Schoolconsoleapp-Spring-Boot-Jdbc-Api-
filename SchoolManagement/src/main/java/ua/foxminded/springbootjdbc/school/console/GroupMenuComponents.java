@@ -16,7 +16,7 @@ public class GroupMenuComponents {
     this.groupService = groupService;
   }
 
-  public void findGroupsWithLessOrEqualsStudents(Scanner scan) {
+  public void findGroupsWithLessOrEqualsStudentsFacade(Scanner scan) {
     System.out.println(MenuConstants.NUMBER_OF_STUDENTS);
 
     if (scan.hasNextInt()) {
@@ -27,7 +27,7 @@ public class GroupMenuComponents {
     }
   }
 
-  public void createGroup(Scanner scan) {
+  public void createGroupFacade(Scanner scan) {
     System.out.println(MenuConstants.GROUP_NAME);
     String groupName = scan.nextLine();
 
@@ -39,7 +39,7 @@ public class GroupMenuComponents {
     }
   }
 
-  public void editGroupName(Scanner scan) {
+  public void editGroupNameFacade(Scanner scan) {
     System.out.println(MenuConstants.CHOOSE_GROUP_NAME);
     groupService.showAllGroups().forEach(System.out::println);
     String groupName = scan.nextLine();
@@ -54,7 +54,7 @@ public class GroupMenuComponents {
     }
   }
 
-  public void deleteGroupByName(Scanner scan) {
+  public void deleteGroupByNameFacade(Scanner scan) {
     System.out.println(MenuConstants.CHOOSE_GROUP_NAME);
     groupService.showAllGroups().forEach(System.out::println);
     String groupName = scan.nextLine();
@@ -67,7 +67,7 @@ public class GroupMenuComponents {
     }
   }
 
-  public void showAllGroups() {
+  public void showAllGroupsFacade() {
     groupService.showAllGroups().forEach(System.out::println);
     System.out.println(MenuConstants.GROUP_MENU);
   }

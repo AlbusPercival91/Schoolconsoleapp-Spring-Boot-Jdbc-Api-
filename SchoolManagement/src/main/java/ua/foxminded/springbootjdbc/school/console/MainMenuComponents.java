@@ -30,19 +30,19 @@ public class MainMenuComponents {
     while (!command.equalsIgnoreCase("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        studentMenu.findStudentsRelatedToCourse(scan);
+        studentMenu.findStudentsRelatedToCourseFacade(scan);
       } else if (command.equalsIgnoreCase("b")) {
-        studentMenu.addNewStudent(scan);
+        studentMenu.addNewStudentFacade(scan);
       } else if (command.equalsIgnoreCase("c")) {
-        studentMenu.deleteStudentByID(scan);
+        studentMenu.deleteStudentByIdFacade(scan);
       } else if (command.equalsIgnoreCase("d")) {
-        studentMenu.addStudentToTheCourse(scan);
+        studentMenu.addStudentToTheCourseFacade(scan);
       } else if (command.equalsIgnoreCase("e")) {
-        studentMenu.removeStudentFromCourse(scan);
+        studentMenu.removeStudentFromCourseFacade(scan);
       } else if (command.equalsIgnoreCase("f")) {
-        studentMenu.updateStudentById(scan);
+        studentMenu.updateStudentByIdFacade(scan);
       } else if (command.equalsIgnoreCase("g")) {
-        studentMenu.showAllStudents();
+        studentMenu.showAllStudentsFacade();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
@@ -58,15 +58,15 @@ public class MainMenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        groupMenu.findGroupsWithLessOrEqualsStudents(scan);
+        groupMenu.findGroupsWithLessOrEqualsStudentsFacade(scan);
       } else if (command.equalsIgnoreCase("b")) {
-        groupMenu.createGroup(scan);
+        groupMenu.createGroupFacade(scan);
       } else if (command.equalsIgnoreCase("c")) {
-        groupMenu.editGroupName(scan);
+        groupMenu.editGroupNameFacade(scan);
       } else if (command.equalsIgnoreCase("d")) {
-        groupMenu.deleteGroupByName(scan);
+        groupMenu.deleteGroupByNameFacade(scan);
       } else if (command.equalsIgnoreCase("e")) {
-        groupMenu.showAllGroups();
+        groupMenu.showAllGroupsFacade();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
@@ -82,15 +82,15 @@ public class MainMenuComponents {
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
-        courseMenu.findCoursesWithLessOrEqualsStudents(scan);
+        courseMenu.findCoursesWithLessOrEqualsStudentsFacade(scan);
       } else if (command.equalsIgnoreCase("b")) {
-        courseMenu.createCourse(scan);
+        courseMenu.createCourseFacade(scan);
       } else if (command.equalsIgnoreCase("c")) {
-        courseMenu.editCourseNameAndDescription(scan);
+        courseMenu.editCourseNameAndDescriptionFacade(scan);
       } else if (command.equalsIgnoreCase("d")) {
-        courseMenu.deleteCourseByName(scan);
+        courseMenu.deleteCourseByNameFacade(scan);
       } else if (command.equalsIgnoreCase("e")) {
-        courseMenu.showAllCourses();
+        courseMenu.showAllCoursesFacade();
       } else if (command.equalsIgnoreCase("m")) {
         System.out.println(MenuConstants.MAIN_MENU);
       } else {
