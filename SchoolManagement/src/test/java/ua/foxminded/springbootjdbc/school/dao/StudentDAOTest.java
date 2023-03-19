@@ -15,6 +15,7 @@ import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
 import ua.foxminded.springbootjdbc.school.entity.Student;
+import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Testcontainers
@@ -30,6 +31,9 @@ class StudentDAOTest {
 
   @Autowired
   private StudentService studentService;
+
+  @Autowired
+  private CourseMaker courseMaker;
 
   @MockBean
   private ConsoleMenuRunner consoleMenuRunner;
@@ -50,54 +54,20 @@ class StudentDAOTest {
     container.stop();
   }
 
-  @TestFactory
+  @Test
+  @DisplayName("Should return true if students at course more than zero")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  Stream<DynamicTest> findStudentsRelatedToCourse__ShouldBeMoreZero() {
+  void findStudentsRelatedToCourse__ShouldBeMoreZero() {
     testData.createGroup();
     testData.createCourse();
     testData.createStudent();
     testData.createCourseStudentRelation();
-    return Stream.of(DynamicTest.dynamicTest("History course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("History").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
+
+    for (String s : courseMaker.generateCourses()) {
+      long studentCount = studentService.findStudentsRelatedToCourse(s).stream()
+          .filter(course -> course.toString().trim().contains(" ")).count();
       Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Literature course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Literature").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Computer Science course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Computer Science").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Geography course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Geography").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Physical Science course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Physical Science").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Life Science course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Life Science").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("English course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("English").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Mathematics course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Mathematics").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Sports course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Sports").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }), DynamicTest.dynamicTest("Art course should have students", () -> {
-      long studentCount = studentService.findStudentsRelatedToCourse("Art").stream()
-          .filter(s -> s.toString().trim().contains(" ")).count();
-      Assertions.assertTrue(studentCount > 0);
-    }));
+    }
   }
 
   @TestFactory
