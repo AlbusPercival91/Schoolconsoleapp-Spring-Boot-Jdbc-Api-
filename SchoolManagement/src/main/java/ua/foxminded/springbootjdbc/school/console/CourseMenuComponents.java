@@ -32,7 +32,8 @@ public class CourseMenuComponents {
     System.out.println(MenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
-    if (!courseName.isEmpty()) {
+    if (!courseName.isEmpty()
+        && courseService.showAllCourses().stream().noneMatch(course -> course.getCourseName().equals(courseName))) {
       System.out.println(MenuConstants.COURSE_DESCRIPTION);
       String courseDescription = scan.nextLine();
       Course course = new Course(courseName, courseDescription);

@@ -31,7 +31,8 @@ public class GroupMenuComponents {
     System.out.println(MenuConstants.GROUP_NAME);
     String groupName = scan.nextLine();
 
-    if (!groupName.isEmpty()) {
+    if (!groupName.isEmpty()
+        && groupService.showAllGroups().stream().noneMatch(group -> group.getGroupName().equals(groupName))) {
       Group group = new Group(groupName);
       System.out.println(groupService.createGroup(group) + " group added" + "\n" + MenuConstants.GROUP_MENU);
     } else {
