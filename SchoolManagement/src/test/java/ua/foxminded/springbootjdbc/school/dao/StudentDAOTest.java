@@ -1,8 +1,9 @@
 package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.List;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.*;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -55,9 +56,9 @@ class StudentDAOTest {
   }
 
   @Test
-  @DisplayName("Should return true if students at course more than zero")
+  @DisplayName("Should return true if number of students at course more than zero")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void findStudentsRelatedToCourse__ShouldBeMoreZero() {
+  void testFindStudentsRelatedToCourse() {
     testData.createGroup();
     testData.createCourse();
     testData.createStudent();
@@ -70,39 +71,23 @@ class StudentDAOTest {
     }
   }
 
-  @TestFactory
+  @ParameterizedTest
+  @DisplayName("Should return equals true if 1 student assigned to one course")
+  @CsvSource({ "12, Art", "190, Literature", "19, Computer Science", "21, Geography", "193, Physical Science",
+      "1, Life Science", "9, English", "2, Mathematics", "150, Sports", "7, History" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  Stream<DynamicTest> addStudentToTheCourse_ShouldBeOne() {
+  void testAddStudentToTheCourse(int studentId, String course) {
     testData.createGroup();
     testData.createCourse();
     testData.createStudent();
-    return Stream.of(
-        DynamicTest.dynamicTest("Add student with ID: 12 to course: Art",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(12, "Art"))),
-        DynamicTest.dynamicTest("Add student with ID: 190 to course: Literature",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(190, "Literature"))),
-        DynamicTest.dynamicTest("Add student with ID: 19 to course: Computer Science",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(19, "Computer Science"))),
-        DynamicTest.dynamicTest("Add student with ID: 21 to course: Geography",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(21, "Geography"))),
-        DynamicTest.dynamicTest("Add student with ID: 193 to course: Physical Science",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(193, "Physical Science"))),
-        DynamicTest.dynamicTest("Add student with ID: 1 to course: Life Science",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(1, "Life Science"))),
-        DynamicTest.dynamicTest("Add student with ID: 9 to course: English",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(9, "English"))),
-        DynamicTest.dynamicTest("Add student with ID: 2 to course: Mathematics",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(2, "Mathematics"))),
-        DynamicTest.dynamicTest("Add student with ID: 150 to course: Sports",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(150, "Sports"))),
-        DynamicTest.dynamicTest("Add student with ID: 7 to course: History",
-            () -> Assertions.assertEquals(1, studentService.addStudentToTheCourse(7, "History"))));
+
+    Assertions.assertEquals(1, studentService.addStudentToTheCourse(studentId, course));
   }
 
   @Test
   @DisplayName("Should return true when actual and inserted student are equals")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void addNewStudent() {
+  void testAddNewStudent() {
     testData.createGroup();
     Student student = new Student(4, "Harry", "Potter");
     studentService.addNewStudent(student);
@@ -119,7 +104,7 @@ class StudentDAOTest {
   @Test
   @DisplayName("Should return 1 if student deleted from DB")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void deleteStudentByID() {
+  void testDeleteStudentByID() {
     testData.createGroup();
     String sql = "insert into school.students(group_id, first_name, last_name) values(9,'Albus','Dambldor');";
     jdbcTemplate.update(sql);
@@ -134,7 +119,7 @@ class StudentDAOTest {
   @Test
   @DisplayName("Should return 1 if student deleted from course Table in DB")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void removeStudentFromCourse() {
+  void testRemoveStudentFromCourse() {
     testData.createGroup();
     testData.createCourse();
     testData.createStudent();
@@ -152,13 +137,14 @@ class StudentDAOTest {
   @Test
   @DisplayName("Should return 1 if student updated")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void updateStudentById() {
+  void testUpdateStudentById() {
     testData.createGroup();
     Student student = new Student(4, "Harry", "Potter");
     studentService.addNewStudent(student);
     Student updatedStudent = new Student(4, "Ron", "Wesley");
     studentService.updateStudentById(1, updatedStudent);
     String sql = "SELECT * FROM school.students;";
+
     String actual = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
       return rs.getInt("student_id") + " " + rs.getInt("group_id") + " " + rs.getString("first_name") + " "
           + rs.getString("last_name");
@@ -171,7 +157,7 @@ class StudentDAOTest {
   @Test
   @DisplayName("Should return 200 when initiated test data")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void showAllStudents() {
+  void testShowAllStudents() {
     testData.createGroup();
     testData.createStudent();
     List<Object> actual = studentService.showAllStudents();
