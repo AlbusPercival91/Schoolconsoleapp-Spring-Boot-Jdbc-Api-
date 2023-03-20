@@ -72,7 +72,7 @@ class StudentDAOTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Should return equals true if 1 student assigned to one course")
+  @DisplayName("Should return 1 if 1 student assigned to one course")
   @CsvSource({ "12, Art", "190, Literature", "19, Computer Science", "21, Geography", "193, Physical Science",
       "1, Life Science", "9, English", "2, Mathematics", "150, Sports", "7, History" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
@@ -153,7 +153,7 @@ class StudentDAOTest {
   }
 
   @Test
-  @DisplayName("Should return 200 when initiated test data")
+  @DisplayName("Should return 200 when initiated students test data")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testShowAllStudents() {
     testData.createGroup();

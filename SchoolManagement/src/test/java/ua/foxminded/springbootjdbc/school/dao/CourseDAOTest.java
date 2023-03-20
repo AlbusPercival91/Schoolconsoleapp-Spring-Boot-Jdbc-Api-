@@ -1,8 +1,6 @@
 package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -16,19 +14,19 @@ import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
-import ua.foxminded.springbootjdbc.school.entity.Group;
+import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Testcontainers
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class GroupDAOTest {
+class CourseDAOTest {
 
   @Autowired
   private TestDataService testData;
 
   @Autowired
-  private GroupService groupService;
+  private CourseService courseService;
 
   @MockBean
   private ConsoleMenuRunner consoleMenuRunner;
@@ -50,52 +48,59 @@ class GroupDAOTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 10 if matched groups less than or equal to students")
-  @CsvSource({ "30", "100" })
+  @DisplayName("Should return true if student exist on courses ")
+  @CsvSource({ "40", "100", "70" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsMax(int number) {
+  void testFindCoursesWithLessOrEqualsStudents(int number) {
     testData.createGroup();
     testData.createStudent();
-    Pattern pattern = Pattern.compile("[a-z]{2}-[0-9]{2}");
-    List<Group> actual = groupService.findGroupsWithLessOrEqualsStudents(number);
-    int matchedPattern = (int) actual.stream().map(Group::toString).map(pattern::matcher).filter(Matcher::find).count();
-    Assertions.assertEquals(10, matchedPattern);
+    testData.createCourse();
+    testData.createCourseStudentRelation();
+    List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(number);
+    Assertions.assertNotNull(actual);
   }
 
   @Test
   @DisplayName("Should return an empty list when the maximum number of students is 0")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsZero() {
+  void testFindCoursesWithLessOrEqualsStudents_WhenStudentsZero() {
     testData.createGroup();
     testData.createStudent();
-    List<Group> actual = groupService.findGroupsWithLessOrEqualsStudents(0);
+    testData.createCourse();
+    testData.createCourseStudentRelation();
+    List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(0);
     Assertions.assertTrue(actual.isEmpty());
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 group updated")
-  @CsvSource({ "aa-34, aa-35", "aa-35, 35-aa", "test, test-test", "123, 321", "aa-aa, bb-bb", "00-00, 11-11",
-      "!@-@$, )&-%^" })
+  @DisplayName("Should return 1 if 1 course updated")
+  @CsvSource({ "History, TBD, Geography, TBD-2", "Art, TBD, Paint, TBD-3", "Sports, TBD, Yoga, TBD-5",
+      "English, TBD, Spanish, TBD-6", "123, TBD, 321, asdf", "%$#, TBD, $%^&, TBDTBD", "!@-@$, )&-%^, Swimming, TBD" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testEditGroupName(Group group, Group newGroup) {
-    groupService.createGroup(group);
-    Assertions.assertEquals(1, groupService.editGroupName(group.getGroupName(), newGroup.getGroupName()));
+  void testEditCourseNameAndDescription(String courseName, String courseDescription, String newCourseName,
+      String newCourseDescription) {
+    Course course = new Course(courseName, courseDescription);
+    courseService.createCourse(course);
+
+    Assertions.assertEquals(1,
+        courseService.editCourseNameAndDescription(course.getCourseName(), newCourseName, newCourseDescription));
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 group deleted")
-  @CsvSource({ "aa-34", "35-aa", "test", "123", "aa-aa", "00-00", "!@-@$" })
-  void testDeleteGroupByName(Group group) {
-    groupService.createGroup(group);
-    Assertions.assertEquals(1, groupService.deleteGroupByName(group.getGroupName()));
+  @DisplayName("Should return 1 if 1 course deleted")
+  @CsvSource({ "History, TBD", "Swimming, TBD", "Paint, TBD-3", "Spanish, TBD-6", "Geography, TBD-2" })
+  void testDeleteCourseByName(String courseName, String courseDescription) {
+    Course course = new Course(courseName, courseDescription);
+    courseService.createCourse(course);
+    Assertions.assertEquals(1, courseService.deleteCourseByName(course.getCourseName()));
   }
 
   @Test
   @DisplayName("Should return 10 when initiated group test data")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testShowAllGroups() {
-    testData.createGroup();
-    List<Group> actual = groupService.showAllGroups();
+  void testShowAllCourses() {
+    testData.createCourse();
+    List<Course> actual = courseService.showAllCourses();
     Assertions.assertEquals(10, actual.size());
   }
 
