@@ -89,6 +89,7 @@ class CourseDAOTest {
   @ParameterizedTest
   @DisplayName("Should return 1 if 1 course deleted")
   @CsvSource({ "History, TBD", "Swimming, TBD", "Paint, TBD-3", "Spanish, TBD-6", "Geography, TBD-2" })
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testDeleteCourseByName(String courseName, String courseDescription) {
     Course course = new Course(courseName, courseDescription);
     courseService.createCourse(course);

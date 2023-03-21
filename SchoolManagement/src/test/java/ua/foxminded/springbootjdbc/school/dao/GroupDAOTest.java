@@ -85,6 +85,7 @@ class GroupDAOTest {
   @ParameterizedTest
   @DisplayName("Should return 1 if 1 group deleted")
   @CsvSource({ "aa-34", "35-aa", "test", "123", "aa-aa", "00-00", "!@-@$" })
+  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testDeleteGroupByName(Group group) {
     groupService.createGroup(group);
     Assertions.assertEquals(1, groupService.deleteGroupByName(group.getGroupName()));
