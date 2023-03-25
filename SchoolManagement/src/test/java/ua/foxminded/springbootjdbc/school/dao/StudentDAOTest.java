@@ -59,7 +59,6 @@ class StudentDAOTest {
   @DisplayName("Should return true if number of students at course more than zero")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testFindStudentsRelatedToCourse() {
-    testData.createGroup();
     testData.createCourse();
     testData.createStudent();
     testData.createCourseStudentRelation();
@@ -77,7 +76,6 @@ class StudentDAOTest {
       "1, Life Science", "9, English", "2, Mathematics", "150, Sports", "7, History" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testAddStudentToTheCourse(int studentId, String course) {
-    testData.createGroup();
     testData.createCourse();
     testData.createStudent();
     Assertions.assertEquals(1, studentService.addStudentToTheCourse(studentId, course));
@@ -87,7 +85,6 @@ class StudentDAOTest {
   @DisplayName("Should return true when actual and inserted student are equals")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testAddNewStudent() {
-    testData.createGroup();
     Student student = new Student(4, "Harry", "Potter");
     studentService.addNewStudent(student);
     String sql = "SELECT * FROM school.students;";
@@ -103,7 +100,6 @@ class StudentDAOTest {
   @DisplayName("Should return 1 if student deleted from DB")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testDeleteStudentByID() {
-    testData.createGroup();
     String sql = "insert into school.students(group_id, first_name, last_name) values(9,'Albus','Dambldor');";
     jdbcTemplate.update(sql);
     int deleted = 0;
@@ -118,7 +114,6 @@ class StudentDAOTest {
   @DisplayName("Should return 1 if student deleted from course Table in DB")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testRemoveStudentFromCourse() {
-    testData.createGroup();
     testData.createCourse();
     testData.createStudent();
     String sql = """
@@ -136,7 +131,6 @@ class StudentDAOTest {
   @DisplayName("Should return 1 if student updated")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testUpdateStudentById() {
-    testData.createGroup();
     Student student = new Student(4, "Harry", "Potter");
     studentService.addNewStudent(student);
     Student updatedStudent = new Student(4, "Ron", "Wesley");
@@ -156,7 +150,6 @@ class StudentDAOTest {
   @DisplayName("Should return 200 when initiated students test data")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testShowAllStudents() {
-    testData.createGroup();
     testData.createStudent();
     List<Object> actual = studentService.showAllStudents();
     Assertions.assertEquals(200, actual.size());

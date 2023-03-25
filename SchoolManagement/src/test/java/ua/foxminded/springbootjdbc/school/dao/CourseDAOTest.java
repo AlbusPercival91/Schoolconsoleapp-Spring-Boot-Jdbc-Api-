@@ -52,7 +52,6 @@ class CourseDAOTest {
   @CsvSource({ "40", "100", "70" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testFindCoursesWithLessOrEqualsStudents(int number) {
-    testData.createGroup();
     testData.createStudent();
     testData.createCourse();
     testData.createCourseStudentRelation();
@@ -64,7 +63,6 @@ class CourseDAOTest {
   @DisplayName("Should return an empty list when the maximum number of students is 0")
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
   void testFindCoursesWithLessOrEqualsStudents_WhenStudentsZero() {
-    testData.createGroup();
     testData.createStudent();
     testData.createCourse();
     testData.createCourseStudentRelation();
