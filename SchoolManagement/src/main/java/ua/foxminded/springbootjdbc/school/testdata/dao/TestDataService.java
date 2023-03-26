@@ -67,8 +67,8 @@ public class TestDataService {
     }
   }
 
-  public int countStudents() {
-    return dataRepository.countStudents();
+  public boolean databaseIsEmpty() {
+    return dataRepository.rowsCount() == 0;
   }
 
 }

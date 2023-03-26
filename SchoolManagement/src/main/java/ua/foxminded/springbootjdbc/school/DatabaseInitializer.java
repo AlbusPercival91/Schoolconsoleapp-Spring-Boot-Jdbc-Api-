@@ -19,7 +19,7 @@ public class DatabaseInitializer implements ApplicationRunner {
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
-    if (testData.countStudents() == 0) {
+    if (testData.databaseIsEmpty()) {
       testData.createGroup();
       testData.createStudent();
       testData.createCourse();

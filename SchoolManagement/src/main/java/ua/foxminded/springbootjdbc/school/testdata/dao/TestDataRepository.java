@@ -36,8 +36,18 @@ public class TestDataRepository {
     return jdbcTemplate.update(sql, scRelation.getStudentId(), scRelation.getCourseId());
   }
 
-  public int countStudents() {
-    String sql = "SELECT COUNT(*) FROM school.students";
+  public int rowsCount() {
+    String sql = """
+                    SELECT SUM (COUNT) FROM (
+        SELECT COUNT(*) AS COUNT FROM school.students
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.groups
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.course
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.students_courses_checkouts
+        ) AS counts;
+                    """;
     return jdbcTemplate.queryForObject(sql, Integer.class);
   }
 
