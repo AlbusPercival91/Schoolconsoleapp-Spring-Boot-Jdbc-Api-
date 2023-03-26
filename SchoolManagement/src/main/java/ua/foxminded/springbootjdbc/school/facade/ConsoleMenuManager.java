@@ -1,27 +1,20 @@
-package ua.foxminded.springbootjdbc.school.console;
+package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Component
-public class ConsoleMenuRunner {
+public class ConsoleMenuManager {
 
   @Autowired
   private MainMenuComponents mainMenu;
 
-  public ConsoleMenuRunner(MainMenuComponents mainMenu) {
+  public ConsoleMenuManager(MainMenuComponents mainMenu) {
     this.mainMenu = mainMenu;
   }
 
-  @Autowired
-  public void runner(TestDataService testData) {
-    testData.createGroup();
-    testData.createStudent();
-    testData.createCourse();
-    testData.createCourseStudentRelation();
-
+  public void manage() {
     Scanner scan = new Scanner(System.in);
     String command = "";
     System.out

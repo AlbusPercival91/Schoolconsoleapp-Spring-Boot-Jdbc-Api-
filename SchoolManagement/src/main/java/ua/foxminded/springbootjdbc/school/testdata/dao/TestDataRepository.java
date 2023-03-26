@@ -36,4 +36,9 @@ public class TestDataRepository {
     return jdbcTemplate.update(sql, scRelation.getStudentId(), scRelation.getCourseId());
   }
 
+  public int countStudents() {
+    String sql = "SELECT COUNT(*) FROM school.students";
+    return jdbcTemplate.queryForObject(sql, Integer.class);
+  }
+
 }

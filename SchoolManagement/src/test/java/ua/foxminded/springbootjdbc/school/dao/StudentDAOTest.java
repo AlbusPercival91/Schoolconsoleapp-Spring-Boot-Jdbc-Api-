@@ -14,8 +14,9 @@ import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
-import ua.foxminded.springbootjdbc.school.console.ConsoleMenuRunner;
+
 import ua.foxminded.springbootjdbc.school.entity.Student;
+import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
@@ -37,7 +38,7 @@ class StudentDAOTest {
   private CourseMaker courseMaker;
 
   @MockBean
-  private ConsoleMenuRunner consoleMenuRunner;
+  private ConsoleMenuManager consoleMenuRunner;
 
   @Container
   private static GenericContainer<?> container = new GenericContainer<>("openjdk:8-jdk-alpine").withExposedPorts(1521)

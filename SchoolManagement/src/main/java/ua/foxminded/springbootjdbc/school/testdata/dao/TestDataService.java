@@ -67,4 +67,8 @@ public class TestDataService {
     }
   }
 
+  public int countStudents() {
+    return dataRepository.countStudents();
+  }
+
 }
