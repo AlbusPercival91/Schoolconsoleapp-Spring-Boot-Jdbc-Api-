@@ -8,7 +8,7 @@ import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @Component
-public class DatabaseInitializer implements ApplicationRunner {
+public class DatabaseRunner implements ApplicationRunner {
 
   @Autowired
   private TestDataService testData;
