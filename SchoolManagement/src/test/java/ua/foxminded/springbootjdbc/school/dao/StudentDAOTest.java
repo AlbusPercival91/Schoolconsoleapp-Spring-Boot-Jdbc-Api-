@@ -14,7 +14,6 @@ import org.springframework.test.context.jdbc.*;
 import org.testcontainers.containers.*;
 import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
-
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
