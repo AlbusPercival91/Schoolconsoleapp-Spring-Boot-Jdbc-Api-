@@ -23,7 +23,6 @@ public class DatabaseRunner implements ApplicationRunner {
       testData.createStudent();
       testData.createCourse();
       testData.createCourseStudentRelation();
-      System.out.println("created data\n\n");
     }
     consoleManager.manage();
   }
