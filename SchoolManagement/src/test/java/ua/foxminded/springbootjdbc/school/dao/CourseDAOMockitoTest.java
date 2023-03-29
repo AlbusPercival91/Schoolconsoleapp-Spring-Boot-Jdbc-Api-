@@ -3,10 +3,8 @@ package ua.foxminded.springbootjdbc.school.dao;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,17 +16,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.jdbc.Sql;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
-import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class MockCourseDAOTest {
-
-  @Autowired
-  private TestDataService testData;
+class CourseDAOMockitoTest {
 
   @Autowired
   private CourseService courseService;
@@ -77,18 +70,12 @@ class MockCourseDAOTest {
       "English, TBD, Spanish, TBD-6", "123, TBD, 321, asdf", "%$#, TBD, $%^&, TBDTBD", "!@-@$, )&-%^, Swimming, TBD" })
   void testEditCourseNameAndDescription(String courseName, String courseDescription, String newCourseName,
       String newCourseDescription) {
-    Integer expectedCreationCount = 1;
-    Integer expectedUpdateCount = 1;
-    Course course = new Course(courseName, courseDescription);
-    when(courseDAO.createCourse(any(Course.class))).thenReturn(expectedCreationCount);
-    when(courseDAO.editCourseNameAndDescription(course.getCourseName(), newCourseName, newCourseDescription))
-        .thenReturn(expectedUpdateCount);
-    Integer actualCreatedCount = courseService.createCourse(course);
-    Integer actualUpdateCount = courseService.editCourseNameAndDescription(courseName, newCourseName,
-        newCourseDescription);
+    Integer expectedCount = 1;
+    when(courseDAO.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription))
+        .thenReturn(expectedCount);
+    Integer actualCount = courseService.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription);
 
-    Assertions.assertEquals(expectedCreationCount, actualCreatedCount);
-    Assertions.assertEquals(expectedUpdateCount, actualUpdateCount);
+    Assertions.assertEquals(expectedCount, actualCount);
     verify(courseDAO).editCourseNameAndDescription(courseName, newCourseName, newCourseDescription);
   }
 }
