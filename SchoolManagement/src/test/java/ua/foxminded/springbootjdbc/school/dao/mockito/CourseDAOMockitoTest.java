@@ -17,7 +17,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import ua.foxminded.springbootjdbc.school.dao.CourseDAO;
 import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.entity.Course;
