@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.dao;
+package ua.foxminded.springbootjdbc.school.dao.mockito;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -17,6 +17,9 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
+import ua.foxminded.springbootjdbc.school.dao.CourseDAO;
+import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
