@@ -8,6 +8,7 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.MockitoAnnotations;
@@ -49,6 +50,16 @@ class CourseDAOMockitoTest {
     Assertions.assertEquals(expected, actual);
   }
 
+  @Test
+  @DisplayName("Should return an empty list when the maximum number of students is 0")
+  void testFindCoursesWithLessOrEqualsStudents_WhenStudentsZero() {
+    List<Course> expected = new ArrayList<>();
+    when(courseDAO.findCoursesWithLessOrEqualsStudents(0)).thenReturn(expected);
+    List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(0);
+
+    Assertions.assertTrue(actual.isEmpty());
+  }
+
   @ParameterizedTest
   @DisplayName("Should return 1 if 1 course created")
   @CsvSource({ "History, TBD", "Art, TBD", "Sports, TBD", "English, TBD", "123, TBD", "%$#, TBD", "!@-@$, )&-%^" })
@@ -77,5 +88,28 @@ class CourseDAOMockitoTest {
 
     Assertions.assertEquals(expectedCount, actualCount);
     verify(courseDAO).editCourseNameAndDescription(courseName, newCourseName, newCourseDescription);
+  }
+
+  @ParameterizedTest
+  @DisplayName("Should return 1 if 1 course deleted")
+  @CsvSource({ "History", "Swimming", "Paint", "Spanish", "Geography" })
+  void testDeleteCourseByName(String courseName) {
+    Integer expectedCount = 1;
+    when(courseDAO.deleteCourseByName(courseName)).thenReturn(expectedCount);
+    Integer actualCount = courseService.deleteCourseByName(courseName);
+
+    Assertions.assertEquals(expectedCount, actualCount);
+    verify(courseDAO).deleteCourseByName(courseName);
+  }
+
+  @Test
+  @DisplayName("Should be equals expected and actual course lists")
+  void testShowAllCourses() {
+    List<Course> expected = new ArrayList<>();
+    when(courseDAO.showAllCourses()).thenReturn(expected);
+    List<Course> actual = courseService.showAllCourses();
+
+    Assertions.assertEquals(expected, actual);
+    verify(courseDAO).showAllCourses();
   }
 }
