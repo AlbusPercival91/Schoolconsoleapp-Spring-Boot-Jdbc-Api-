@@ -53,7 +53,7 @@ class GroupDAOTest {
   @DisplayName("Should return 10 if matched groups less than or equal to students")
   @CsvSource({ "30", "100" })
   @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsMax(int number) {
+  void testFindGroupsWithLessOrEqualsStudents(int number) {
     testData.createGroup();
     testData.createStudent();
     Pattern pattern = Pattern.compile("[a-z]{2}-[0-9]{2}");
