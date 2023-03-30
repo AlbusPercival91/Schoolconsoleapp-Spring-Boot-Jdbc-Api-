@@ -24,7 +24,7 @@ import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class CourseDAOMockitoTest {
+class CourseDaoMockitoTest {
 
   @Autowired
   private CourseService courseService;

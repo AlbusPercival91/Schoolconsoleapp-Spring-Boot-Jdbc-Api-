@@ -24,7 +24,7 @@ import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class GroupDAOMockitoTest {
+class GroupDaoMockitoTest {
 
   @Autowired
   private GroupService groupService;
