@@ -3,7 +3,6 @@ package ua.foxminded.springbootjdbc.school.dao.mockito;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
