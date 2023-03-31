@@ -3,10 +3,8 @@ package ua.foxminded.springbootjdbc.school.dao.mockito;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -50,6 +48,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.findStudentsRelatedToCourse(courseName)).thenReturn(expected);
     List<Student> actual = studentService.findStudentsRelatedToCourse(courseName);
 
+    Assertions.assertNotNull(actual);
     Assertions.assertEquals(expected, actual);
     verify(studentDAO).findStudentsRelatedToCourse(courseName);
   }
@@ -63,6 +62,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.addStudentToTheCourse(studentId, courseName)).thenReturn(expectedCount);
     Integer actualCount = studentService.addStudentToTheCourse(studentId, courseName);
 
+    Assertions.assertNotNull(actualCount);
     Assertions.assertEquals(expectedCount, actualCount);
     verify(studentDAO).addStudentToTheCourse(studentId, courseName);
   }
@@ -91,6 +91,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.deleteStudentByID(studentId)).thenReturn(expectedCount);
     Integer actualCount = studentService.deleteStudentByID(studentId);
 
+    Assertions.assertNotNull(actualCount);
     Assertions.assertEquals(expectedCount, actualCount);
     verify(studentDAO).deleteStudentByID(studentId);
   }
@@ -104,6 +105,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.removeStudentFromCourse(studentId, courseName)).thenReturn(expectedCount);
     Integer actualCount = studentService.removeStudentFromCourse(studentId, courseName);
 
+    Assertions.assertNotNull(actualCount);
     Assertions.assertEquals(expectedCount, actualCount);
     verify(studentDAO).removeStudentFromCourse(studentId, courseName);
   }
@@ -117,6 +119,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.updateStudentById(updateId, studentUpdate)).thenReturn(expectedCount);
     Integer actualCount = studentService.updateStudentById(updateId, studentUpdate);
 
+    Assertions.assertNotNull(actualCount);
     Assertions.assertEquals(expectedCount, actualCount);
     verify(studentDAO).updateStudentById(updateId, studentUpdate);
   }
@@ -128,6 +131,7 @@ class StudentDaoMockitoTest {
     when(studentDAO.showAllStudents()).thenReturn(expected);
     List<Object> actual = studentService.showAllStudents();
 
+    Assertions.assertNotNull(actual);
     Assertions.assertEquals(expected, actual);
     verify(studentDAO).showAllStudents();
   }

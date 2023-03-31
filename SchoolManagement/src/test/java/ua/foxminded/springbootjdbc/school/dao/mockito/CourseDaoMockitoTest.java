@@ -88,6 +88,7 @@ class CourseDaoMockitoTest {
         .thenReturn(expectedCount);
     Integer actualCount = courseService.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription);
 
+    Assertions.assertNotNull(actualCount);
     Assertions.assertEquals(expectedCount, actualCount);
     verify(courseDAO).editCourseNameAndDescription(courseName, newCourseName, newCourseDescription);
   }
