@@ -14,13 +14,13 @@ import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class TestDataServiceTest {
+class GeneratorDataServiceTest {
 
   @Autowired
-  private TestDataService testDataService;
+  private GeneratedDataService testDataService;
 
   @MockBean
-  private TestDataRepository repository;
+  private GeneratorDataRepository repository;
 
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;

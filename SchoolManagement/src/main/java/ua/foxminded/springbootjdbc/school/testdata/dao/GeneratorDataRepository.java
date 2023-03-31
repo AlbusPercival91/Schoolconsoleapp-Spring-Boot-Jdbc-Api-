@@ -8,11 +8,11 @@ import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 
 @Repository
-public class TestDataRepository {
+public class GeneratorDataRepository {
 
   private final JdbcTemplate jdbcTemplate;
 
-  public TestDataRepository(JdbcTemplate jdbcTemplate) {
+  public GeneratorDataRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 

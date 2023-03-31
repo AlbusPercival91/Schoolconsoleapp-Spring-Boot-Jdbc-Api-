@@ -17,7 +17,7 @@ import org.testcontainers.junit.jupiter.*;
 import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
-import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratedDataService;
 
 @Testcontainers
 @SpringBootTest
@@ -25,7 +25,7 @@ import ua.foxminded.springbootjdbc.school.testdata.dao.TestDataService;
 class GroupDAOTest {
 
   @Autowired
-  private TestDataService testData;
+  private GeneratedDataService testData;
 
   @Autowired
   private GroupService groupService;
