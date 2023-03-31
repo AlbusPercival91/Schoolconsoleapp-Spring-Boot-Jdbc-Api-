@@ -102,7 +102,7 @@ class GroupDaoMockitoTest {
   }
 
   @Test
-  @DisplayName("Should return 10 when initiated group test data")
+  @DisplayName("Should be equals expected and actual group lists")
   void testShowAllGroups() {
     List<Group> expected = new ArrayList<>();
     when(groupDAO.showAllGroups()).thenReturn(expected);
