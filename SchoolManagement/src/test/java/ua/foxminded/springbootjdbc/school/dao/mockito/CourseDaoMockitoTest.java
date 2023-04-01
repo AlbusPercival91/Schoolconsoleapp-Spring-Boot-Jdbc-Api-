@@ -105,13 +105,18 @@ class CourseDaoMockitoTest {
     verify(courseDAO).deleteCourseByName(courseName);
   }
 
-  @Test
+  @ParameterizedTest
   @DisplayName("Should be equals expected and actual course lists")
-  void testShowAllCourses() {
+  @CsvSource({ "History", "Swimming", "Paint", "Spanish", "Geography" })
+  void testShowAllCourses(String courseName) {
     List<Course> expected = new ArrayList<>();
+    Course course = new Course(courseName);
+    expected.add(course);
     when(courseDAO.showAllCourses()).thenReturn(expected);
     List<Course> actual = courseService.showAllCourses();
 
+    Assertions.assertTrue(!expected.isEmpty() && !actual.isEmpty());
+    Assertions.assertNotNull(course.getCourseName());
     Assertions.assertEquals(expected, actual);
     verify(courseDAO).showAllCourses();
   }

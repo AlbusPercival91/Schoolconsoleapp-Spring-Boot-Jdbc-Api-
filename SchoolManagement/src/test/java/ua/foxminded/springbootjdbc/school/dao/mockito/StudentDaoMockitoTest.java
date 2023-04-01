@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.MockitoAnnotations;
@@ -124,14 +123,20 @@ class StudentDaoMockitoTest {
     verify(studentDAO).updateStudentById(updateId, studentUpdate);
   }
 
-  @Test
+  @ParameterizedTest
   @DisplayName("Should be equals expected and actual student lists")
-  void testShowAllStudents() {
+  @CsvSource({ "1, Harry, Potter", "1, Ron, Wesley", "1, Herminone, Granger", "4, Draco, Malfoy " })
+  void testShowAllStudents(int groupId, String name, String surname) {
     List<Object> expected = new ArrayList<>();
+    Student student = new Student(groupId, name, surname);
+    expected.add(student);
     when(studentDAO.showAllStudents()).thenReturn(expected);
     List<Object> actual = studentService.showAllStudents();
-
-    Assertions.assertNotNull(actual);
+   
+    Assertions.assertTrue(!expected.isEmpty() && !actual.isEmpty());
+    Assertions.assertNotNull(student.getGroupId());
+    Assertions.assertNotNull(student.getFirstName());
+    Assertions.assertNotNull(student.getLastName());
     Assertions.assertEquals(expected, actual);
     verify(studentDAO).showAllStudents();
   }
