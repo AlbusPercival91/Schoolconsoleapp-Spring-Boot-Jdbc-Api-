@@ -1,23 +1,42 @@
 package ua.foxminded.springbootjdbc.school.testdata.dao;
 
-import org.junit.jupiter.api.BeforeEach;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import java.util.Map;
+import java.util.Set;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
+import ua.foxminded.springbootjdbc.school.entity.Course;
+import ua.foxminded.springbootjdbc.school.entity.Group;
+import ua.foxminded.springbootjdbc.school.entity.Student;
+import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
+import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
+import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class GeneratorDataServiceTest {
 
   @Autowired
-  private GeneratedDataService testDataService;
+  private GeneratedDataService service;
+
+  @Autowired
+  private GroupMaker groupMaker;
+
+  @Autowired
+  private StudentMaker studentMaker;
+
+  @Autowired
+  private CourseMaker courseMaker;
 
   @MockBean
   private GeneratorDataRepository repository;
@@ -25,38 +44,80 @@ class GeneratorDataServiceTest {
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;
 
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.initMocks(this);
-  }
-
   @Test
   @DisplayName("Should randomly generated 200 students")
   void shouldCreateStudent() {
-// hello
+    service = mock(GeneratedDataService.class);
+    service.createStudent();
+    verify(service).createStudent();
+    int i = 0;
+
+    for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
+      Student student = new Student(groupMaker.assignGroupId().get(i++), s.substring(0, s.indexOf(" ")),
+          s.substring(s.indexOf(" ")));
+      when(repository.createStudent(student)).thenReturn(i);
+    }
+    Assertions.assertEquals(200, i);
   }
 
   @Test
   @DisplayName("Should randomly generated 10 groups")
-  void createGroup() {
+  void shouldCreateGroup() {
+    service = mock(GeneratedDataService.class);
+    service.createGroup();
+    verify(service).createGroup();
+    int i = 0;
 
+    for (String s : groupMaker.generateGroups()) {
+      Group group = new Group(s);
+      when(repository.createGroup(group)).thenReturn(i++);
+    }
+    Assertions.assertEquals(10, i);
   }
 
   @Test
   @DisplayName("Should randomly generated 10 courses")
-  void createCourse() {
+  void shouldCreateCourse() {
+    service = mock(GeneratedDataService.class);
+    service.createCourse();
+    verify(service).createCourse();
+    int i = 0;
 
+    for (String s : courseMaker.generateCourses()) {
+      Course course = new Course(s, "TBD");
+      when(repository.createCourse(course)).thenReturn(i++);
+    }
+    Assertions.assertEquals(10, i);
   }
 
   @Test
   @DisplayName("Should randomly assigne 200 students to 10 courses")
-  void createCourseStudentRelation() {
+  void shouldCreateCourseStudentRelation() {
+    service = mock(GeneratedDataService.class);
+    service.createCourseStudentRelation();
+    verify(service).createCourseStudentRelation();
 
+    for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
+      Integer key = entry.getKey();
+      Set<Integer> value = entry.getValue();
+
+      for (Integer i : value) {
+        StudentCourseRelation scRelation = new StudentCourseRelation(key, i);
+        when(repository.createCourseStudentRelation(scRelation)).thenReturn(value.size());
+      }
+      Assertions.assertTrue(value.size() <= 3 && value.size() >= 1);
+    }
   }
 
   @Test
   @DisplayName("Should return all rows in database")
-  void rowsCount() {
-
+  void shouldGiveRowsCount() {
+    service = mock(GeneratedDataService.class);
+    service.databaseIsEmpty();
+    verify(service).databaseIsEmpty();
+    int expectedRows = 10;
+    when(repository.rowsCount()).thenReturn(expectedRows);
+    int actualRows = repository.rowsCount();
+    Assertions.assertEquals(expectedRows, actualRows);
   }
 }
