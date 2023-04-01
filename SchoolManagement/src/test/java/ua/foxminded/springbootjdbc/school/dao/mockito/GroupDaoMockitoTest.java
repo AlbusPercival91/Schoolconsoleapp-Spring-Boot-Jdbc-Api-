@@ -3,15 +3,12 @@ package ua.foxminded.springbootjdbc.school.dao.mockito;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -35,37 +32,33 @@ class GroupDaoMockitoTest {
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;
 
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.initMocks(this);
+  @ParameterizedTest
+  @CsvSource({ "30, aa-34", "100, ab-45", "23, er-12" })
+  void shouldFindGroupsWithLessOrEqualsStudents(int numberOfStudents, String groupName) {
+    Group group = new Group(groupName);
+    List<Group> groups = Collections.singletonList(group);
+    when(groupDAO.findGroupsWithLessOrEqualsStudents(numberOfStudents)).thenReturn(groups);
+    List<Group> actual = groupService.findGroupsWithLessOrEqualsStudents(numberOfStudents);
+
+    Assertions.assertEquals(groups.size(), actual.size(), "Expected number of groups to match actual");
+    Group actualGroup = actual.get(0);
+    Assertions.assertEquals(groupName, actualGroup.getGroupName(), "Expected group name to match actual");
+    verify(groupDAO, Mockito.times(1)).findGroupsWithLessOrEqualsStudents(numberOfStudents);
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 10 if matched groups less than or equal to students")
-  @CsvSource({ "30", "100" })
-  void testFindGroupsWithLessOrEqualsStudents(int number) {
-    List<Group> expected = new ArrayList<>();
-    when(groupDAO.findGroupsWithLessOrEqualsStudents(number)).thenReturn(expected);
-    List<Group> actual = groupService.findGroupsWithLessOrEqualsStudents(number);
-
-    Assertions.assertNotNull(actual);
-    Assertions.assertEquals(expected, actual);
-  }
-
-  @Test
-  @DisplayName("Should return an empty list when the maximum number of students is 0")
-  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsZero() {
-    List<Group> expected = new ArrayList<>();
-    when(groupDAO.findGroupsWithLessOrEqualsStudents(0)).thenReturn(expected);
+  @CsvSource({ "aa-34", "ab-45", "er-12" })
+  void shouldFindGroupsWithLessOrEqualsStudents_WhenStudentsZero() {
+    when(groupDAO.findGroupsWithLessOrEqualsStudents(0)).thenReturn(Collections.emptyList());
     List<Group> actual = groupService.findGroupsWithLessOrEqualsStudents(0);
 
     Assertions.assertTrue(actual.isEmpty());
+    verify(groupDAO, Mockito.times(1)).findGroupsWithLessOrEqualsStudents(0);
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 group created")
   @CsvSource({ "aa-23", "!@-@$", "cc-45", "45-df", "@#-45" })
-  void testCreateGroup(String groupName) {
+  void shouldCreateGroup(String groupName) {
     Integer expectedCount = 1;
     Group group = new Group(groupName);
     when(groupDAO.createGroup(any(Group.class))).thenReturn(expectedCount);
@@ -73,42 +66,43 @@ class GroupDaoMockitoTest {
 
     Assertions.assertNotNull(group.getGroupName());
     Assertions.assertEquals(expectedCount, actualCount);
-    verify(groupDAO).createGroup(any(Group.class));
+    verify(groupDAO, Mockito.times(1)).createGroup(any(Group.class));
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 group updated")
   @CsvSource({ "aa-34, aa-35", "aa-35, 35-aa", "test, test-test", "123, 321", "aa-aa, bb-bb", "00-00, 11-11",
       "!@-@$, )&-%^" })
-  void testEditGroupName(String groupName, String newGroupName) {
+  void shouldEditGroupName(String groupName, String newGroupName) {
     Integer expectedCount = 1;
     when(groupDAO.editGroupName(groupName, newGroupName)).thenReturn(expectedCount);
     Integer actualCount = groupService.editGroupName(groupName, newGroupName);
 
     Assertions.assertEquals(expectedCount, actualCount);
-    verify(groupDAO).editGroupName(groupName, newGroupName);
+    verify(groupDAO, Mockito.times(1)).editGroupName(groupName, newGroupName);
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 group deleted")
   @CsvSource({ "aa-34", "35-aa", "test", "123", "aa-aa", "00-00", "!@-@$" })
-  void testDeleteGroupByName(String groupName) {
+  void shouldDeleteGroupByName(String groupName) {
     Integer expectedCount = 1;
     when(groupDAO.deleteGroupByName(groupName)).thenReturn(expectedCount);
     Integer actualCount = groupService.deleteGroupByName(groupName);
 
     Assertions.assertEquals(expectedCount, actualCount);
-    verify(groupDAO).deleteGroupByName(groupName);
+    verify(groupDAO, Mockito.times(1)).deleteGroupByName(groupName);
   }
 
-  @Test
-  @DisplayName("Should be equals expected and actual group lists")
-  void testShowAllGroups() {
-    List<Group> expected = new ArrayList<>();
-    when(groupDAO.showAllGroups()).thenReturn(expected);
+  @ParameterizedTest
+  @CsvSource({ "aa-34", "35-aa", "test", "123", "aa-aa", "00-00", "!@-@$" })
+  void shouldShowAllGroups(String groupName) {
+    Group group = new Group(groupName);
+    List<Group> groups = Collections.singletonList(group);
+    when(groupDAO.showAllGroups()).thenReturn(groups);
     List<Group> actual = groupService.showAllGroups();
 
-    Assertions.assertEquals(expected, actual);
+    Assertions.assertTrue(!groups.isEmpty() && !actual.isEmpty());
+    Assertions.assertNotNull(group.getGroupName());
+    Assertions.assertEquals(groups, actual);
     verify(groupDAO).showAllGroups();
   }
 }

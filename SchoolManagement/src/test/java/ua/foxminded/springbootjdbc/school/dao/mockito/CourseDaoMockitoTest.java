@@ -3,7 +3,6 @@ package ua.foxminded.springbootjdbc.school.dao.mockito;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
@@ -100,15 +99,14 @@ class CourseDaoMockitoTest {
   @ParameterizedTest
   @CsvSource({ "History", "Swimming", "Paint", "Spanish", "Geography" })
   void shouldShowAllCourses(String courseName) {
-    List<Course> expected = new ArrayList<>();
     Course course = new Course(courseName);
-    expected.add(course);
-    when(courseDAO.showAllCourses()).thenReturn(expected);
+    List<Course> courses = Collections.singletonList(course);
+    when(courseDAO.showAllCourses()).thenReturn(courses);
     List<Course> actual = courseService.showAllCourses();
 
-    Assertions.assertTrue(!expected.isEmpty() && !actual.isEmpty());
+    Assertions.assertTrue(!courses.isEmpty() && !actual.isEmpty());
     Assertions.assertNotNull(course.getCourseName());
-    Assertions.assertEquals(expected, actual);
+    Assertions.assertEquals(courses, actual);
     verify(courseDAO).showAllCourses();
   }
 }
