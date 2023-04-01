@@ -4,14 +4,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -35,37 +33,33 @@ class CourseDaoMockitoTest {
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;
 
-  @BeforeEach
-  void setUp() {
-    MockitoAnnotations.initMocks(this);
+  @ParameterizedTest
+  @CsvSource({ "40, History", "100, Art", "70, Sports" })
+  void shouldFindCoursesWithLessOrEqualsStudents_WhenGivenNumberOfStudents(int numberOfStudents, String courseName) {
+    Course course = new Course(courseName);
+    List<Course> courses = Collections.singletonList(course);
+    when(courseDAO.findCoursesWithLessOrEqualsStudents(numberOfStudents)).thenReturn(courses);
+    List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(numberOfStudents);
+
+    Assertions.assertEquals(courses.size(), actual.size(), "Expected number of courses to match actual");
+    Course actualCourse = actual.get(0);
+    Assertions.assertEquals(courseName, actualCourse.getCourseName(), "Expected course name to match actual");
+    verify(courseDAO, Mockito.times(1)).findCoursesWithLessOrEqualsStudents(numberOfStudents);
   }
 
   @ParameterizedTest
-  @DisplayName("Should return true if student exist on courses ")
-  @CsvSource({ "40", "100", "70" })
-  void testFindCoursesWithLessOrEqualsStudents(int number) {
-    List<Course> expected = new ArrayList<>();
-    when(courseDAO.findCoursesWithLessOrEqualsStudents(number)).thenReturn(expected);
-    List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(number);
-
-    Assertions.assertNotNull(actual);
-    Assertions.assertEquals(expected, actual);
-  }
-
-  @Test
-  @DisplayName("Should return an empty list when the maximum number of students is 0")
-  void testFindCoursesWithLessOrEqualsStudents_WhenStudentsZero() {
-    List<Course> expected = new ArrayList<>();
-    when(courseDAO.findCoursesWithLessOrEqualsStudents(0)).thenReturn(expected);
+  @CsvSource({ "History", "Art", "Sports" })
+  void shouldFindCoursesWithLessOrEqualsStudents_WhenStudentsZero(String courseName) {
+    when(courseDAO.findCoursesWithLessOrEqualsStudents(0)).thenReturn(Collections.emptyList());
     List<Course> actual = courseService.findCoursesWithLessOrEqualsStudents(0);
 
     Assertions.assertTrue(actual.isEmpty());
+    verify(courseDAO, Mockito.times(1)).findCoursesWithLessOrEqualsStudents(0);
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 course created")
   @CsvSource({ "History, TBD", "Art, TBD", "Sports, TBD", "English, TBD", "123, TBD", "%$#, TBD", "!@-@$, )&-%^" })
-  void testCreateCourse(String courseName, String courseDescription) {
+  void shouldCreateCourse(String courseName, String courseDescription) {
     Integer expectedCount = 1;
     Course course = new Course(courseName, courseDescription);
     when(courseDAO.createCourse(any(Course.class))).thenReturn(expectedCount);
@@ -78,10 +72,9 @@ class CourseDaoMockitoTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 course updated")
   @CsvSource({ "History, TBD, Geography, TBD-2", "Art, TBD, Paint, TBD-3", "Sports, TBD, Yoga, TBD-5",
       "English, TBD, Spanish, TBD-6", "123, TBD, 321, asdf", "%$#, TBD, $%^&, TBDTBD", "!@-@$, )&-%^, Swimming, TBD" })
-  void testEditCourseNameAndDescription(String courseName, String courseDescription, String newCourseName,
+  void shouldEditCourseNameAndDescription(String courseName, String courseDescription, String newCourseName,
       String newCourseDescription) {
     Integer expectedCount = 1;
     when(courseDAO.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription))
@@ -94,9 +87,8 @@ class CourseDaoMockitoTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Should return 1 if 1 course deleted")
   @CsvSource({ "History", "Swimming", "Paint", "Spanish", "Geography" })
-  void testDeleteCourseByName(String courseName) {
+  void shouldDeleteCourseByName(String courseName) {
     Integer expectedCount = 1;
     when(courseDAO.deleteCourseByName(courseName)).thenReturn(expectedCount);
     Integer actualCount = courseService.deleteCourseByName(courseName);
@@ -106,9 +98,8 @@ class CourseDaoMockitoTest {
   }
 
   @ParameterizedTest
-  @DisplayName("Should be equals expected and actual course lists")
   @CsvSource({ "History", "Swimming", "Paint", "Spanish", "Geography" })
-  void testShowAllCourses(String courseName) {
+  void shouldShowAllCourses(String courseName) {
     List<Course> expected = new ArrayList<>();
     Course course = new Course(courseName);
     expected.add(course);
