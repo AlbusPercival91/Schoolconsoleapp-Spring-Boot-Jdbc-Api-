@@ -50,14 +50,14 @@ class GeneratorDataServiceTest {
     service = mock(GeneratedDataService.class);
     service.createStudent();
     verify(service).createStudent();
-    int i = 0;
+    int count = 0;
 
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
-      Student student = new Student(groupMaker.assignGroupId().get(i++), s.substring(0, s.indexOf(" ")),
+      Student student = new Student(groupMaker.assignGroupId().get(count++), s.substring(0, s.indexOf(" ")),
           s.substring(s.indexOf(" ")));
-      when(repository.createStudent(student)).thenReturn(i);
+      when(repository.createStudent(student)).thenReturn(count);
     }
-    Assertions.assertEquals(200, i);
+    Assertions.assertEquals(200, count);
   }
 
   @Test
@@ -66,13 +66,13 @@ class GeneratorDataServiceTest {
     service = mock(GeneratedDataService.class);
     service.createGroup();
     verify(service).createGroup();
-    int i = 0;
+    int count = 0;
 
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
-      when(repository.createGroup(group)).thenReturn(i++);
+      when(repository.createGroup(group)).thenReturn(count++);
     }
-    Assertions.assertEquals(10, i);
+    Assertions.assertEquals(10, count);
   }
 
   @Test
@@ -81,13 +81,13 @@ class GeneratorDataServiceTest {
     service = mock(GeneratedDataService.class);
     service.createCourse();
     verify(service).createCourse();
-    int i = 0;
+    int count = 0;
 
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
-      when(repository.createCourse(course)).thenReturn(i++);
+      when(repository.createCourse(course)).thenReturn(count++);
     }
-    Assertions.assertEquals(10, i);
+    Assertions.assertEquals(10, count);
   }
 
   @Test
