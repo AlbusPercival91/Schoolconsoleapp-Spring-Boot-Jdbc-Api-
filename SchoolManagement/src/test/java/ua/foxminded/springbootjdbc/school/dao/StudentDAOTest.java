@@ -17,7 +17,7 @@ import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
-import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratedDataService;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
 @Testcontainers
 @SpringBootTest
@@ -28,7 +28,7 @@ class StudentDAOTest {
   private JdbcTemplate jdbcTemplate;
 
   @Autowired
-  private GeneratedDataService testData;
+  private GeneratorDataService testData;
 
   @Autowired
   private StudentService studentService;

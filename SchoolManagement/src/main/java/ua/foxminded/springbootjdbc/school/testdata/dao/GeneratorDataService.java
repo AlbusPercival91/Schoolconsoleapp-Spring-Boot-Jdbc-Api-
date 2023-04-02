@@ -14,7 +14,7 @@ import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
 import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @Service
-public class GeneratedDataService {
+public class GeneratorDataService {
 
   @Autowired
   private StudentMaker studentMaker;
@@ -27,7 +27,7 @@ public class GeneratedDataService {
 
   private final GeneratorDataRepository dataRepository;
 
-  public GeneratedDataService(GeneratorDataRepository dataRepository) {
+  public GeneratorDataService(GeneratorDataRepository dataRepository) {
     this.dataRepository = dataRepository;
   }
 

@@ -50,5 +50,4 @@ public class GeneratorDataRepository {
                     """;
     return jdbcTemplate.queryForObject(sql, Integer.class);
   }
-
 }

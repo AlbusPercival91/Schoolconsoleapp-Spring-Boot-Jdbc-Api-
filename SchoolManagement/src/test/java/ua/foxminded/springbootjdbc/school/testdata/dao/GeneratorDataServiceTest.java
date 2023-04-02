@@ -1,13 +1,13 @@
 package ua.foxminded.springbootjdbc.school.testdata.dao;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -18,25 +18,13 @@ import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
-import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
-import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
-import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 class GeneratorDataServiceTest {
 
   @Autowired
-  private GeneratedDataService service;
-
-  @Autowired
-  private GroupMaker groupMaker;
-
-  @Autowired
-  private StudentMaker studentMaker;
-
-  @Autowired
-  private CourseMaker courseMaker;
+  private GeneratorDataService service;
 
   @MockBean
   private GeneratorDataRepository repository;
@@ -44,80 +32,62 @@ class GeneratorDataServiceTest {
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;
 
+  @Captor
+  private ArgumentCaptor<Course> courseCaptor;
+
+  @Captor
+  private ArgumentCaptor<Student> studentCaptor;
+
+  @Captor
+  private ArgumentCaptor<Group> groupCaptor;
+
+  @Captor
+  private ArgumentCaptor<StudentCourseRelation> relationCaptor;
+
   @Test
-  @DisplayName("Should randomly generated 200 students")
   void shouldCreateStudent() {
-    service = mock(GeneratedDataService.class);
     service.createStudent();
-    verify(service).createStudent();
-    int count = 0;
-
-    for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
-      Student student = new Student(groupMaker.assignGroupId().get(count++), s.substring(0, s.indexOf(" ")),
-          s.substring(s.indexOf(" ")));
-      when(repository.createStudent(student)).thenReturn(count);
-    }
-    Assertions.assertEquals(200, count);
+    verify(repository, Mockito.times(200)).createStudent(studentCaptor.capture());
+    List<Student> capturedStudents = studentCaptor.getAllValues();
+    Assertions.assertEquals(200, capturedStudents.size());
+    capturedStudents.forEach(student -> Assertions.assertNotNull(student.getFirstName()));
   }
 
   @Test
-  @DisplayName("Should randomly generated 10 groups")
   void shouldCreateGroup() {
-    service = mock(GeneratedDataService.class);
     service.createGroup();
-    verify(service).createGroup();
-    int count = 0;
-
-    for (String s : groupMaker.generateGroups()) {
-      Group group = new Group(s);
-      when(repository.createGroup(group)).thenReturn(count++);
-    }
-    Assertions.assertEquals(10, count);
+    verify(repository, Mockito.times(10)).createGroup(groupCaptor.capture());
+    List<Group> capturedGroups = groupCaptor.getAllValues();
+    Assertions.assertEquals(10, capturedGroups.size());
+    capturedGroups.forEach(group -> Assertions.assertNotNull(group.getGroupName()));
   }
 
   @Test
-  @DisplayName("Should randomly generated 10 courses")
   void shouldCreateCourse() {
-    service = mock(GeneratedDataService.class);
     service.createCourse();
-    verify(service).createCourse();
-    int count = 0;
-
-    for (String s : courseMaker.generateCourses()) {
-      Course course = new Course(s, "TBD");
-      when(repository.createCourse(course)).thenReturn(count++);
-    }
-    Assertions.assertEquals(10, count);
+    verify(repository, Mockito.times(10)).createCourse(courseCaptor.capture());
+    List<Course> capturedCourses = courseCaptor.getAllValues();
+    Assertions.assertEquals(10, capturedCourses.size());
+    capturedCourses.forEach(course -> Assertions.assertNotNull(course.getCourseName()));
   }
 
   @Test
-  @DisplayName("Should randomly assigne 200 students to 10 courses")
   void shouldCreateCourseStudentRelation() {
-    service = mock(GeneratedDataService.class);
     service.createCourseStudentRelation();
-    verify(service).createCourseStudentRelation();
-
-    for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
-      Integer key = entry.getKey();
-      Set<Integer> value = entry.getValue();
-
-      for (Integer i : value) {
-        StudentCourseRelation scRelation = new StudentCourseRelation(key, i);
-        when(repository.createCourseStudentRelation(scRelation)).thenReturn(value.size());
-      }
-      Assertions.assertTrue(value.size() <= 3 && value.size() >= 1);
-    }
+    verify(repository, Mockito.atLeast(200)).createCourseStudentRelation(relationCaptor.capture());
+    List<StudentCourseRelation> capturedRelations = relationCaptor.getAllValues();
+    Assertions.assertTrue(capturedRelations.size() >= 200);
+    capturedRelations.forEach(relation -> {
+      Assertions.assertNotNull(Integer.valueOf(relation.getStudentId()), "Student ID should not be null");
+      Assertions.assertNotNull(Integer.valueOf(relation.getCourseId()), "Course ID should not be null");
+    });
   }
 
   @Test
-  @DisplayName("Should return all rows in database")
   void shouldGiveRowsCount() {
-    service = mock(GeneratedDataService.class);
-    service.databaseIsEmpty();
-    verify(service).databaseIsEmpty();
-    int expectedRows = 10;
-    when(repository.rowsCount()).thenReturn(expectedRows);
-    int actualRows = repository.rowsCount();
-    Assertions.assertEquals(expectedRows, actualRows);
+    when(repository.rowsCount()).thenReturn(100);
+    boolean isEmpty = service.databaseIsEmpty();
+    verify(repository, Mockito.times(1)).rowsCount();
+    Assertions.assertFalse(isEmpty);
   }
 }

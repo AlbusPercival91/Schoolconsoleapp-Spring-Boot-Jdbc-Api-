@@ -5,13 +5,13 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
-import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratedDataService;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
 @Component
 public class DatabaseRunner implements ApplicationRunner {
 
   @Autowired
-  private GeneratedDataService testData;
+  private GeneratorDataService testData;
 
   @Autowired
   private ConsoleMenuManager consoleManager;
