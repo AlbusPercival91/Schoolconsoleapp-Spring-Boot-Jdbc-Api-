@@ -3,11 +3,14 @@ package ua.foxminded.springbootjdbc.school.testdata.dao;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -43,6 +46,18 @@ class GeneratorDataServiceTest {
 
   @Captor
   private ArgumentCaptor<StudentCourseRelation> relationCaptor;
+
+  private AutoCloseable closeable;
+
+  @BeforeEach
+  public void open() {
+    closeable = MockitoAnnotations.openMocks(this);
+  }
+
+  @AfterEach
+  public void release() throws Exception {
+    closeable.close();
+  }
 
   @Test
   void shouldCreateStudent() {

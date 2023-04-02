@@ -6,10 +6,14 @@ import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
@@ -32,6 +36,18 @@ class StudentDaoMockitoTest {
 
   @MockBean
   private ConsoleMenuManager consoleMenuRunner;
+  
+  private AutoCloseable closeable;
+
+  @BeforeEach
+  public void open() {
+    closeable = MockitoAnnotations.openMocks(this);
+  }
+
+  @AfterEach
+  public void release() throws Exception {
+    closeable.close();
+  }
 
   @ParameterizedTest
   @CsvSource({ "Art, 7, Jack, Sparrow", "Sports, 4, Sasha, Burdin", "History, 3, Jinny, Wesley" })
