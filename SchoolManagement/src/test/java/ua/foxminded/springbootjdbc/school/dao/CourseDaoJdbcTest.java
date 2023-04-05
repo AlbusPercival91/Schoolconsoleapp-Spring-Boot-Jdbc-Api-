@@ -7,20 +7,28 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import ua.foxminded.springbootjdbc.school.entity.Course;
+import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
-@JdbcTest
+@SpringBootTest
+@Testcontainers
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@ActiveProfiles("test")
+@ActiveProfiles("test-container")
 @Sql(scripts = { "/drop_data.sql", "/init_tables.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 class CourseDaoJdbcTest {
-
+  
   @Autowired
   private JdbcTemplate jdbcTemplate;
   private CourseDAO courseDao;
+
+  @MockBean
+  private ConsoleMenuManager consoleMenuRunner;
 
   @BeforeEach
   void setUp() {
@@ -29,11 +37,12 @@ class CourseDaoJdbcTest {
 
   @Test
   void testShowAllCourses() {
-    CourseService courseService = new CourseService(courseDao);
     Course course = new Course("Swimming");
-    int addCourse = courseService.createCourse(course);
-    List<Course> actual = courseService.showAllCourses();
+    int addCourse = courseDao.createCourse(course);
+    List<Course> actual = courseDao.showAllCourses();
     Assertions.assertEquals(1, addCourse);
     Assertions.assertEquals(1, actual.size());
+//    int a = 1;
+//    Assertions.assertEquals(1, a);
   }
 }
