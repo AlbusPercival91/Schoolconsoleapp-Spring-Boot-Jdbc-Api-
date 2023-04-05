@@ -1,4 +1,4 @@
-app:
+spring:
   datasource:
     main:
       driver-class-name: org.postgresql.Driver
