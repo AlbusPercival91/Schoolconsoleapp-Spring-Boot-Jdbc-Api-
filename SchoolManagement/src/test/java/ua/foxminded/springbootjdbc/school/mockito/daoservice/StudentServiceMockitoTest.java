@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.dao.mockito;
+package ua.foxminded.springbootjdbc.school.mockito.daoservice;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
@@ -26,7 +26,7 @@ import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class StudentDaoMockitoTest {
+class StudentServiceMockitoTest {
 
   @Autowired
   private StudentService studentService;

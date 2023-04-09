@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.testdata.dao;
+package ua.foxminded.springbootjdbc.school.mockito.testdataservice;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -21,6 +21,8 @@ import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
