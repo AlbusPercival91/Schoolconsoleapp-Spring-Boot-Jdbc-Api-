@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.mockito.testdataservice;
+package ua.foxminded.springbootjdbc.school.mockito.testservice;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -26,7 +26,7 @@ import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-class GeneratorDataServiceTest {
+class GeneratorDataServiceMockitoTest {
 
   @Autowired
   private GeneratorDataService service;

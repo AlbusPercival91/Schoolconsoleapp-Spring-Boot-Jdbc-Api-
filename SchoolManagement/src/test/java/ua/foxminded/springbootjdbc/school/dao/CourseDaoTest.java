@@ -53,7 +53,7 @@ class CourseDaoTest {
   }
 
   @Test
-  @DisplayName("Should return an empty list when the maximum number of students is 0")
+  @DisplayName("Should return an empty list of courses when the maximum number of students is 0")
   void should_return_empty_list_when_students_is_zero() {
     testData.createStudent();
     testData.createCourse();
