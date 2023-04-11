@@ -39,8 +39,7 @@ class GroupDaoTest {
   @ParameterizedTest
   @DisplayName("Should return 10 if matched groups less than or equal to students")
   @CsvSource({ "30", "100" })
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindGroupsWithLessOrEqualsStudents(int number) {
+  void testFindGroupsWithLessOrEqualsStudents_ShouldReturnGroupsWhenMatchedLessOrEqual(int number) {
     testData.createGroup();
     testData.createStudent();
     Pattern pattern = Pattern.compile("[a-z]{2}-[0-9]{2}");
@@ -51,8 +50,7 @@ class GroupDaoTest {
 
   @Test
   @DisplayName("Should return an empty list when the maximum number of students is 0")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsZero() {
+  void testFindGroupsWithLessOrEqualsStudents_WhenStudentsZero_ShouldReturnEmptyList() {
     testData.createGroup();
     testData.createStudent();
     List<Group> actual = groupDao.findGroupsWithLessOrEqualsStudents(0);
@@ -63,8 +61,7 @@ class GroupDaoTest {
   @DisplayName("Should return 1 if 1 group updated")
   @CsvSource({ "aa-34, aa-35", "aa-35, 35-aa", "test, test-test", "123, 321", "aa-aa, bb-bb", "00-00, 11-11",
       "!@-@$, )&-%^" })
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testEditGroupName(Group group, Group newGroup) {
+  void testEditGroupName_ShouldReturnOneIfGroupUpdated(Group group, Group newGroup) {
     groupDao.createGroup(group);
     Assertions.assertEquals(1, groupDao.editGroupName(group.getGroupName(), newGroup.getGroupName()));
   }
@@ -72,16 +69,14 @@ class GroupDaoTest {
   @ParameterizedTest
   @DisplayName("Should return 1 if 1 group deleted")
   @CsvSource({ "aa-34", "35-aa", "test", "123", "aa-aa", "00-00", "!@-@$" })
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testDeleteGroupByName(Group group) {
+  void testDeleteGroupByName_ShouldReturnOneIfGroupDeleted(Group group) {
     groupDao.createGroup(group);
     Assertions.assertEquals(1, groupDao.deleteGroupByName(group.getGroupName()));
   }
 
   @Test
   @DisplayName("Should return 10 when initiated group test data")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testShowAllGroups() {
+  void testShowAllGroups_ShouldReturnAllGroups() {
     testData.createGroup();
     List<Group> actual = groupDao.showAllGroups();
     Assertions.assertEquals(10, actual.size());

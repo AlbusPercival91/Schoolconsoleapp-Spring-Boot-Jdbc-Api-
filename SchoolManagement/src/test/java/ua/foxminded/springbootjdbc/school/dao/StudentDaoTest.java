@@ -6,65 +6,43 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.*;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.*;
-import org.testcontainers.containers.*;
-import org.testcontainers.junit.jupiter.*;
-import org.testcontainers.junit.jupiter.Container;
 import ua.foxminded.springbootjdbc.school.entity.Student;
-import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
-import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
+import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
+import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
 
-@Testcontainers
-@SpringBootTest
-@AutoConfigureTestDatabase(replace = Replace.NONE)
-class StudentDAOTest {
+@JdbcTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@ActiveProfiles("test-container")
+@Sql(scripts = { "/drop_data.sql", "/init_tables.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+class StudentDaoTest {
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
-
-  @Autowired
-  private GeneratorDataService testData;
-
-  @Autowired
-  private StudentService studentService;
-
-  @Autowired
-  private CourseMaker courseMaker;
-
-  @MockBean
-  private ConsoleMenuManager consoleMenuRunner;
-
-  @Container
-  private static GenericContainer<?> container = new GenericContainer<>("openjdk:8-jdk-alpine").withExposedPorts(1521)
-      .withEnv("TZ", "UTC").withCommand("/bin/sh", "-c",
-          "apk update && apk add --no-cache h2 && java -cp /usr/share/java/h2*.jar org.h2.tools.Server -ifNotExists -tcp -tcpAllowOthers -tcpPort 1521");
+  private StudentDAO studentDao;
+  private TestDataGenerator testData;
 
   @BeforeEach
   void setUp() {
-    container.start();
-  }
-
-  @AfterEach
-  @Sql(scripts = "/drop_all_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-  void tearDown() {
-    container.stop();
+    studentDao = new StudentDAO(jdbcTemplate);
+    testData = new TestDataGenerator(new StudentMaker(), new GroupMaker(), new CourseMaker(),
+        new GeneratorDataRepository(jdbcTemplate));
   }
 
   @Test
   @DisplayName("Should return true if number of students at course more than zero")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testFindStudentsRelatedToCourse() {
+  void testFindStudentsRelatedToCourse_ShouldReturnNameOfCourses() {
     testData.createCourse();
     testData.createStudent();
     testData.createCourseStudentRelation();
 
-    for (String s : courseMaker.generateCourses()) {
-      long studentCount = studentService.findStudentsRelatedToCourse(s).stream()
+    for (String s : new CourseMaker().generateCourses()) {
+      long studentCount = studentDao.findStudentsRelatedToCourse(s).stream()
           .filter(course -> course.toString().trim().contains(" ")).count();
       Assertions.assertTrue(studentCount > 0);
     }
@@ -74,19 +52,17 @@ class StudentDAOTest {
   @DisplayName("Should return 1 if 1 student assigned to one course")
   @CsvSource({ "12, Art", "190, Literature", "19, Computer Science", "21, Geography", "193, Physical Science",
       "1, Life Science", "9, English", "2, Mathematics", "150, Sports", "7, History" })
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testAddStudentToTheCourse(int studentId, String course) {
+  void testAddStudentToTheCourse_ShouldReturnOneIfStudentAssigned(int studentId, String course) {
     testData.createCourse();
     testData.createStudent();
-    Assertions.assertEquals(1, studentService.addStudentToTheCourse(studentId, course));
+    Assertions.assertEquals(1, studentDao.addStudentToTheCourse(studentId, course));
   }
 
   @Test
   @DisplayName("Should return true when actual and inserted student are equals")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testAddNewStudent() {
+  void testAddNewStudent_ShouldReturnEqualsWhenNewStudentCreated() {
     Student student = new Student(4, "Harry", "Potter");
-    studentService.addNewStudent(student);
+    studentDao.addNewStudent(student);
     String sql = "SELECT * FROM school.students;";
     String actual = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
       return rs.getInt("student_id") + " " + rs.getInt("group_id") + " " + rs.getString("first_name") + " "
@@ -98,22 +74,20 @@ class StudentDAOTest {
 
   @Test
   @DisplayName("Should return 1 if student deleted from DB")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testDeleteStudentByID() {
+  void testDeleteStudentByID_ShouldReturnOneIfStudentRemoved() {
     String sql = "insert into school.students(group_id, first_name, last_name) values(9,'Albus','Dambldor');";
     jdbcTemplate.update(sql);
     int deleted = 0;
 
-    if (studentService.getStudentID().contains(1)) {
-      deleted = studentService.deleteStudentByID(1);
+    if (studentDao.getStudentID().contains(1)) {
+      deleted = studentDao.deleteStudentByID(1);
     }
     Assertions.assertEquals(1, deleted);
   }
 
   @Test
   @DisplayName("Should return 1 if student deleted from course Table in DB")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testRemoveStudentFromCourse() {
+  void testRemoveStudentFromCourse_ShouldReturnOneIfStudentRemovedFromCourse() {
     testData.createCourse();
     testData.createStudent();
     String sql = """
@@ -123,18 +97,17 @@ class StudentDAOTest {
         (SELECT course_id FROM school.course WHERE course_name = 'Sports');
             """;
     jdbcTemplate.update(sql);
-    int deleted = studentService.removeStudentFromCourse(17, "Sports");
+    int deleted = studentDao.removeStudentFromCourse(17, "Sports");
     Assertions.assertEquals(1, deleted);
   }
 
   @Test
   @DisplayName("Should return 1 if student updated")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testUpdateStudentById() {
+  void testUpdateStudentById_ShouldReturnEqualsStringsWhenStudentUpdated() {
     Student student = new Student(4, "Harry", "Potter");
-    studentService.addNewStudent(student);
+    studentDao.addNewStudent(student);
     Student updatedStudent = new Student(4, "Ron", "Wesley");
-    studentService.updateStudentById(1, updatedStudent);
+    studentDao.updateStudentById(1, updatedStudent);
     String sql = "SELECT * FROM school.students;";
 
     String actual = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
@@ -148,10 +121,9 @@ class StudentDAOTest {
 
   @Test
   @DisplayName("Should return 200 when initiated students test data")
-  @Sql(scripts = "/init_tables.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-  void testShowAllStudents() {
+  void testShowAllStudents_ShouldReturnAllStudents() {
     testData.createStudent();
-    List<Object> actual = studentService.showAllStudents();
+    List<Object> actual = studentDao.showAllStudents();
     Assertions.assertEquals(200, actual.size());
   }
 
