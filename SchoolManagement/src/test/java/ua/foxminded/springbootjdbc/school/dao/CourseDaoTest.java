@@ -26,7 +26,7 @@ import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
 @ActiveProfiles("test-container")
 @Sql(scripts = { "/drop_data.sql", "/init_tables.sql" }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
-class CourseDaoJdbcTest {
+class CourseDaoTest {
 
   @Autowired
   private JdbcTemplate jdbcTemplate;
