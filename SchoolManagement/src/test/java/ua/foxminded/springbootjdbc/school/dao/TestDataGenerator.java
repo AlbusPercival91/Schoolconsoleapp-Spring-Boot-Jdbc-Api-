@@ -12,10 +12,20 @@ import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
 import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
 
 public class TestDataGenerator {
+  private final StudentMaker studentMaker;
+  private final GroupMaker groupMaker;
+  private final CourseMaker courseMaker;
+  private final GeneratorDataRepository dataRepository;
 
-  public void createStudent(GeneratorDataRepository dataRepository) {
-    StudentMaker studentMaker = new StudentMaker();
-    GroupMaker groupMaker = new GroupMaker();
+  public TestDataGenerator(StudentMaker studentMaker, GroupMaker groupMaker, CourseMaker courseMaker,
+      GeneratorDataRepository dataRepository) {
+    this.studentMaker = studentMaker;
+    this.groupMaker = groupMaker;
+    this.courseMaker = courseMaker;
+    this.dataRepository = dataRepository;
+  }
+
+  public void createStudent() {
     int i = 0;
 
     for (String s : studentMaker.generateStudents(studentMaker.generateNames(20), studentMaker.generateSurnames(20))) {
@@ -25,27 +35,21 @@ public class TestDataGenerator {
     }
   }
 
-  public void createGroup(GeneratorDataRepository dataRepository) {
-    GroupMaker groupMaker = new GroupMaker();
-
+  public void createGroup() {
     for (String s : groupMaker.generateGroups()) {
       Group group = new Group(s);
       dataRepository.createGroup(group);
     }
   }
 
-  public void createCourse(GeneratorDataRepository dataRepository) {
-    CourseMaker courseMaker = new CourseMaker();
-
+  public void createCourse() {
     for (String s : courseMaker.generateCourses()) {
       Course course = new Course(s, "TBD");
       dataRepository.createCourse(course);
     }
   }
 
-  public void createCourseStudentRelation(GeneratorDataRepository dataRepository) {
-    CourseMaker courseMaker = new CourseMaker();
-
+  public void createCourseStudentRelation() {
     for (Map.Entry<Integer, Set<Integer>> entry : courseMaker.assignCourseId().entrySet()) {
       Integer key = entry.getKey();
       Set<Integer> value = entry.getValue();
@@ -56,5 +60,5 @@ public class TestDataGenerator {
       }
     }
   }
- 
+
 }
