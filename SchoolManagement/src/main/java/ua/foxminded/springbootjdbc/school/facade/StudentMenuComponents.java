@@ -1,4 +1,4 @@
-package ua.foxminded.springbootjdbc.school.console;
+package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.beans.factory.annotation.Autowired;

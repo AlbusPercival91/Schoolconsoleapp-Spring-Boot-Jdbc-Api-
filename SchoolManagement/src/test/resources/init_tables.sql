@@ -1,12 +1,4 @@
-DROP TABLE IF EXISTS school.students_courses_checkouts;
-DROP TABLE IF EXISTS school.students;
-DROP TABLE IF EXISTS school.course;
-DROP TABLE IF EXISTS school.groups;
-
-DROP SCHEMA IF EXISTS school;
-
-CREATE SCHEMA IF NOT EXISTS school
-    AUTHORIZATION school_admin;
+CREATE SCHEMA IF NOT EXISTS school;
     
 CREATE TABLE IF NOT EXISTS school.groups
 (
@@ -21,11 +13,7 @@ CREATE TABLE IF NOT EXISTS school.students
     group_id integer,
     first_name character varying(50) NOT NULL,
     last_name character varying(50) NOT NULL,
-    CONSTRAINT students_pkey PRIMARY KEY (student_id),
-    CONSTRAINT group_id FOREIGN KEY (group_id)
-        REFERENCES school.groups (group_id)
-        ON UPDATE CASCADE
-        ON DELETE SET NULL
+    CONSTRAINT students_pkey PRIMARY KEY (student_id)
 );
     
 CREATE TABLE IF NOT EXISTS school.course

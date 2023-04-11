@@ -30,12 +30,7 @@ public class StudentService {
   }
 
   public int deleteStudentByID(int id) {
-    int result = studentDao.deleteStudentByID(id);
-
-    if (result != 1) {
-      throw new IllegalStateException(WRONG);
-    }
-    return result;
+    return studentDao.deleteStudentByID(id);
   }
 
   public List<Integer> getStudentID() {

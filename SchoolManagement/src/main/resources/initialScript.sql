@@ -1,6 +1,3 @@
-DROP DATABASE IF EXISTS school(force);
-DROP ROLE IF EXISTS school_admin;
-
 CREATE ROLE school_admin 
 LOGIN
 PASSWORD '1234';

@@ -8,11 +8,11 @@ import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 
 @Repository
-public class TestDataRepository {
+public class GeneratorDataRepository {
 
   private final JdbcTemplate jdbcTemplate;
 
-  public TestDataRepository(JdbcTemplate jdbcTemplate) {
+  public GeneratorDataRepository(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
   }
 
@@ -36,4 +36,18 @@ public class TestDataRepository {
     return jdbcTemplate.update(sql, scRelation.getStudentId(), scRelation.getCourseId());
   }
 
+  public int rowsCount() {
+    String sql = """
+                    SELECT SUM (COUNT) FROM (
+        SELECT COUNT(*) AS COUNT FROM school.students
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.groups
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.course
+        UNION ALL
+        SELECT COUNT(*) AS COUNT FROM school.students_courses_checkouts
+        ) AS counts;
+                    """;
+    return jdbcTemplate.queryForObject(sql, Integer.class);
+  }
 }

@@ -12,7 +12,13 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class SchoolManagementApplication {
 
-  public static void main(String[] args) throws InterruptedException {
+  public static void main(String[] args) {
+    initializeDatabase();
+    ConfigurableApplicationContext context = SpringApplication.run(SchoolManagementApplication.class, args);
+    context.close();
+  }
+
+  private static void initializeDatabase() {
     String initialScriptFileName = "initialScript.sql";
 
     try (InputStream is = SchoolManagementApplication.class.getResourceAsStream("/" + initialScriptFileName);
@@ -35,12 +41,9 @@ public class SchoolManagementApplication {
       String[] envVars = { "PGPASSWORD=1234" };
       Process runInitScript = Runtime.getRuntime().exec(cmdQuery, envVars);
       runInitScript.waitFor();
-    } catch (IOException e) {
-      throw new IllegalArgumentException("File not found");
+    } catch (IOException | InterruptedException e) {
+      Thread.currentThread().interrupt();
     }
-
-    ConfigurableApplicationContext context = SpringApplication.run(SchoolManagementApplication.class, args);
-    context.close();
   }
 
 }

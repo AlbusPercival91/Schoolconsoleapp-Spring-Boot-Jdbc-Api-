@@ -1,10 +1,7 @@
-package ua.foxminded.springbootjdbc.school.testdata.dao;
+package ua.foxminded.springbootjdbc.school.dao;
 
 import java.util.Map;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
@@ -12,22 +9,19 @@ import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
 import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 import ua.foxminded.springbootjdbc.school.testdata.GroupMaker;
 import ua.foxminded.springbootjdbc.school.testdata.StudentMaker;
+import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
 
-@Service
-public class TestDataService {
+public class TestDataGenerator {
+  private final StudentMaker studentMaker;
+  private final GroupMaker groupMaker;
+  private final CourseMaker courseMaker;
+  private final GeneratorDataRepository dataRepository;
 
-  @Autowired
-  private StudentMaker studentMaker;
-
-  @Autowired
-  private CourseMaker courseMaker;
-
-  @Autowired
-  private GroupMaker groupMaker;
-
-  private final TestDataRepository dataRepository;
-
-  public TestDataService(TestDataRepository dataRepository) {
+  public TestDataGenerator(StudentMaker studentMaker, GroupMaker groupMaker, CourseMaker courseMaker,
+      GeneratorDataRepository dataRepository) {
+    this.studentMaker = studentMaker;
+    this.groupMaker = groupMaker;
+    this.courseMaker = courseMaker;
     this.dataRepository = dataRepository;
   }
 
