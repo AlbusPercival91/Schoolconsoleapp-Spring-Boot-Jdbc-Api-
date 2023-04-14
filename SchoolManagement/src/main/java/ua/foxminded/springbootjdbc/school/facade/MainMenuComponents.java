@@ -1,19 +1,12 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class MainMenuComponents {
-
-  @Autowired
   private StudentMenuComponents studentMenu;
-
-  @Autowired
   private GroupMenuComponents groupMenu;
-
-  @Autowired
   private CourseMenuComponents courseMenu;
 
   public MainMenuComponents(StudentMenuComponents studentMenu, GroupMenuComponents groupMenu,

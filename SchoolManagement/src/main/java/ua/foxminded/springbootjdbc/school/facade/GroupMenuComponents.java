@@ -1,15 +1,12 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.dao.GroupService;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 
 @Component
 public class GroupMenuComponents {
-
-  @Autowired
   private final GroupService groupService;
 
   public GroupMenuComponents(GroupService groupService) {

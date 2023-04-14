@@ -1,15 +1,12 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 
 @Component
 public class CourseMenuComponents {
-
-  @Autowired
   private final CourseService courseService;
 
   public CourseMenuComponents(CourseService courseService) {
