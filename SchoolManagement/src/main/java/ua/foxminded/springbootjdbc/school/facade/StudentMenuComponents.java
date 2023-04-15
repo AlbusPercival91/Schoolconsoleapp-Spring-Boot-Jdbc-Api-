@@ -1,6 +1,8 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ua.foxminded.springbootjdbc.school.dao.StudentService;
 import ua.foxminded.springbootjdbc.school.entity.Student;
@@ -9,6 +11,8 @@ import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 @Component
 public class StudentMenuComponents {
   private final StudentService studentService;
+  
+  @Autowired
   private CourseMaker courseMaker;
 
   public StudentMenuComponents(StudentService studentService) {
