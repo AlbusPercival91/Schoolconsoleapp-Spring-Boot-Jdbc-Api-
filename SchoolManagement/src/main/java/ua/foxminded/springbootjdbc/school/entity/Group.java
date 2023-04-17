@@ -1,5 +1,10 @@
 package ua.foxminded.springbootjdbc.school.entity;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public class Group {
   private String groupName;
 
@@ -7,12 +12,4 @@ public class Group {
     this.groupName = groupName;
   }
 
-  public String getGroupName() {
-    return groupName;
-  }
-
-  @Override
-  public String toString() {
-    return groupName;
-  }
 }

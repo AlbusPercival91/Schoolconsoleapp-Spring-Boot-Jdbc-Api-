@@ -1,5 +1,10 @@
 package ua.foxminded.springbootjdbc.school.entity;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public class Student {
   private Integer groupId;
   private String firstName;
@@ -9,26 +14,6 @@ public class Student {
     this.groupId = groupId;
     this.firstName = firstName;
     this.lastName = lastName;
-  }
-
-  public Integer getGroupId() {
-    return groupId;
-  }
-
-  public String getFirstName() {
-    return firstName;
-  }
-
-  public String getLastName() {
-    return lastName;
-  }
-
-  @Override
-  public String toString() {
-    if (groupId == 0) {
-      groupId = null;
-    }
-    return "Student [group ID= " + groupId + ", Name= " + firstName + ", Surname= " + lastName + "]";
   }
 
 }
