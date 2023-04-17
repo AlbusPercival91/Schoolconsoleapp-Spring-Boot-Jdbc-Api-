@@ -2,9 +2,12 @@ package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
+
+import lombok.extern.slf4j.Slf4j;
 import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.entity.Course;
 
+@Slf4j
 @Component
 public class CourseMenuComponents {
   private final CourseService courseService;
@@ -14,70 +17,73 @@ public class CourseMenuComponents {
   }
 
   public void findCoursesWithLessOrEqualsStudentsFacade(Scanner scan) {
-    System.out.println(MenuConstants.NUMBER_OF_STUDENTS);
+    log.info(MenuConstants.NUMBER_OF_STUDENTS);
 
     if (scan.hasNextInt()) {
       int quant = scan.nextInt();
       courseService.findCoursesWithLessOrEqualsStudents(quant).stream().map(Course::toString)
           .forEach(System.out::println);
     } else {
-      System.out.println(MenuConstants.DIGITS_REQUIRED + "\n" + MenuConstants.COURSE_MENU);
+      log.warn(MenuConstants.DIGITS_REQUIRED);
+      log.info(MenuConstants.COURSE_MENU);
     }
   }
 
   public void createCourseFacade(Scanner scan) {
-    System.out.println(MenuConstants.COURSE_NAME);
+    log.info(MenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
     if (!courseName.isEmpty()
         && courseService.showAllCourses().stream().noneMatch(course -> course.getCourseName().equals(courseName))) {
-      System.out.println(MenuConstants.COURSE_DESCRIPTION);
+      log.info(MenuConstants.COURSE_DESCRIPTION);
       String courseDescription = scan.nextLine();
       Course course = new Course(courseName, courseDescription);
-      System.out.println(courseService.createCourse(course) + " course added" + "\n" + MenuConstants.COURSE_MENU);
+      log.info(courseService.createCourse(course) + " course added" + "\n" + MenuConstants.COURSE_MENU);
     } else {
-      System.out.println(MenuConstants.EMPTY_NOTE + "\n" + MenuConstants.COURSE_MENU);
+      log.warn(MenuConstants.EMPTY_NOTE);
+      log.info(MenuConstants.COURSE_MENU);
     }
   }
 
   public void editCourseNameAndDescriptionFacade(Scanner scan) {
-    System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
+    log.info(MenuConstants.CHOOSE_COURSE_NAME);
     courseService.showAllCourses().forEach(System.out::println);
     String courseName = scan.nextLine();
 
     if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
-      System.out.println(MenuConstants.NEW_COURSE_NAME);
+      log.info(MenuConstants.NEW_COURSE_NAME);
       String newCourseName = scan.nextLine();
 
       if (!newCourseName.isEmpty()) {
-        System.out.println(MenuConstants.COURSE_DESCRIPTION);
+        log.info(MenuConstants.COURSE_DESCRIPTION);
         String newCourseDescription = scan.nextLine();
-        System.out.println(courseService.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription)
+        log.info(courseService.editCourseNameAndDescription(courseName, newCourseName, newCourseDescription)
             + " course name and description updated" + "\n" + MenuConstants.COURSE_MENU);
       } else {
-        System.out.println(MenuConstants.EMPTY_NOTE + "\n" + MenuConstants.COURSE_MENU);
+        log.warn(MenuConstants.EMPTY_NOTE);
+        log.info(MenuConstants.COURSE_MENU);
       }
     } else {
-      System.out.println(MenuConstants.NO_SUCH_COURSE + "\n" + MenuConstants.COURSE_MENU);
+      log.warn(MenuConstants.NO_SUCH_COURSE);
+      log.info(MenuConstants.COURSE_MENU);
     }
   }
 
   public void deleteCourseByNameFacade(Scanner scan) {
-    System.out.println(MenuConstants.CHOOSE_COURSE_NAME);
+    log.info(MenuConstants.CHOOSE_COURSE_NAME);
     courseService.showAllCourses().forEach(System.out::println);
     String courseName = scan.nextLine();
 
     if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
-      System.out
-          .println(courseService.deleteCourseByName(courseName) + " course deleted" + "\n" + MenuConstants.COURSE_MENU);
+      log.info(courseService.deleteCourseByName(courseName) + " course deleted" + "\n" + MenuConstants.COURSE_MENU);
     } else {
-      System.out.println(MenuConstants.NO_SUCH_COURSE + "\n" + MenuConstants.COURSE_MENU);
+      log.warn(MenuConstants.NO_SUCH_COURSE + "\n" + MenuConstants.COURSE_MENU);
     }
   }
 
   public void showAllCoursesFacade() {
     courseService.showAllCourses().forEach(System.out::println);
-    System.out.println(MenuConstants.COURSE_MENU);
+    log.info(MenuConstants.COURSE_MENU);
   }
 
 }

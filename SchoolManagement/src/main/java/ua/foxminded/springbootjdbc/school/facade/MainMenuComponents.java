@@ -2,7 +2,9 @@ package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class MainMenuComponents {
   private StudentMenuComponents studentMenu;
@@ -18,7 +20,7 @@ public class MainMenuComponents {
 
   public String studentMenu(Scanner scan) {
     String command = "";
-    System.out.println(MenuConstants.STUDENT_MENU);
+    log.info(MenuConstants.STUDENT_MENU);
 
     while (!command.equalsIgnoreCase("m")) {
       command = scan.nextLine();
@@ -47,7 +49,7 @@ public class MainMenuComponents {
 
   public String groupMenu(Scanner scan) {
     String command = "";
-    System.out.println(MenuConstants.GROUP_MENU);
+    log.info(MenuConstants.GROUP_MENU);
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
@@ -61,9 +63,9 @@ public class MainMenuComponents {
       } else if (command.equalsIgnoreCase("e")) {
         groupMenu.showAllGroupsFacade();
       } else if (command.equalsIgnoreCase("m")) {
-        System.out.println(MenuConstants.MAIN_MENU);
+        log.info(MenuConstants.MAIN_MENU);
       } else {
-        System.out.println(MenuConstants.GROUP_MENU);
+        log.info(MenuConstants.GROUP_MENU);
       }
     }
     return command;
@@ -71,7 +73,7 @@ public class MainMenuComponents {
 
   public String courseMenu(Scanner scan) {
     String command = "";
-    System.out.println(MenuConstants.COURSE_MENU);
+    log.info(MenuConstants.COURSE_MENU);
     while (!command.equals("m")) {
       command = scan.nextLine();
       if (command.equalsIgnoreCase("a")) {
@@ -85,9 +87,9 @@ public class MainMenuComponents {
       } else if (command.equalsIgnoreCase("e")) {
         courseMenu.showAllCoursesFacade();
       } else if (command.equalsIgnoreCase("m")) {
-        System.out.println(MenuConstants.MAIN_MENU);
+        log.info(MenuConstants.MAIN_MENU);
       } else {
-        System.out.println(MenuConstants.COURSE_MENU);
+        log.info(MenuConstants.COURSE_MENU);
       }
     }
     return command;

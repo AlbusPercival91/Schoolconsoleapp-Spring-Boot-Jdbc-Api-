@@ -1,10 +1,8 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
 import ua.foxminded.springbootjdbc.school.dao.StudentService;
 import ua.foxminded.springbootjdbc.school.entity.Student;

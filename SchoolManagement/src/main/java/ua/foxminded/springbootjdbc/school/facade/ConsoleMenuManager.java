@@ -3,6 +3,9 @@ package ua.foxminded.springbootjdbc.school.facade;
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class ConsoleMenuManager {
   private MainMenuComponents mainMenu;
@@ -14,8 +17,7 @@ public class ConsoleMenuManager {
   public void manage() {
     Scanner scan = new Scanner(System.in);
     String command = "";
-    System.out
-        .println("Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
+    log.info("Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
 
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
