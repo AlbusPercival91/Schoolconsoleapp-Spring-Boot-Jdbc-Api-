@@ -20,7 +20,7 @@ import ua.foxminded.springbootjdbc.school.entity.Course;
 import ua.foxminded.springbootjdbc.school.entity.Group;
 import ua.foxminded.springbootjdbc.school.entity.Student;
 import ua.foxminded.springbootjdbc.school.entity.StudentCourseRelation;
-import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.facade.SchoolManager;
 import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataRepository;
 import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
@@ -35,7 +35,7 @@ class GeneratorDataServiceMockitoTest {
   private GeneratorDataRepository repository;
 
   @MockBean
-  private ConsoleMenuManager consoleMenuRunner;
+  private SchoolManager schoolManager;
 
   @Captor
   private ArgumentCaptor<Course> courseCaptor;

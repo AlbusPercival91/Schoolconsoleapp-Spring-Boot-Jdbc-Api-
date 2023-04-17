@@ -21,7 +21,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.foxminded.springbootjdbc.school.dao.GroupDAO;
 import ua.foxminded.springbootjdbc.school.dao.GroupService;
 import ua.foxminded.springbootjdbc.school.entity.Group;
-import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.facade.SchoolManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -34,7 +34,7 @@ class GroupServiceMockitoTest {
   private GroupDAO groupDAO;
 
   @MockBean
-  private ConsoleMenuManager consoleMenuRunner;
+  private SchoolManager schoolManager;
   
   private AutoCloseable closeable;
 

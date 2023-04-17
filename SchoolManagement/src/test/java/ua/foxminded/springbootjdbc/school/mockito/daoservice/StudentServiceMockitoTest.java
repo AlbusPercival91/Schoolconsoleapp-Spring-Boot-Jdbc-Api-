@@ -22,7 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.foxminded.springbootjdbc.school.dao.StudentDAO;
 import ua.foxminded.springbootjdbc.school.dao.StudentService;
 import ua.foxminded.springbootjdbc.school.entity.Student;
-import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.facade.SchoolManager;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
@@ -35,7 +35,7 @@ class StudentServiceMockitoTest {
   private StudentDAO studentDAO;
 
   @MockBean
-  private ConsoleMenuManager consoleMenuRunner;
+  private SchoolManager schoolManager;
   
   private AutoCloseable closeable;
 
