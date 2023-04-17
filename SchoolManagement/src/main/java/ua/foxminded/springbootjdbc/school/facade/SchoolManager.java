@@ -17,8 +17,9 @@ public class SchoolManager {
   public void manage() {
     Scanner scan = new Scanner(System.in);
     String command = "";
-    log.info("Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
-
+    log.info("Welcome to School console application. Please choose options below:");
+    log.info(MenuConstants.MAIN_MENU);
+    
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
 

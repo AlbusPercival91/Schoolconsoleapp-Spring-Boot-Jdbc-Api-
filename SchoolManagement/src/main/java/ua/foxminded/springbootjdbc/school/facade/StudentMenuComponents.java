@@ -25,7 +25,7 @@ public class StudentMenuComponents {
     String courseName = scan.nextLine();
 
     if (courseMaker.generateCourses().contains(courseName)) {
-      studentService.findStudentsRelatedToCourse(courseName).forEach(System.out::println);
+      studentService.findStudentsRelatedToCourse(courseName).forEach(student -> log.info(student.toString()));
       log.info("\n" + MenuConstants.STUDENT_MENU);
     } else {
       log.warn(MenuConstants.WRONG_COURSE);
@@ -77,7 +77,7 @@ public class StudentMenuComponents {
 
       if (studentService.getStudentID().contains(studentId)) {
         log.info(MenuConstants.COURSE_LIST);
-        courseMaker.generateCourses().forEach(System.out::println);
+        courseMaker.generateCourses().forEach(log::info);
         String courseName = scan.next();
 
         if (courseMaker.generateCourses().contains(courseName)) {
@@ -102,7 +102,7 @@ public class StudentMenuComponents {
 
       if (studentService.getStudentID().contains(studentId)) {
         log.info(MenuConstants.COURSE_LIST);
-        courseMaker.generateCourses().forEach(System.out::println);
+        courseMaker.generateCourses().forEach(log::info);
         String courseName = scan.next();
 
         if (courseMaker.generateCourses().contains(courseName)) {
@@ -161,7 +161,7 @@ public class StudentMenuComponents {
   }
 
   public void showAllStudentsFacade() {
-    studentService.showAllStudents().forEach(System.out::println);
+    studentService.showAllStudents().forEach(student -> log.info(student.toString()));
     log.info(MenuConstants.STUDENT_MENU);
   }
 

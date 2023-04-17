@@ -21,8 +21,7 @@ public class CourseMenuComponents {
 
     if (scan.hasNextInt()) {
       int quant = scan.nextInt();
-      courseService.findCoursesWithLessOrEqualsStudents(quant).stream().map(Course::toString)
-          .forEach(System.out::println);
+      courseService.findCoursesWithLessOrEqualsStudents(quant).stream().map(Course::toString).forEach(log::info);
     } else {
       log.warn(MenuConstants.DIGITS_REQUIRED);
       log.info(MenuConstants.COURSE_MENU);
@@ -47,7 +46,7 @@ public class CourseMenuComponents {
 
   public void editCourseNameAndDescriptionFacade(Scanner scan) {
     log.info(MenuConstants.CHOOSE_COURSE_NAME);
-    courseService.showAllCourses().forEach(System.out::println);
+    courseService.showAllCourses().forEach(course -> log.info(course.toString()));
     String courseName = scan.nextLine();
 
     if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
@@ -71,7 +70,7 @@ public class CourseMenuComponents {
 
   public void deleteCourseByNameFacade(Scanner scan) {
     log.info(MenuConstants.CHOOSE_COURSE_NAME);
-    courseService.showAllCourses().forEach(System.out::println);
+    courseService.showAllCourses().forEach(course -> log.info(course.toString()));
     String courseName = scan.nextLine();
 
     if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
@@ -82,7 +81,7 @@ public class CourseMenuComponents {
   }
 
   public void showAllCoursesFacade() {
-    courseService.showAllCourses().forEach(System.out::println);
+    courseService.showAllCourses().forEach(course -> log.info(course.toString()));
     log.info(MenuConstants.COURSE_MENU);
   }
 

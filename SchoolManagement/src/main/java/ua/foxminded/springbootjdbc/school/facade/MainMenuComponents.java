@@ -39,9 +39,9 @@ public class MainMenuComponents {
       } else if (command.equalsIgnoreCase("g")) {
         studentMenu.showAllStudentsFacade();
       } else if (command.equalsIgnoreCase("m")) {
-        System.out.println(MenuConstants.MAIN_MENU);
+        log.info(MenuConstants.MAIN_MENU);
       } else {
-        System.out.println(MenuConstants.STUDENT_MENU);
+        log.info(MenuConstants.STUDENT_MENU);
       }
     }
     return command;
