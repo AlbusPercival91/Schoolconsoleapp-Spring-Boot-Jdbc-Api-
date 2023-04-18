@@ -33,7 +33,7 @@ public class CourseMenuComponents {
     String courseName = scan.nextLine();
 
     if (!courseName.isEmpty()
-        && courseService.showAllCourses().stream().noneMatch(course -> course.getCourseName().equals(courseName))) {
+        && courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
       log.info(MenuConstants.COURSE_DESCRIPTION);
       String courseDescription = scan.nextLine();
       Course course = new Course(courseName, courseDescription);

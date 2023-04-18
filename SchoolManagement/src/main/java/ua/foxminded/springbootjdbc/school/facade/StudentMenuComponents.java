@@ -1,30 +1,28 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
+import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.dao.StudentService;
 import ua.foxminded.springbootjdbc.school.entity.Student;
-import ua.foxminded.springbootjdbc.school.testdata.CourseMaker;
 
 @Slf4j
 @Component
 public class StudentMenuComponents {
   private final StudentService studentService;
+  private final CourseService courseService;
 
-  @Autowired
-  private CourseMaker courseMaker;
-
-  public StudentMenuComponents(StudentService studentService) {
+  public StudentMenuComponents(StudentService studentService, CourseService courseService) {
     this.studentService = studentService;
+    this.courseService = courseService;
   }
 
   public void findStudentsRelatedToCourseFacade(Scanner scan) {
     log.info(MenuConstants.COURSE_NAME);
     String courseName = scan.nextLine();
 
-    if (courseMaker.generateCourses().contains(courseName)) {
+    if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
       studentService.findStudentsRelatedToCourse(courseName).forEach(student -> log.info(student.toString()));
       log.info("\n" + MenuConstants.STUDENT_MENU);
     } else {
@@ -77,10 +75,10 @@ public class StudentMenuComponents {
 
       if (studentService.getStudentID().contains(studentId)) {
         log.info(MenuConstants.COURSE_LIST);
-        courseMaker.generateCourses().forEach(log::info);
+        courseService.showAllCourses().forEach(course -> log.info(course.toString()));
         String courseName = scan.next();
 
-        if (courseMaker.generateCourses().contains(courseName)) {
+        if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
           studentService.addStudentToTheCourse(studentId, courseName);
           log.info("Student with ID: " + studentId + " assigned to the course: " + courseName);
         } else {
@@ -102,10 +100,10 @@ public class StudentMenuComponents {
 
       if (studentService.getStudentID().contains(studentId)) {
         log.info(MenuConstants.COURSE_LIST);
-        courseMaker.generateCourses().forEach(log::info);
+        courseService.showAllCourses().forEach(course -> log.info(course.toString()));
         String courseName = scan.next();
 
-        if (courseMaker.generateCourses().contains(courseName)) {
+        if (courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
           log.info(studentService.removeStudentFromCourse(studentId, courseName) + " student(s) with ID " + studentId
               + " deleted from course " + courseName);
         } else {
