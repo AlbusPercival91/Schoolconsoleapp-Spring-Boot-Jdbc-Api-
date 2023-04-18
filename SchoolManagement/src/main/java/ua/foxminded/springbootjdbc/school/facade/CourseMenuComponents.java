@@ -2,7 +2,6 @@ package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
 import ua.foxminded.springbootjdbc.school.dao.CourseService;
 import ua.foxminded.springbootjdbc.school.entity.Course;
@@ -33,7 +32,7 @@ public class CourseMenuComponents {
     String courseName = scan.nextLine();
 
     if (!courseName.isEmpty()
-        && courseService.showAllCourses().stream().anyMatch(course -> course.getCourseName().equals(courseName))) {
+        && courseService.showAllCourses().stream().noneMatch(course -> course.getCourseName().equals(courseName))) {
       log.info(MenuConstants.COURSE_DESCRIPTION);
       String courseDescription = scan.nextLine();
       Course course = new Course(courseName, courseDescription);

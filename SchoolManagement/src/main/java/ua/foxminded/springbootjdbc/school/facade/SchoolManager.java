@@ -2,7 +2,6 @@ package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
 import org.springframework.stereotype.Component;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
