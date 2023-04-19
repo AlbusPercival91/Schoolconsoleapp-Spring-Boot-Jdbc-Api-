@@ -1,5 +1,10 @@
 package ua.foxminded.springbootjdbc.school.entity;
 
+import lombok.Getter;
+import lombok.ToString;
+
+@Getter
+@ToString
 public class Course {
   private String courseName;
   private String courseDescription;
@@ -11,19 +16,6 @@ public class Course {
 
   public Course(String courseName) {
     this.courseName = courseName;
-  }
-
-  public String getCourseName() {
-    return courseName;
-  }
-
-  public String getCourseDescription() {
-    return courseDescription;
-  }
-
-  @Override
-  public String toString() {
-    return courseName + ", course description: " + courseDescription;
   }
 
 }

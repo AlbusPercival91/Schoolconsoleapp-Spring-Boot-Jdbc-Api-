@@ -1,25 +1,24 @@
 package ua.foxminded.springbootjdbc.school.facade;
 
 import java.util.Scanner;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
-public class ConsoleMenuManager {
-
-  @Autowired
+public class SchoolManager {
   private MainMenuComponents mainMenu;
 
-  public ConsoleMenuManager(MainMenuComponents mainMenu) {
+  public SchoolManager(MainMenuComponents mainMenu) {
     this.mainMenu = mainMenu;
   }
 
   public void manage() {
     Scanner scan = new Scanner(System.in);
     String command = "";
-    System.out
-        .println("Welcome to School console application. Please choose options below:\n" + MenuConstants.MAIN_MENU);
-
+    log.info("Welcome to School console application. Please choose options below:");
+    log.info(MenuConstants.MAIN_MENU);
+    
     while (!command.equalsIgnoreCase("q")) {
       command = scan.nextLine();
 

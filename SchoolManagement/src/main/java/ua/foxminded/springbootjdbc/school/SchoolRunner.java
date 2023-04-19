@@ -4,17 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import ua.foxminded.springbootjdbc.school.facade.ConsoleMenuManager;
+import ua.foxminded.springbootjdbc.school.facade.SchoolManager;
 import ua.foxminded.springbootjdbc.school.testdata.dao.GeneratorDataService;
 
 @Component
-public class DatabaseRunner implements ApplicationRunner {
+public class SchoolRunner implements ApplicationRunner {
 
   @Autowired
   private GeneratorDataService testData;
 
   @Autowired
-  private ConsoleMenuManager consoleManager;
+  private SchoolManager schoolManager;
 
   @Override
   public void run(ApplicationArguments args) throws Exception {
@@ -24,7 +24,7 @@ public class DatabaseRunner implements ApplicationRunner {
       testData.createCourse();
       testData.createCourseStudentRelation();
     }
-    consoleManager.manage();
+    schoolManager.manage();
   }
 
 }
